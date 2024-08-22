@@ -1,0 +1,291 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кабинет пользователя</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("front.jpg");
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        nav {
+            background-color: #1a2e35;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: inline-block;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #1cbbb4;
+            border-radius: 4px;
+        }
+        h1 {
+            text-align: center;
+            color: #252525;
+            margin-bottom: 30px;
+        }
+        .profile-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .profile-avatar {
+            flex: 1;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .profile-avatar img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 3px solid #1a2e35;
+            object-fit: cover;
+        }
+        .profile-info {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .profile-info > div {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+        .profile-info h2 {
+            margin-top: 0;
+            color: #252525;
+        }
+        .settings-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .settings-button {
+            background-color: #1a2e35;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .settings-button:hover {
+            background-color: #1cbbb4;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal a {
+            color: #1cbbb4;
+            text-decoration: none;
+        }
+        .modal a:hover {
+            text-decoration: underline;
+        }
+        .modal input[type="submit"] {
+            background-color: #1a2e35;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .modal input[type="submit"]:hover {
+            background-color: #1cbbb4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="sit1.html">Главная</a>
+            <a href="about.html">О нас</a>
+            <a href="services.html">Услуги</a>
+            <a href="contact.html">Контакты</a>
+            <a href="sit2.html">Личный кабинет</a>
+        </nav>
+        <h1>Кабинет пользователя</h1>
+        <div class="profile-section">
+            <div class="profile-avatar">
+                <img src="{% static 'deps/images/scrin.png' %}" alt="Аватар пользователя">
+            </div>
+            <div class="profile-info">
+                <div>
+                    <h2>Информация о пользователе</h2>
+                    <p><strong>Имя:</strong> Иван Иванов</p>
+                    <p><strong>Email:</strong> ivanov@example.com</p>
+                    <p><strong>Дата регистрации:</strong> 1 января 2024</p>
+                </div>
+                <div>
+                    <h2>Настройки</h2>
+                    <div class="settings-buttons">
+                        <button class="settings-button" id="change-password-link">Изменить пароль</button>
+                        <button class="settings-button" id="change-email-link">Изменить email</button>
+                        <button class="settings-button" id="delete-account-link">Удалить аккаунт</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для изменения пароля -->
+    <div id="change-password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-change-password">&times;</span>
+            <h2>Изменить пароль</h2>
+            <form action="/change-password" method="post">
+                <label for="old-password">Старый пароль:</label>
+                <input type="password" id="old-password" name="old-password" required>
+                <label for="new-password">Новый пароль:</label>
+                <input type="password" id="new-password" name="new-password" required>
+                <input type="submit" value="Изменить пароль">
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно для изменения email -->
+    <div id="change-email-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-change-email">&times;</span>
+            <h2>Изменить email</h2>
+            <form action="/change-email" method="post">
+                <label for="new-email">Новый email:</label>
+                <input type="email" id="new-email" name="new-email" required>
+                <input type="submit" value="Изменить email">
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно для удаления аккаунта -->
+    <div id="delete-account-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-delete-account">&times;</span>
+            <h2>Удалить аккаунт</h2>
+            <form action="/delete-account" method="post">
+                <p>Вы уверены, что хотите удалить свой аккаунт? Это действие нельзя отменить.</p>
+                <input type="submit" value="Удалить аккаунт">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Получаем модальные окна
+        var changePasswordModal = document.getElementById("change-password-modal");
+        var changeEmailModal = document.getElementById("change-email-modal");
+        var deleteAccountModal = document.getElementById("delete-account-modal");
+
+        // Получаем кнопки открытия модальных окон
+        var changePasswordLink = document.getElementById("change-password-link");
+        var changeEmailLink = document.getElementById("change-email-link");
+        var deleteAccountLink = document.getElementById("delete-account-link");
+
+        // Получаем кнопки закрытия модальных окон
+        var closeChangePassword = document.getElementById("close-change-password");
+        var closeChangeEmail = document.getElementById("close-change-email");
+        var closeDeleteAccount = document.getElementById("close-delete-account");
+
+        // Открытие модальных окон при клике на ссылки
+        changePasswordLink.onclick = function() {
+            changePasswordModal.style.display = "block";
+        }
+        changeEmailLink.onclick = function() {
+            changeEmailModal.style.display = "block";
+        }
+        deleteAccountLink.onclick = function() {
+            deleteAccountModal.style.display = "block";
+        }
+
+        // Закрытие модальных окон при клике на кнопку закрытия
+        closeChangePassword.onclick = function() {
+            changePasswordModal.style.display = "none";
+        }
+        closeChangeEmail.onclick = function() {
+            changeEmailModal.style.display = "none";
+        }
+        closeDeleteAccount.onclick = function() {
+            deleteAccountModal.style.display = "none";
+        }
+
+        // Закрытие модальных окон при клике вне модального окна
+        window.onclick = function(event) {
+            if (event.target == changePasswordModal) {
+                changePasswordModal.style.display = "none";
+            }
+            if (event.target == changeEmailModal) {
+                changeEmailModal.style.display = "none";
+            }
+            if (event.target == deleteAccountModal) {
+                deleteAccountModal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
