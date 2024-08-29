@@ -32,7 +32,7 @@
     <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand">
             <img src="{% static 'deps/images/logo.png' %}" alt="" />
             <span>
               TNK Ocenka
@@ -60,7 +60,13 @@
             <div class="user_option">
               <a href="sit2.html">
                 <span>
-                  Login
+                  Войти
+                </span>
+                /
+              </a>
+              <a href={% url "ps_account:registration" %}>
+                <span>
+                  Зарегистрироваться
                 </span>
               </a>
               <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
