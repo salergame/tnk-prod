@@ -12,10 +12,8 @@
     <div class="container">
         <nav>
             <a href="{% url "main:index" %}">Главная</a>
-            <a href="about.html">О нас</a>
-            <a href="services.html">Услуги</a>
             <a href="contact.html">Контакты</a>
-            <a href="sit2.html">Личный кабинет</a>
+            <a href="{% url "ps_account:login" %}">Войти</a>
         </nav>
         <h1>Регистрация пользователя</h1>
         <div class="registration-section">
@@ -43,10 +41,12 @@
                 <div class="text-center">
                     <p>Или авторизуйтесь через:</p>
                     
-                    <a href="#" class="btn btn-dark">
-                        <img class="mx-1" src="{% static 'deps/icons/google.svg' %}" alt="Catalog Icon" width="16" height="16">
-                        Google
-                    </a>
+                    <div class="auth-buttons">
+                        <a href="#" class="btn-google">
+                            <span class="google-icon"></span> Регистрация через Google
+                        </a>
+                    </div>                    
+                    
                 </div>
             </form>
         </div>

@@ -1,0 +1,93 @@
+{% load static socialaccount %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход пользователя</title>
+    <link rel="stylesheet" href="{% static 'deps/css/account_style.css' %}">
+    <style>
+        .alert {
+            display: none; /* Скрываем по умолчанию */
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            background-color: red; /* Красный цвет фона */
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        .alert.show {
+            display: block; /* Показываем блок */
+            animation: fadeOut 5s forwards;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="{% url 'main:index' %}">Главная</a>
+            <a href="contact.html">Контакты</a>
+            <a href="{% url 'ps_account:registration' %}">Регистрация</a>
+        </nav>
+        <h1>Вход пользователя</h1>
+        
+        <div class="login-section">
+            <!-- Всплывающее окно ошибки -->
+            {% if form.errors %}
+                <div id="errorAlert" class="alert">
+                    <strong>Ошибка:</strong> Неправильное имя пользователя или пароль.
+                </div>
+            {% endif %}
+            
+            <form action="{% url 'ps_account:login' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Имя пользователя:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="login-button">Войти</button>
+                </div>
+                
+                <div class="text-center">
+                    <p>Или войдите через:</p>
+                    
+                    <div class="auth-buttons">
+                        <a href="{% provider_login_url 'google' %}" class="btn-google">
+                            <span class="google-icon"></span> Вход через Google
+                        </a>
+                    </div>                    
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Если ошибка присутствует, показать всплывающее сообщение
+        window.onload = function() {
+            var errorAlert = document.getElementById('errorAlert');
+            if (errorAlert) {
+                errorAlert.classList.add('show');
+                // Автоматическое закрытие через 5 секунд
+                setTimeout(function() {
+                    errorAlert.classList.remove('show');
+                }, 5000);
+            }
+        };
+    </script>
+    <script src="{% static 'deps/js/account.js' %}"></script>
+</body>
+</html>

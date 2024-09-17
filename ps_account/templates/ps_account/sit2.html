@@ -13,9 +13,7 @@
         <nav>
             <a href="{% url "main:index" %}">Главная</a>
             <a href="about.html">О нас</a>
-            <a href="services.html">Услуги</a>
             <a href="contact.html">Контакты</a>
-            <a href="sit2.html">Личный кабинет</a>
         </nav>
         <h1>Кабинет пользователя</h1>
         <div class="profile-section">
@@ -25,17 +23,24 @@
             <div class="profile-info">
                 <div>
                     <h2>Информация о пользователе</h2>
-                    <p><strong>Имя:</strong> Иван Иванов</p>
-                    <p><strong>Email:</strong> ivanov@example.com</p>
-                    <p><strong>Дата регистрации:</strong> 1 января 2024</p>
+                    <p><strong>Имя:</strong> {{ user_name }}</p>
+                    <p><strong>Email:</strong> {{ user_email }}</p>
+                    <p><strong>Дата регистрации:</strong> {{ registration_date }}</p>
                 </div>
                 <div>
                     <h2>Настройки</h2>
                     <div class="settings-buttons">
-                        <button class="settings-button" id="change-password-link">Изменить пароль</button>
-                        <button class="settings-button" id="change-email-link">Изменить email</button>
-                        <button class="settings-button" id="delete-account-link">Удалить аккаунт</button>
+                        <a href="{% url 'ps_account:change_password' %}">
+                            <button class="settings-button">Изменить пароль</button>
+                        </a>
+                        <a href="{% url 'ps_account:change_email' %}">
+                            <button class="settings-button">Изменить email</button>
+                        </a>
+                        <a href="{% url 'ps_account:delete_account' %}">
+                            <button class="settings-button">Удалить аккаунт</button>
+                        </a>
                     </div>
+                    
                 </div>
             </div>
         </div>

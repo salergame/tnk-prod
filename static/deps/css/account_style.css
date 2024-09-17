@@ -104,6 +104,22 @@ h1 {
     background-color: #1cbbb4;
 }
 
+.login-button {
+    width: 100%;
+    padding: 14px;
+    background-color: #1a2e35;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #1cbbb4;
+}
+
 .profile-section {
     display: flex;
     justify-content: space-between;
@@ -228,3 +244,60 @@ h1 {
 .modal input[type="submit"]:hover {
     background-color: #1cbbb4;
 }
+
+.auth-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Расстояние между кнопками */
+    margin-top: 20px;
+}
+
+.btn-google, .btn-linkedin {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    color: white;
+}
+
+.btn-google {
+    background-color: #4285F4; /* Цвет Google */
+}
+
+.btn-google:hover {
+    background-color: #357ae8; /* Цвет при наведении */
+}
+
+.google-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('../images/white_g_no_background.png'); /* Adjust path as needed */
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
+
+.btn-linkedin {
+    background-color: #0077B5; /* Цвет LinkedIn */
+}
+
+.btn-linkedin:hover {
+    background-color: #005582; /* Цвет при наведении */
+}
+
+.linkedin-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
