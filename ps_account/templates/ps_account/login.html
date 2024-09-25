@@ -66,9 +66,9 @@
                     <p>Или войдите через:</p>
                     
                     <div class="auth-buttons">
-                        <a href="{% provider_login_url 'google' %}" class="btn-google">
+                        <a href="{% url 'ps_account:google_redirect' %}">
                             <span class="google-icon"></span> Вход через Google
-                        </a>
+                        </a>                                          
                     </div>                    
                 </div>
             </form>

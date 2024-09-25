@@ -17,4 +17,5 @@ urlpatterns = [
     ), name='change_password'),
     path('change-email/', views.change_email, name='change_email'),
     path('delete-account/', views.delete_account, name='delete_account'),
+    path('login/google/', views.google_redirect, name='google_redirect'),
 ]

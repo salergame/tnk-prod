@@ -7,6 +7,9 @@ from django.contrib import auth
 from django.urls import reverse
 from ps_account.forms import RegisterForm
 from .forms import EmailChangeForm
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -80,3 +83,40 @@ def change_email(request):
         form = EmailChangeForm()
 
     return render(request, 'ps_account/change_email.html', {'form': form})
+
+def google_redirect(request):
+    google_login_url = reverse('socialaccount_login', kwargs={'provider': 'google'})
+    return redirect(google_login_url)
+
+@login_required
+def start_chat(request):
+    """Пользователь начинает новый чат с сотрудником"""
+    # Предположим, что сотрудник выбирается автоматически (первый доступный)
+    staff_member = User.objects.filter(is_staff=True).first()
+
+    # Проверяем, существует ли уже чат между пользователем и сотрудником
+    chat_room, created = ChatRoom.objects.get_or_create(user=request.user, staff=staff_member)
+
+    # Перенаправляем пользователя в комнату чата
+    return redirect('chat_room', room_id=chat_room.id)
+
+
+@login_required
+def chat_room(request, room_id):
+    """Показываем комнату чата и сообщения"""
+    chat_room = get_object_or_404(ChatRoom, id=room_id)
+    messages = chat_room.messages.all().order_by('timestamp')
+
+    if request.method == 'POST':
+        message = request.POST.get('message')
+        if message:
+            ChatMessage.objects.create(chat_room=chat_room, sender=request.user, message=message)
+    
+    return render(request, 'chat_room.html', {'chat_room': chat_room, 'messages': messages})
+
+
+@login_required
+def staff_chat_list(request):
+    """Список всех чатов для сотрудника"""
+    chat_rooms = ChatRoom.objects.filter(staff=request.user).order_by('-created_at')
+    return render(request, 'staff_chat_list.html', {'chat_rooms': chat_rooms})

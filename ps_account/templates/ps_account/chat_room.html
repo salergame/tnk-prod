@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чат</title>
+
+    <!-- Подключение CSS файлов -->
+    <link rel="stylesheet" href="{% static 'deps/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'deps/css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'deps/css/style.css' %}">
+
+    <style>
+        .chat-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .chat-log {
+            height: 400px;
+            overflow-y: scroll;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .chat-input {
+            width: calc(100% - 120px);
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <h2>Chat Room: {{ room_name }}</h2>
+
+        <!-- Поле для отображения сообщений -->
+        <div id="chat-log" class="chat-log"></div>
+
+        <!-- Поле для указания получателя -->
+        <div class="form-group">
+            <label for="receiver-id">Получатель: </label>
+            <input id="receiver-id" class="form-control" type="text" placeholder="ID получателя">
+        </div>
+
+        <!-- Поле для ввода сообщений -->
+        <div class="form-group">
+            <input id="chat-message-input" class="form-control chat-input" type="text" placeholder="Введите сообщение...">
+            <button id="chat-message-submit" class="btn btn-primary">Отправить</button>
+        </div>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script>
+        // Получаем ID текущего пользователя
+        const senderId = "{{ user.id }}";
+        const roomName = "{{ room_name }}";
+
+        // Устанавливаем WebSocket соединение
+        const chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+        );
+
+        // Получаем сообщения от WebSocket
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            const chatLog = document.querySelector('#chat-log');
+            chatLog.innerHTML += `<p><strong>${data.sender}</strong>: ${data.message}</p>`;
+        };
+
+        // Закрытие WebSocket
+        chatSocket.onclose = function(e) {
+            console.error('WebSocket закрылся неожиданно');
+        };
+
+        // Отправка сообщений по нажатию кнопки "Отправить"
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+
+            const receiverId = document.querySelector('#receiver-id').value;  // ID получателя
+
+            // Отправляем сообщение через WebSocket
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'sender_id': senderId,
+                'receiver_id': receiverId
+            }));
+
+            // Очищаем поле ввода
+            messageInputDom.value = '';
+        };
+    </script>
+</body>
+</html>

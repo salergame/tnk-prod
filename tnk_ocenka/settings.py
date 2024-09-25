@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google', 
+    'channels',
     
     'main',
     'ps_account',
@@ -148,10 +149,38 @@ AUTHENTICATION_BACKENDS = [
 
 ACCOUNT_SIGNUP_REDIRECT_URL = '/account/profile'
 LOGIN_REDIRECT_URL = '/account/profile'
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # Allows users to login with either username or email
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Ensure email verification is mandatory
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5  # Limits number of login attempts
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300  # 5 minutes timeout
+
+SOCIALACCOUNT_QUERY_EMAIL = True  # Fetch email from the provider
+
+SOCIALACCOUNT_PROVIDERS = {
+     'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'APP': {
+            'client_id': '946847496404-h009iu4p62vof55at5pl7a16tchh2qhv.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    },
+}
+
+ASGI_APPLICATION = 'tnk_ocenka.asgi.application'
 
 
-"""
-social for google
-"""
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 
