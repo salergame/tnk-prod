@@ -27,7 +27,7 @@
 </head>
 
 <body>
-  <a href="{% url "chat:index" %}" class="chat-float-btn">
+  <a href="{% if user.is_authenticated %}{% url 'chat:index' %}{% else %}{% url 'ps_account:login' %}{% endif %}" class="chat-float-btn">
     <img src="{% static 'deps/images/chat-icon.png' %}" alt="Иконка чата">
   </a>
   <div class="hero_area">
