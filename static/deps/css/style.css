@@ -66,6 +66,21 @@ body {
   height: auto;
 }
 
+.chat-float-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #28a745;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+.chat-float-btn img {
+  width: 40px;
+  height: 40px;
+}
+
 .header_section {
   overflow-x: hidden;
 }
