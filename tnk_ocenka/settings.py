@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,9 +45,11 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google', 
+    'django_htmx',
     
     'main',
     'ps_account',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+    'django_htmx.middleware.HtmxMiddleware',
     "allauth.account.middleware.AccountMiddleware",
 ]
 
@@ -78,8 +82,15 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'tnk_ocenka.wsgi.application'
+# WSGI_APPLICATION = 'tnk_ocenka.wsgi.application'
 
+ASGI_APPLICATION = 'tnk_ocenka.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -149,9 +160,17 @@ AUTHENTICATION_BACKENDS = [
 ACCOUNT_SIGNUP_REDIRECT_URL = '/account/profile'
 LOGIN_REDIRECT_URL = '/account/profile'
 
-
-"""
-social for google
-"""
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ''SocialApp''
+        # (''socialaccount'' app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '946847496404-h009iu4p62vof55at5pl7a16tchh2qhv.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    },
+}
 
 

@@ -22,4 +22,5 @@ urlpatterns = [
     path('',include('main.urls', namespace='main')),
     path('account/',include('ps_account.urls', namespace='ps_account')),
     path('accounts/', include('allauth.urls')),
+    path('chat/',include('chat.urls', namespace='chat')),
 ]
