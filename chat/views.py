@@ -13,7 +13,8 @@ def chat_views(request, chatroom_name="public-chat"):
     
     # Загружаем список всех чатов для staff
     if request.user.is_staff:
-        chat_list = ChatGroup.objects.filter(users_online=request.user)  # Убедись, что фильтр правильный
+        # Изменяем запрос, чтобы выбрать чаты, в которых пользователь находится в users_in_chat
+        chat_list = ChatGroup.objects.filter(users_in_chat=request.user)
     else:
         chat_list = []
 

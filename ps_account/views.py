@@ -74,8 +74,7 @@ def change_email(request):
             user = request.user
             user.email = new_email
             user.save()
-            messages.success(request, 'Ваш email был успешно изменен!')
-            return redirect('user_account')
+            return redirect('ps_account:account')
     else:
         form = EmailChangeForm()
 

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class ChatGroup(models.Model):
     group_name = models.CharField(max_length=128, unique=True, blank=True)
     users_online = models.ManyToManyField(User, related_name='online_in_groups', blank=True)
+    users_in_chat = models.ManyToManyField(User, related_name='users_in_groups', blank=True)
     # Для реализации приватных чатов добавим следующие поля
     is_private = models.BooleanField(default=False)  # Флаг для обозначения приватного чата
     other_user = models.ForeignKey(User, related_name='private_chat_user', on_delete=models.CASCADE, blank=True, null=True)
@@ -20,7 +21,9 @@ class GroupMessage(models.Model):
     
     def __str__(self):
         if self.body:
-            return f'{self.author.username} : {self.body}'
+            return f'{self.author.username}: {self.body}'
+        else:
+            return f'{self.author.username}: [empty message]'
         
     class Meta:
         ordering = ['-created']

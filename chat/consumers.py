@@ -18,7 +18,11 @@ class ChatroomConsumer(WebsocketConsumer):
             self.channel_name
         )
 
-        # Добавляем пользователя в список онлайн, если он еще не добавлен
+        # Добавляем пользователя в список пользователей чата, если его там еще нет
+        if not self.chatroom.users_in_chat.filter(id=self.user.id).exists():
+            self.chatroom.users_in_chat.add(self.user)
+
+        # Добавляем пользователя в список онлайн
         if not self.chatroom.users_online.filter(id=self.user.id).exists():
             self.chatroom.users_online.add(self.user)
             self.update_online_count()
@@ -42,23 +46,25 @@ class ChatroomConsumer(WebsocketConsumer):
     def receive(self, text_data):
         # Получаем данные сообщения
         text_data_json = json.loads(text_data)
-        body = text_data_json['body']
+        body = text_data_json.get('body', '').strip()  # Проверяем, есть ли сообщение и убираем пробелы
 
-        # Создаем сообщение в базе данных
-        message = GroupMessage.objects.create(
-            body=body,
-            author=self.user,
-            group=self.chatroom
-        )
+        # Проверяем, что сообщение не пустое
+        if body:
+            # Создаем сообщение в базе данных
+            message = GroupMessage.objects.create(
+                body=body,
+                author=self.user,
+                group=self.chatroom
+            )
 
-        # Рассылаем сообщение всем участникам комнаты
-        event = {
-            'type': 'message_handler',
-            'message_id': message.id
-        }
-        async_to_sync(self.channel_layer.group_send)(
-            self.chatroom_name, event
-        )
+            # Рассылаем сообщение всем участникам комнаты
+            event = {
+                'type': 'message_handler',
+                'message_id': message.id
+            }
+            async_to_sync(self.channel_layer.group_send)(
+                self.chatroom_name, event
+            )
 
     def message_handler(self, event):
         # Получаем сообщение по ID и рендерим его
@@ -75,7 +81,7 @@ class ChatroomConsumer(WebsocketConsumer):
 
     def update_online_count(self):
         # Обновляем количество онлайн пользователей
-        online_count = self.chatroom.users_online.count()
+        online_count = self.chatroom.users_online.count() - 1
         event = {
             'type': 'online_count_handler',
             'online_count': online_count
