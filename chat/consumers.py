@@ -3,6 +3,7 @@ from channels.generic.websocket import WebsocketConsumer
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from asgiref.sync import async_to_sync
+from channels.auth import get_user
 from .models import ChatGroup, GroupMessage
 
 class ChatroomConsumer(WebsocketConsumer):
@@ -11,6 +12,11 @@ class ChatroomConsumer(WebsocketConsumer):
         self.user = self.scope['user']
         self.chatroom_name = self.scope['url_route']['kwargs']['chatroom_name']
         self.chatroom = get_object_or_404(ChatGroup, group_name=self.chatroom_name)
+
+        # Проверяем, что пользователь аутентифицирован
+        if not self.user.is_authenticated:
+            self.close()
+            return
 
         # Добавляем пользователя в WebSocket группу (соединение для этой комнаты)
         async_to_sync(self.channel_layer.group_add)(
@@ -95,3 +101,4 @@ class ChatroomConsumer(WebsocketConsumer):
         online_count = event['online_count']
         html = render_to_string("chat/partials/online_count.html", {'online_count': online_count})
         self.send(text_data=html)
+ 

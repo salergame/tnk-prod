@@ -7,27 +7,141 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кабинет пользователя</title>
     <link rel="stylesheet" href="{% static 'deps/css/account_style.css' %}">
+    <style>
+        /* Общий контейнер для страницы */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        nav {
+            background-color: #2c3e50;
+            padding: 10px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .profile-container {
+            display: flex;
+            justify-content: space-between;
+            flex-grow: 1;
+            margin-top: 20px;
+        }
+
+        .profile-info, .document-section {
+            flex: 1;
+            padding: 20px;
+            margin: 0 10px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .document-section {
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .settings-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .settings-button, .document-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2c3e50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .settings-button:hover, .document-button:hover {
+            background-color: #34495e;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: auto;
+        }
+
+        .pagination .step-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            color: #2c3e50;
+            padding: 5px 10px;
+            border: 1px solid #2c3e50;
+            border-radius: 5px;
+        }
+
+        .pagination a:hover {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .pagination .current {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #ecf0f1;
+            color: #2c3e50;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <nav>
             <a href="{% url "main:index" %}">Главная</a>
-            <a href="about.html">О нас</a>
-            <a href="contact.html">Контакты</a>
+            <a href="{% url 'chat:index' %}">Чат</a>
+            <a href="{% url 'ps_account:account' %}">Личный кабинет</a>
         </nav>
         <h1>Кабинет пользователя</h1>
-        <div class="profile-section">
-            <div class="profile-avatar">
-                <img src="{% static 'deps/images/default-avatar.png' %}" alt="Аватар пользователя">
-            </div>
+        
+        <div class="profile-container">
+            <!-- Левый блок профиля -->
             <div class="profile-info">
-                <div>
+                <div class="profile-avatar">
+                    <img src="{% static 'deps/images/default-avatar.png' %}" alt="Аватар пользователя">
+                </div>
+                <div class="profile-details">
                     <h2>Информация о пользователе</h2>
                     <p><strong>Имя:</strong> {{ user_name }}</p>
                     <p><strong>Email:</strong> {{ user_email }}</p>
                     <p><strong>Дата регистрации:</strong> {{ registration_date }}</p>
                 </div>
-                <div>
+                <div class="settings-section">
                     <h2>Настройки</h2>
                     <div class="settings-buttons">
                         <a href="{% url 'ps_account:change_password' %}">
@@ -40,13 +154,47 @@
                             <button class="settings-button">Удалить аккаунт</button>
                         </a>
                     </div>
-                    
+                </div>
+            </div>
+
+            <!-- Правый блок документов -->
+            <div class="document-section">
+                <h2>Загруженные документы</h2>
+                <ul>
+                    {% for document in documents %}
+                        <li>
+                            <a href="{{ document.document.url }}">{{ document.document.name }}</a> 
+                            (Загружено {{ document.uploaded_at }})
+                        </li>
+                    {% empty %}
+                        <li>Документы отсутствуют.</li>
+                    {% endfor %}
+                </ul>
+
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if documents.paginator.num_pages > 1 %}
+                            {% if documents.has_previous %}
+                                <a href="?page=1">&laquo; первая</a>
+                                <a href="?page={{ documents.previous_page_number }}">предыдущая</a>
+                            {% endif %}
+                        
+                            <span class="current">
+                                {{ documents.number }} из {{ documents.paginator.num_pages }}
+                            </span>
+                        
+                            {% if documents.has_next %}
+                                <a href="?page={{ documents.next_page_number }}">следующая</a>
+                                <a href="?page={{ documents.paginator.num_pages }}">последняя &raquo;</a>
+                            {% endif %}
+                        {% else %}
+                            <span class="current">1</span>
+                        {% endif %}
+                    </span>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Модальные окна и другая разметка -->
 
     <script src="{% static 'deps/js/account.js' %}"></script>
 </body>

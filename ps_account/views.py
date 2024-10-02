@@ -1,12 +1,14 @@
 from pyexpat.errors import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import auth
 from django.urls import reverse
 from ps_account.forms import RegisterForm
-from .forms import EmailChangeForm
+from .forms import EmailChangeForm,DocumentUploadForm
+from .models import UserDocument
+from django.contrib.auth.models import User
 
 
 # Create your views here.
