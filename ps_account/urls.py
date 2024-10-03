@@ -17,5 +17,7 @@ urlpatterns = [
     ), name='change_password'),
     path('change-email/', views.change_email, name='change_email'),
     path('delete-account/', views.delete_account, name='delete_account'),
-
+    path('staff-documents/', views.staff_documents, name='staff_documents'),
+    path('staff-documents/<int:user_id>/', views.user_account_for_staff, name='user_account_for_staff'),
+    path('staff-documents/<int:user_id>/delete-document/<int:document_id>/', views.delete_document, name='delete_document'),
 ]

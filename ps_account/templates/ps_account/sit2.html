@@ -1,4 +1,4 @@
-{% load static %}
+{% load static extras %}
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кабинет пользователя</title>
     <link rel="stylesheet" href="{% static 'deps/css/account_style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Общий контейнер для страницы */
         body, html {
@@ -61,30 +62,83 @@
         }
 
         .document-section {
-            max-width: 300px;
-            display: flex;
-            flex-direction: column;
+            max-width: 400px; /* Установите максимальную ширину для блока с документами */
+            margin: 0 auto; /* Центрирование блока */
         }
 
-        .settings-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .document-section ul {
+            list-style: none;
+            padding: 0;
         }
-
-        .settings-button, .document-button {
-            width: 100%;
+        
+        .document-section li {
+            display: flex;
+            justify-content: space-between; /* Разделяет текст и иконку */
+            align-items: center;
             padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+        }
+        
+        .document-details {
+            flex-grow: 1;
+            margin-right: 10px; /* Добавляем отступ между текстом и иконкой */
+        }
+        
+        .document-section li a {
+            text-decoration: none;
+            color: #2980b9;
+            font-weight: bold;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+        
+        .delete-icon-wrapper {
+            flex-shrink: 0; /* Иконка корзины не будет сжиматься */
+        }
+        
+        .delete-icon {
+            color: red;
+            cursor: pointer;
+        }
+        
+        .delete-icon:hover {
+            color: darkred;
+        }
+        
+        .delete-icon i {
+            font-size: 18px;
+        }        
+    
+        .file-upload-wrapper {
+            margin-bottom: 10px;
+        }
+    
+        .upload-button {
             background-color: #2c3e50;
-            color: #fff;
+            color: white;
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            text-align: center;
+            font-size: 1em;
         }
-
-        .settings-button:hover, .document-button:hover {
+    
+        .upload-button:hover {
             background-color: #34495e;
+        }
+    
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            margin-bottom: 10px;
         }
 
         .pagination {
@@ -163,36 +217,38 @@
                 <ul>
                     {% for document in documents %}
                         <li>
-                            <a href="{{ document.document.url }}">{{ document.document.name }}</a> 
-                            (Загружено {{ document.uploaded_at }})
+                            <div class="document-details">
+                                <a href="{{ document.document.url }}" download>{{ document.document.name|basename }}</a>
+                                <span>(Загружено {{ document.uploaded_at }})</span>
+                            </div>
+                            {% if user.is_staff %}
+                                <div class="delete-icon-wrapper">
+                                    <!-- Иконка корзины для удаления -->
+                                    <a href="{% url 'ps_account:delete_document' user_id=document.user.id document_id=document.id %}" 
+                                       class="delete-icon" 
+                                       onclick="return confirm('Вы уверены, что хотите удалить этот документ?');">
+                                       <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            {% endif %}
                         </li>
                     {% empty %}
                         <li>Документы отсутствуют.</li>
                     {% endfor %}
                 </ul>
-
-                <div class="pagination">
-                    <span class="step-links">
-                        {% if documents.paginator.num_pages > 1 %}
-                            {% if documents.has_previous %}
-                                <a href="?page=1">&laquo; первая</a>
-                                <a href="?page={{ documents.previous_page_number }}">предыдущая</a>
-                            {% endif %}
-                        
-                            <span class="current">
-                                {{ documents.number }} из {{ documents.paginator.num_pages }}
-                            </span>
-                        
-                            {% if documents.has_next %}
-                                <a href="?page={{ documents.next_page_number }}">следующая</a>
-                                <a href="?page={{ documents.paginator.num_pages }}">последняя &raquo;</a>
-                            {% endif %}
-                        {% else %}
-                            <span class="current">1</span>
-                        {% endif %}
-                    </span>
-                </div>
+            
+                {% if user.is_staff %}
+                    <h3>Загрузить новый документ</h3>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="file-upload-wrapper">
+                            {{ form.document }}
+                        </div>
+                        <button type="submit" class="upload-button">Загрузить</button>
+                    </form>
+                {% endif %}
             </div>
+                 
         </div>
     </div>
 
