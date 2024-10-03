@@ -25,15 +25,24 @@ def chat_views(request, chatroom_name=None):
             # Если нет staff пользователей, перенаправляем на главную
             return redirect('main:index')
 
+    # Добавляем проверку: если пользователь уже имеет существующий чат, перенаправляем его в этот чат
+    if not chatroom_name:
+        # Проверяем, есть ли существующий чат у пользователя
+        existing_chat = ChatGroup.objects.filter(users_in_chat=request.user).first()
+
+        # Если существующий чат найден, перенаправляем в него
+        if existing_chat:
+            return redirect('chat:chatroom', chatroom_name=existing_chat.group_name)
+
     # Если chatroom_name не передан, проверяем, является ли пользователь staff
     if not chatroom_name:
         if request.user.is_staff:
             # Если это staff пользователь, показываем список чатов с возможным поиском
             if search_query:
-                # Фильтруем чаты по названию
+                # Фильтруем чаты по названию и проверяем, что staff является частью чата
                 chat_list = ChatGroup.objects.filter(group_name__icontains=search_query, users_in_chat=request.user).distinct()
             else:
-                # Если поиска нет, показываем все чаты, где есть пользователь
+                # Если поиска нет, показываем все чаты, где есть staff пользователь
                 chat_list = ChatGroup.objects.filter(users_in_chat=request.user)
             first_chat = chat_list.first()
             if first_chat:

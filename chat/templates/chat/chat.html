@@ -12,7 +12,7 @@
                 </form>
             </div>            
             <div id="chat_list" class="flex flex-col gap-2 overflow-y-auto">
-                {% if request.user.is_staff %}
+                {% if chat_list %}
                     {% for chat in chat_list %}
                     <div class="chat-item p-2 rounded-lg hover:bg-gray-700 cursor-pointer">
                         <a href="{% url 'chat:chatroom' chat.group_name %}" class="w-full">
@@ -67,13 +67,3 @@
     </div>
 </wrapper>
 {% endblock content %}
-
-{% block javascript %}
-<script>
-    function scrollToBottom() {
-        const container = document.getElementById('chat_container');
-        container.scrollTop = container.scrollHeight;
-    }
-    scrollToBottom();
-</script>
-{% endblock javascript %}
