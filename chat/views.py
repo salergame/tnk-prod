@@ -1,51 +1,61 @@
-from django.shortcuts import render, get_object_or_404, redirect 
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import ChatGroup, GroupMessage
+from django.contrib.auth.models import User
+from .models import ChatGroup
 from .forms import ChatmessageCreateForm
 
-from django.contrib.auth.models import User
-from django.db.models import Q
-from django.utils.crypto import get_random_string
-from django.contrib.auth.models import User
-from django.db.models import Q
-from django.utils.crypto import get_random_string
-
 @login_required
-def chat_views(request, chatroom_name="public-chat"):
-    # Проверяем, является ли пользователь новым и нужно ли создавать приватный чат со staff
-    if not request.user.is_staff:
-        # Ищем уже существующий приватный чат между пользователем и любым staff
-        chat_group = ChatGroup.objects.filter(
-            is_private=True,
-            users_in_chat=request.user,
-            users_in_chat__in=User.objects.filter(is_staff=True)
-        ).first()
+def chat_views(request, chatroom_name=None):
+    # Функционал поиска
+    search_query = request.GET.get('search', '')
 
-        # Если чата нет, создаем новый с первым доступным staff пользователем
-        if not chat_group:
-            staff_user = User.objects.filter(is_staff=True).first()  # Берем первого staff пользователя
-            if staff_user:
-                # Генерируем уникальное имя чата
-                group_name = f'private-{request.user.username}-{staff_user.username}-{get_random_string(8)}'
-                
-                chat_group = ChatGroup.objects.create(
-                    group_name=group_name,
-                    is_private=True,
-                    other_user=staff_user
-                )
-                chat_group.users_in_chat.add(request.user, staff_user)
+    # Проверяем, если у пользователя нет чатов
+    if not ChatGroup.objects.filter(users_in_chat=request.user).exists():
+        # Если нет чатов, находим любого пользователя со статусом staff
+        staff_user = User.objects.filter(is_staff=True).first()
 
-            return redirect('chat:chatroom', chatroom_name=chat_group.group_name)
+        if staff_user:
+            # Создаем новый чат с staff пользователем
+            new_chat = ChatGroup.objects.create(group_name=f"private-{request.user.username}-{staff_user.username}")
+            new_chat.users_in_chat.add(request.user, staff_user)
+
+            # Перенаправляем пользователя в новый созданный чат
+            return redirect('chat:chatroom', chatroom_name=new_chat.group_name)
+        else:
+            # Если нет staff пользователей, перенаправляем на главную
+            return redirect('main:index')
+
+    # Если chatroom_name не передан, проверяем, является ли пользователь staff
+    if not chatroom_name:
+        if request.user.is_staff:
+            # Если это staff пользователь, показываем список чатов с возможным поиском
+            if search_query:
+                # Фильтруем чаты по названию
+                chat_list = ChatGroup.objects.filter(group_name__icontains=search_query, users_in_chat=request.user).distinct()
+            else:
+                # Если поиска нет, показываем все чаты, где есть пользователь
+                chat_list = ChatGroup.objects.filter(users_in_chat=request.user)
+            first_chat = chat_list.first()
+            if first_chat:
+                return redirect('chat:chatroom', chatroom_name=first_chat.group_name)
+            else:
+                return redirect('main:index')  # Если чатов нет
+        else:
+            return redirect('main:index')  # Если не staff, перенаправляем на главную
 
     # Если пользователь уже в чате или является staff
     chat_group = get_object_or_404(ChatGroup, group_name=chatroom_name)
-    
+
     # Загружаем последние 30 сообщений из текущего чата
     chat_messages = chat_group.chat_messages.all()[:30]
-    
-    # Загружаем список всех чатов для staff
+
+    # Загружаем список всех чатов для staff с фильтрацией по названию
     if request.user.is_staff:
-        chat_list = ChatGroup.objects.filter(users_in_chat=request.user)
+        if search_query:
+            # Фильтруем чаты по названию чата
+            chat_list = ChatGroup.objects.filter(group_name__icontains=search_query, users_in_chat=request.user).distinct()
+        else:
+            chat_list = ChatGroup.objects.filter(users_in_chat=request.user)
     else:
         chat_list = []
 
@@ -64,8 +74,8 @@ def chat_views(request, chatroom_name="public-chat"):
             return render(request, 'chat/partials/chat_message_p.html', context)
 
     return render(request, 'chat/chat.html', {
-        'chat_messages': chat_messages,  # Сообщения из текущего чата
+        'chat_messages': chat_messages,
         'form': ChatmessageCreateForm(),
-        'chat_list': chat_list,  # Список чатов для staff
+        'chat_list': chat_list,  # Список чатов для staff, с фильтрацией по названию чата
         'current_chatroom': chat_group  # Текущая комната
     })

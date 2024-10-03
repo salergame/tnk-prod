@@ -7,7 +7,6 @@ class ChatGroup(models.Model):
     users_online = models.ManyToManyField(User, related_name='online_in_groups', blank=True)
     users_in_chat = models.ManyToManyField(User, related_name='users_in_groups', blank=True)
     # Для реализации приватных чатов добавим следующие поля
-    is_private = models.BooleanField(default=False)  # Флаг для обозначения приватного чата
     other_user = models.ForeignKey(User, related_name='private_chat_user', on_delete=models.CASCADE, blank=True, null=True)
     
     def __str__(self):
