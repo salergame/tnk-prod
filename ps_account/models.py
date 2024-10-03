@@ -8,3 +8,13 @@ class UserDocument(models.Model):
 
     def __str__(self):
         return f"{self.user.email} - {self.document.name}"
+
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='avatars/', default='avatars/baseavatar.jpg')
+
+    def __str__(self):
+        return self.user.username
+

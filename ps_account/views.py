@@ -6,27 +6,43 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import auth
 from django.urls import reverse
 from ps_account.forms import RegisterForm
-from .forms import EmailChangeForm,DocumentUploadForm
-from .models import UserDocument
+from .forms import AvatarChangeForm, EmailChangeForm,DocumentUploadForm
+from .models import UserDocument, UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test
 from django.db.models import Q
 
-
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 
 # Create your views here.
 @login_required
 def account(request):
     user = request.user
-    documents = UserDocument.objects.filter(user=user)  # Получение документов текущего пользователя
+    profile, created = UserProfile.objects.get_or_create(user=user)
+    documents = UserDocument.objects.filter(user=user)
+
+    if request.method == 'POST':
+        avatar_form = AvatarChangeForm(request.POST, request.FILES, instance=profile)  # Важно передать request.FILES
+        if avatar_form.is_valid():
+            avatar_form.save()  # Сохраняем форму с загруженным файлом
+            return redirect('ps_account:account')  # Перенаправляем после успешного сохранения
+        else:
+            print(avatar_form.errors)  # Вывод ошибок для отладки
+    else:
+        avatar_form = AvatarChangeForm(instance=profile)
+
     context = {
-        'user_name': user.get_full_name() or user.username,  # или user.username
+        'user_name': user.get_full_name() or user.username,
         'user_email': user.email,
         'registration_date': user.date_joined.strftime('%d %B %Y'),
-        'documents': documents  # Передача списка документов в шаблон
+        'documents': documents,
+        'avatar_form': avatar_form,
+        'avatar_url': profile.avatar.url if profile.avatar else '/media/avatars/baseavatar.jpg'  # Корректный путь к аватарке
     }
     return render(request, 'ps_account/sit2.html', context)
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -88,8 +104,18 @@ def change_email(request):
 
     return render(request, 'ps_account/change_email.html', {'form': form})
 
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Чтобы избежать выхода пользователя из сессии
+            return redirect('ps_account:account')
+    else:
+        form = PasswordChangeForm(request.user)
 
-# Ensure only staff can access these views
+    return render(request, 'ps_account/change_password.html', {'form': form})
 def staff_check(user):
     return user.is_staff
 
