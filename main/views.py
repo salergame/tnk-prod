@@ -1,4 +1,27 @@
 from django.shortcuts import render
 
 def index(request):
-    return render(request, 'index.html')
+    certificates = [
+        '1_page_1.jpg',
+        'Движимое имущество_page_1.jpg',
+        'Движимое_page_1.jpg',
+        'Жаксалыков Кайрат Куанышпаевич_page_1.jpg',
+        'Жаксалыков_Кайрат_Куанышпаевич1_page_1.jpg',
+        'Жаксалыков_Кайрат_Куанышпаевич2_page_1.jpg',
+        'Интелектуалка_page_1.jpg',
+        'Интелектуальной собственности_page_1.jpg',
+        'Недвижимое имущество_page_1.jpg',
+        'Недвижимое_page_1.jpg',
+        'Свидетельство палаты 2024 г._page_1.jpg',
+        'Әділханова Назерке_page_1.jpg',
+        'Әділханова Назерке1_page_1.jpg',
+        'Әділханова Назерке2_page_1.jpg',
+        'Әділханова Назерке3_page_1.jpg',
+        'Әділханова Назерке4_page_1.jpg',
+        'Әділханова Назерке5_page_1.jpg',
+        'Әділханова_Назерке_Әмірханқызы_12_10_2023_page_1.jpg',
+        'Әділханова_Назерке_Әмірханқызы_2024_г__page_1.jpg',
+        'Әділханова_Назерке_Әмірханқызы_28_09_2023_page_1.jpg'
+    ]
+    
+    return render(request, 'index.html', {'certificates': certificates})

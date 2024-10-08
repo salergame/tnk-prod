@@ -1,7 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from channels.layers import get_channel_layer
 from django.contrib.auth.models import User
-from .models import ChatGroup
+from asgiref.sync import async_to_sync
+from django.http import HttpResponse
+
+from .models import *
 from .forms import ChatmessageCreateForm
 
 @login_required
@@ -88,3 +92,39 @@ def chat_views(request, chatroom_name=None):
         'chat_list': chat_list,  # Список чатов для staff, с фильтрацией по названию чата
         'current_chatroom': chat_group  # Текущая комната
     })
+
+def chat_file_upload(request, chatroom_name):
+    chat_group = get_object_or_404(ChatGroup, group_name=chatroom_name)
+    
+    if request.htmx and request.FILES:
+        file = request.FILES['file']
+        message = GroupMessage.objects.create(
+            file = file,
+            author = request.user, 
+            group = chat_group,
+        )
+        channel_layer = get_channel_layer()
+        event = {
+            'type': 'message_handler',
+            'message_id': message.id,
+        }
+        async_to_sync(channel_layer.group_send)(
+            chatroom_name, event
+        )
+    return HttpResponse()
+
+# Представление для скачивания файла
+def download_file(request, message_id):
+    # Получаем сообщение по ID
+    message = get_object_or_404(GroupMessage, id=message_id)
+
+    # Проверяем, есть ли файл в сообщении
+    if message.file:
+        # Открываем файл для чтения в бинарном режиме
+        file_path = message.file.path
+        with open(file_path, 'rb') as f:
+            response = HttpResponse(f.read(), content_type='application/octet-stream')
+            response['Content-Disposition'] = f'attachment; filename="{message.file.name}"'
+            return response
+    else:
+        return HttpResponse("Файл не найден", status=404)

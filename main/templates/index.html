@@ -231,29 +231,78 @@
   <!-- experience section -->
   <h2 id="About"></h2>
   <section class="experience_section layout_padding">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-5">
-          <div class="img-box">
-            <img src="{% static 'deps/images/experience-img.jpg' %}" alt="">
+      <div class="container">
+          <div class="heading_container">
+              <h2 style="text-align: center;">Наши сертификаты</h2>
           </div>
-        </div>
-        <div class="col-md-7">
-          <div class="detail-box">
-            <div class="heading_container">
-              <h2>
-                Лучшая компания по оценке недвижимости!
-              </h2>
-            </div>
-            <p>
-              Мы предлагаем профессиональный подход к каждому клиенту, гарантируя точные и надежные результаты оценки. Наша команда экспертов работает с полной прозрачностью, соблюдая высокие стандарты качества, чтобы обеспечить вам максимальную выгоду и удовлетворение от нашего сервиса.
-            </p>
+          <div id="carousel_certificates" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                  {% for certificate in certificates %}
+                  <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                      <div class="certificate-box" style="height: 500px; width: 100%; display: flex; justify-content: center; align-items: center;">
+                          <img src="{% static 'deps/images/certificates/' %}{{ certificate }}" alt="{{ certificate }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                      </div>
+                  </div>
+                  {% endfor %}
+              </div>
+              <!-- Стрелки -->
+              <a class="carousel-control-prev custom-prev" href="#carousel_certificates" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true">‹</span>
+                  <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next custom-next" href="#carousel_certificates" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true">›</span>
+                  <span class="sr-only">Next</span>
+              </a>
           </div>
-        </div>
-
       </div>
-    </div>
   </section>
+  
+  <!-- Стили для центрирования заголовка и стрелок -->
+  <style>
+      /* Центрирование заголовка */
+      .heading_container h2 {
+          text-align: center;
+          font-size: 32px; /* Увеличен размер шрифта для наглядности */
+          margin-bottom: 30px;
+      }
+    
+      /* Стрелки */
+      .custom-prev, .custom-next {
+          background-color: black;
+          border-radius: 50%;
+          width: 50px; /* Увеличен размер кнопок */
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 10;
+      }
+    
+      /* Белая стрелка */
+      .custom-prev-icon, .custom-next-icon {
+          color: white;
+          font-size: 30px; /* Увеличен размер стрелок */
+      }
+    
+      /* Позиционирование стрелок по бокам */
+      .custom-prev {
+          left: 20px; /* Расстояние от левого края */
+      }
+    
+      .custom-next {
+          right: 20px; /* Расстояние от правого края */
+      }
+    
+      .custom-prev:hover, .custom-next:hover {
+          background-color: black;
+          opacity: 0.8;
+      }
+  </style>
+
 
   <!-- end experience section -->
 
