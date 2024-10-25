@@ -3,6 +3,22 @@ body {
   color: #0c0c0c;
   background-color: #ffffff;
 }
+.partners_logos {
+  display: flex;
+  justify-content: flex-end; /* Aligns logos to the right */
+  gap: 15px; /* Space between logos */
+}
+
+.partners_logos a img {
+  width: 80px; /* Reduce the size of the logos */
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .partners_logos {
+    justify-content: center; /* Center the logos on smaller screens */
+  }
+}
 
 .layout_padding {
   padding-top: 90px;
