@@ -24,12 +24,13 @@ def account(request):
     documents = UserDocument.objects.filter(user=user)
 
     if request.method == 'POST':
-        avatar_form = AvatarChangeForm(request.POST, request.FILES, instance=profile)  # Важно передать request.FILES
+        avatar_form = AvatarChangeForm(request.POST, request.FILES, instance=profile)
         if avatar_form.is_valid():
-            avatar_form.save()  # Сохраняем форму с загруженным файлом
-            return redirect('ps_account:account')  # Перенаправляем после успешного сохранения
+            avatar_form.save()
+            print("Аватар загружен:", profile.avatar.url)  # Отладочный вывод
+            return redirect('ps_account:account')
         else:
-            print(avatar_form.errors)  # Вывод ошибок для отладки
+            print("Ошибки формы:", avatar_form.errors)  # Вывод ошибок формы для отладки
     else:
         avatar_form = AvatarChangeForm(instance=profile)
 
@@ -39,10 +40,10 @@ def account(request):
         'registration_date': user.date_joined.strftime('%d %B %Y'),
         'documents': documents,
         'avatar_form': avatar_form,
-        'avatar_url': profile.avatar.url if profile.avatar else '/media/avatars/baseavatar.jpg'  # Корректный путь к аватарке
+        'avatar_url': profile.avatar.url if profile.avatar else '/media/avatars/default-avatar.png',
+        'profile': profile
     }
     return render(request, 'ps_account/sit2.html', context)
-
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)

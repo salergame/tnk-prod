@@ -13,7 +13,7 @@ class UserDocument(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='avatars/', default='avatars/baseavatar.jpg')
+    avatar = models.ImageField(upload_to='avatars/', default='avatars/default-avatar.png')
 
     def __str__(self):
         return self.user.username
