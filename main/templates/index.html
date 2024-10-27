@@ -27,6 +27,9 @@
 </head>
 
 <body>
+  <a href="{% if user.is_authenticated %}{% url 'chat:index' %}{% else %}{% url 'ps_account:login' %}{% endif %}" class="chat-float-btn">
+    <img src="{% static 'deps/images/chat-icon.png' %}" alt="Иконка чата">
+  </a>
   <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
@@ -56,6 +59,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="#category">Категорий </a>
               </li>
+              {% if user.is_staff %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'ps_account:staff_documents' %}">Документы </a>
+              </li>
+              {% endif %}
             </ul>
             <div class="user_option">
               {% if user.is_authenticated %}
@@ -223,29 +231,78 @@
   <!-- experience section -->
   <h2 id="About"></h2>
   <section class="experience_section layout_padding">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-5">
-          <div class="img-box">
-            <img src="{% static 'deps/images/experience-img.jpg' %}" alt="">
+      <div class="container">
+          <div class="heading_container">
+              <h2 style="text-align: center;">Наши сертификаты</h2>
           </div>
-        </div>
-        <div class="col-md-7">
-          <div class="detail-box">
-            <div class="heading_container">
-              <h2>
-                Лучшая компания по оценке недвижимости!
-              </h2>
-            </div>
-            <p>
-              It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
-            </p>
+          <div id="carousel_certificates" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                  {% for certificate in certificates %}
+                  <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                      <div class="certificate-box" style="height: 500px; width: 100%; display: flex; justify-content: center; align-items: center;">
+                          <img src="{% static 'deps/images/certificates/' %}{{ certificate }}" alt="{{ certificate }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                      </div>
+                  </div>
+                  {% endfor %}
+              </div>
+              <!-- Стрелки -->
+              <a class="carousel-control-prev custom-prev" href="#carousel_certificates" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true">‹</span>
+                  <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next custom-next" href="#carousel_certificates" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true">›</span>
+                  <span class="sr-only">Next</span>
+              </a>
           </div>
-        </div>
-
       </div>
-    </div>
   </section>
+  
+  <!-- Стили для центрирования заголовка и стрелок -->
+  <style>
+      /* Центрирование заголовка */
+      .heading_container h2 {
+          text-align: center;
+          font-size: 32px; /* Увеличен размер шрифта для наглядности */
+          margin-bottom: 30px;
+      }
+    
+      /* Стрелки */
+      .custom-prev, .custom-next {
+          background-color: black;
+          border-radius: 50%;
+          width: 50px; /* Увеличен размер кнопок */
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 10;
+      }
+    
+      /* Белая стрелка */
+      .custom-prev-icon, .custom-next-icon {
+          color: white;
+          font-size: 30px; /* Увеличен размер стрелок */
+      }
+    
+      /* Позиционирование стрелок по бокам */
+      .custom-prev {
+          left: 20px; /* Расстояние от левого края */
+      }
+    
+      .custom-next {
+          right: 20px; /* Расстояние от правого края */
+      }
+    
+      .custom-prev:hover, .custom-next:hover {
+          background-color: black;
+          opacity: 0.8;
+      }
+  </style>
+
 
   <!-- end experience section -->
 
@@ -519,35 +576,16 @@
 
   <!-- info section -->
 
-  <section class="info_section ">
+  <section class="info_section">
     <div class="info_container layout_padding-top">
       <div class="container">
         <div class="info_top">
           <div class="info_logo">
             <img src="{% static 'deps/images/logo.png' %}" alt="" />
-            <span>
-              TNK Ocenka
-            </span>
-          </div>
-          <div class="social_box">
-            <a href="#">
-              <img src="{% static 'deps/images/fb.png' %}" alt="">
-            </a>
-            <a href="#">
-              <img src="{% static 'deps/images/twitter.png' %}" alt="">
-            </a>
-            <a href="#">
-              <img src="{% static 'deps/images/linkedin.png' %}" alt="">
-            </a>
-            <a href="#">
-              <img src="{% static 'deps/images/instagram.png' %}" alt="">
-            </a>
-            <a href="#">
-              <img src="{% static 'deps/images/youtube.png' %}" alt="">
-            </a>
+            <span>TNK Ocenka</span>
           </div>
         </div>
-
+  
         <div class="info_main">
           <div class="row">
             <div class="col-md-3 col-lg-2">
@@ -557,57 +595,36 @@
                   <li class="active">
                     <a class="nav-link" href="index.html">Общее <span class="sr-only">(current)</span></a>
                   </li>
-                  <li>
-                    <a class="nav-link" href="#About">О нас</a>
-                  </li>
-                  <li>
-                    <a class="nav-link" href="#work">Достижения</a>
-                  </li>
-                  <li>
-                    <a class="nav-link" href="#category">Категорий</a>
-                  </li>
+                  <li><a class="nav-link" href="#About">О нас</a></li>
+                  <li><a class="nav-link" href="#work">Достижения</a></li>
+                  <li><a class="nav-link" href="#category">Категорий</a></li>
                 </ul>
               </div>
             </div>
-            <div class="col-md-3 ">
-              <h5>
-                Офис
-              </h5>
-              <p>
-                Астана.Проспект Республики, 32
-              </p>
-              <p>
-                Этаж 6, офис 605
-              </p>
+  
+            <div class="col-md-3">
+              <h5>Офис</h5>
+              <p>Астана. Проспект Республики, 32</p>
+              <p>Этаж 6, офис 605</p>
             </div>
-
+  
             <div class="col-md-3 col-lg-2 offset-lg-1">
-              <h5>
-                График
-              </h5>
-              <p>
-                ПН-ВС 9:00 - 18:30
-              </p>
-              <p>
-                 Обед:  13:00 - 14:00
-              </p>
+              <h5>График</h5>
+              <p>ПН-ВС 9:00 - 18:30</p>
+              <p>Обед: 13:00 - 14:00</p>
             </div>
-
-            <div class="col-md-3  offset-lg-1">
-              <div class="info_form ">
-                <h5>
-                  Newsletter
-                </h5>
-                <form action="">
-                  <input type="email" placeholder="Email">
-                  <button>
-                    Subscribe
-                  </button>
-                </form>
+  
+            <div class="col-md-3 col-lg-3">
+              <h5>Партнеры</h5>
+              <div class="partners_logos d-flex justify-content-end">
+                <a><img src="{% static 'deps/images/forte_bank.png' %}" alt="Forte Bank Logo"></a>
+                <a><img src="{% static 'deps/images/Halyk_bank.svg' %}" alt="Halyk Bank Logo"></a>
+                <a><img src="{% static 'deps/images/kaspi_bank.png' %}" alt="Kaspi Bank Logo"></a>
               </div>
             </div>
           </div>
         </div>
+  
         <div class="row">
           <div class="col-lg-9 col-md-10 mx-auto">
             <div class="info_contact layout_padding2">
@@ -618,9 +635,7 @@
                       <img src="{% static 'deps/images/location.png' %}" alt="">
                     </div>
                     <div class="detail-box">
-                      <h6>
-                        Астана.Проспект Республики, 32
-                      </h6>
+                      <h6>Астана. Проспект Республики, 32</h6>
                     </div>
                   </a>
                 </div>
@@ -630,9 +645,7 @@
                       <img src="{% static 'deps/images/mail.png' %}" alt="">
                     </div>
                     <div class="detail-box">
-                      <h6>
-                        tnk01@list.ru
-                      </h6>
+                      <h6>tnk01@list.ru</h6>
                     </div>
                   </a>
                 </div>
@@ -642,9 +655,7 @@
                       <img src="{% static 'deps/images/call.png' %}" alt="">
                     </div>
                     <div class="detail-box">
-                      <h6>
-                        Телефон +7 (702) 626 49-98
-                      </h6>
+                      <h6>Телефон +7 (702) 626 49-98</h6>
                     </div>
                   </a>
                 </div>
@@ -652,11 +663,11 @@
             </div>
           </div>
         </div>
-
+  
       </div>
     </div>
   </section>
-
+  
   <!-- end info section -->
 
   <!-- footer section -->

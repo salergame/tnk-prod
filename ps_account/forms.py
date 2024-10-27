@@ -1,4 +1,5 @@
 from django import forms
+from .models import UserDocument, UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -26,3 +27,14 @@ class EmailChangeForm(forms.Form):
         validators=[EmailValidator()],
         help_text='Введите ваш новый email'
     )
+    
+class AvatarChangeForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['avatar']
+
+
+class DocumentUploadForm(forms.ModelForm):
+    class Meta:
+        model = UserDocument
+        fields = ['document']

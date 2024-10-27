@@ -29,13 +29,26 @@
             80% { opacity: 1; }
             100% { opacity: 0; }
         }
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .password-wrapper input {
+            width: calc(100% - 40px); /* Оставляем место для иконки */
+        }
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <nav>
             <a href="{% url 'main:index' %}">Главная</a>
-            <a href="contact.html">Контакты</a>
             <a href="{% url 'ps_account:registration' %}">Регистрация</a>
         </nav>
         <h1>Вход пользователя</h1>
@@ -56,7 +69,19 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Пароль:</label>
-                    <input type="password" id="password" name="password" required>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" required>
+                        <span id="togglePassword" class="toggle-password">
+                            <!-- Иконка глаза -->
+                            <svg id="eyeOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" style="display: none;">
+                                <path d="M12 4.5C7.30558 4.5 3.32203 7.36251 1.5 12C3.32203 16.6375 7.30558 19.5 12 19.5C16.6944 19.5 20.6779 16.6375 22.5 12C20.6779 7.36251 16.6944 4.5 12 4.5ZM12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12C16.5 14.4853 14.4853 16.5 12 16.5ZM12 9C10.6203 9 9.5 10.1203 9.5 11.5C9.5 12.8797 10.6203 14 12 14C13.3797 14 14.5 12.8797 14.5 11.5C14.5 10.1203 13.3797 9 12 9Z"/>
+                            </svg>
+                            <!-- Иконка перечеркнутого глаза -->
+                            <svg id="eyeClosed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M12 5C7 5 2.73 7.61 1 12C1.67 13.87 2.77 15.44 4.18 16.63L5.61 15.2C4.49 14.3 3.62 13.19 3.05 12C4.5 8.67 7.68 6.5 12 6.5C12.93 6.5 13.8 6.65 14.6 6.91L16.14 5.37C14.96 5.13 13.5 5 12 5ZM17.45 9.13L19.26 7.32C19.53 7.68 19.79 8.05 20.04 8.44L18.64 9.84C18.31 9.21 17.91 8.62 17.45 9.13ZM19.87 5.87L18.5 4.5L3.5 19.5L4.87 20.87L7.42 18.32C8.32 18.76 9.32 19 10.38 19C15.32 19 19.26 16.39 21 12C20.41 10.9 19.62 9.93 18.67 9.14L20.05 7.76C20.79 8.63 21.5 9.72 22.08 11C20.53 14.87 16.5 17 12 17C10.83 17 9.72 16.79 8.7 16.4L11 14.1C11.61 14.35 12.29 14.5 13 14.5C14.93 14.5 16.5 12.93 16.5 11C16.5 10.32 16.35 9.68 16.1 9.07L19.87 5.87Z"/>
+                            </svg>
+                        </span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="login-button">Войти</button>
@@ -86,6 +111,26 @@
                     errorAlert.classList.remove('show');
                 }, 5000);
             }
+
+            // Логика для показа/скрытия пароля
+            const passwordInput = document.getElementById('password');
+            const togglePassword = document.getElementById('togglePassword');
+            const eyeOpen = document.getElementById('eyeOpen');
+            const eyeClosed = document.getElementById('eyeClosed');
+
+            togglePassword.addEventListener('click', function() {
+                // Если тип поля "пароль", меняем на "текст" для показа пароля
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    eyeOpen.style.display = 'inline';
+                    eyeClosed.style.display = 'none';
+                } else {
+                    // Если тип поля "текст", меняем на "пароль" для скрытия пароля
+                    passwordInput.type = 'password';
+                    eyeOpen.style.display = 'none';
+                    eyeClosed.style.display = 'inline';
+                }
+            });
         };
     </script>
     <script src="{% static 'deps/js/account.js' %}"></script>

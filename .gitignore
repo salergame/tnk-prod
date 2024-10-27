@@ -1,2 +1,6 @@
 venv
-test.txt
+media
+*.pyc
+migrations/
+*/__pycache__ 
+__pycache__ 

@@ -1,0 +1,79 @@
+{% extends "layouts/blank.html" %}
+
+{% block content %}
+<wrapper class="block max-w-5xl mx-auto my-10 px-6">
+    <div class="flex h-[45rem]">
+        <!-- Sidebar for chat selection -->
+        {% if user.is_staff %}
+        <div class="w-1/4 bg-gray-900 text-white rounded-2xl shadow-2xl p-4 flex flex-col">
+            <div class="mb-4">
+                <form method="GET" action="">
+                    <input type="text" name="search" value="{{ request.GET.search }}" placeholder="Search chats" class="w-full p-2 rounded-lg bg-gray-800 border border-gray-600 text-gray-300">
+                </form>
+            </div>            
+            <div id="chat_list" class="flex flex-col gap-2 overflow-y-auto">
+                {% if chat_list %}
+                    {% for chat in chat_list %}
+                    <div class="chat-item p-2 rounded-lg hover:bg-gray-700 cursor-pointer">
+                        <a href="{% url 'chat:chatroom' chat.group_name %}" class="w-full">
+                            <div class="flex items-center">
+                                <div class="chat-avatar w-10 h-10 rounded-full bg-gray-600 mr-3"></div>
+                                <div class="chat-info">
+                                    {% if chat.is_private %}
+                                        <p class="text-white font-semibold">{{ chat.other_user.username }}</p>
+                                    {% else %}
+                                        <p class="text-white font-semibold">{{ chat.group_name }}</p>
+                                    {% endif %}
+                                    <p class="text-gray-400 text-sm">{{ chat.last_message|truncatechars:30 }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Чатов нет.</p>
+                {% endif %}
+            </div>   
+        </div>
+        {% endif %}         
+
+        <!-- Chat Window -->
+        <div id="chat_window" class="w-3/4 flex flex-col bg-gray-800 rounded-2xl shadow-2xl relative p-1 ml-4">
+            <div class="flex justify-center text-emerald-400 bg-gray-800 p-2 sticky top-0 z-10">
+                <div id="online-icon"></div>
+                <span id="online-count" class="pr-1"></span> online |
+                <span class="pl-1 text-white">{{ current_chatroom.group_name }}</span> <!-- Отображаем название чата -->
+            </div>
+            <div id="chat_container" class="overflow-y-auto grow">
+                <ul id="chat_messages" class="flex flex-col justify-end gap-2 p-4">
+                    {% for message in chat_messages reversed %}
+                    {% include "chat/chat_message.html" %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="sticky bottom-0 z-10 p-2 bg-gray-800">
+                <div class="flex flex-col gap-4 items-center rounded-xl px-2 py-2">
+                    <form id="chat_message_form" class="w-full"
+                          hx-ext="ws"
+                          ws-connect="/ws/chatroom/{{ current_chatroom.group_name }}"
+                          ws-send
+                          _="on htmx:wsAfterSend reset() me">
+                        {% csrf_token %}
+                        {{ form }}
+                    </form>
+                    <form id="chat_file_form" enctype="multipart/form-data" class="flex items-center w-full" 
+                          hx-post="{% url 'chat:chat-file-upload' current_chatroom.group_name %}"
+                          hx-target="#chat_messages"
+                          hx-swap="beforeend" 
+                          _="on htmx:beforeSend reset() me">
+                        {% csrf_token %}
+                        <input type="file" name="file" id="id_file" class="!bg-transparent text-gray-400">
+                        <button type="submit" class="whitespace-nowrap !text-sm !py-3 !px-4 h-fit">Отправить</button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</wrapper>
+{% endblock content %}

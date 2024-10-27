@@ -3,6 +3,22 @@ body {
   color: #0c0c0c;
   background-color: #ffffff;
 }
+.partners_logos {
+  display: flex;
+  justify-content: flex-end; /* Aligns logos to the right */
+  gap: 15px; /* Space between logos */
+}
+
+.partners_logos a img {
+  width: 80px; /* Reduce the size of the logos */
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .partners_logos {
+    justify-content: center; /* Center the logos on smaller screens */
+  }
+}
 
 .layout_padding {
   padding-top: 90px;
@@ -66,12 +82,27 @@ body {
   height: auto;
 }
 
+.chat-float-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #1a2e35;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+.chat-float-btn img {
+  width: 40px;
+  height: 40px;
+}
+
 .header_section {
   overflow-x: hidden;
 }
 
 .header_section .container-fluid {
-  padding-right: 25px;
+  padding-right: px;
   padding-left: 25px;
 }
 
