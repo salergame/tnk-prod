@@ -101,7 +101,7 @@ else:
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
             "CONFIG": {
-                "hosts": [(config("REDIS_HOST", default="127.0.0.1"), config("REDIS_PORT", cast=int, default=6379))],
+                "hosts": [config("REDIS_URL")],
             },
         },
     }
