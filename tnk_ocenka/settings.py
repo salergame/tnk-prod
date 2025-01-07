@@ -87,11 +87,21 @@ TEMPLATES = [
 
 ASGI_APPLICATION = 'tnk_ocenka.asgi.application'
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
+if DEBUG:
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels.layers.InMemoryChannelLayer"
+        }
     }
-}
+else:
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [('127.0.0.1', 6379)],  # Или адрес вашего Redis сервера
+            },
+        },
+    }
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
