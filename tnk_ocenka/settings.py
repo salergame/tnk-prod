@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+from decouple import config, Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-f695_b4*ax*m64morrb2vb1h+)-@k+xmodxk-p8b%m6*oitkph'
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1", cast=Csv())
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost', 'http://127.0.0.1','https://tnk-ocenka.kz']  # Добавьте свои домены
 
@@ -100,7 +101,7 @@ else:
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
             "CONFIG": {
-                "hosts": [('127.0.0.1', 6379)],  # Или адрес вашего Redis сервера
+                "hosts": [(config("REDIS_HOST", default="127.0.0.1"), config("REDIS_PORT", cast=int, default=6379))],
             },
         },
     }
@@ -175,12 +176,9 @@ LOGIN_REDIRECT_URL = '/account/profile'
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        # For each OAuth based provider, either add a ''SocialApp''
-        # (''socialaccount'' app) containing the required client
-        # credentials, or list them here:
         'APP': {
-            'client_id': '946847496404-h009iu4p62vof55at5pl7a16tchh2qhv.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': config("GOOGLE_CLIENT_ID"),
+            'secret': config("GOOGLE_SECRET"),
             'key': ''
         }
     },
