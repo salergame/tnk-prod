@@ -1,4 +1,5 @@
 {% extends "layouts/blank.html" %}
+{% load static %}
 
 {% block content %}
 <wrapper class="block max-w-5xl mx-auto my-10 px-6">
@@ -10,32 +11,46 @@
                 <form method="GET" action="">
                     <input type="text" name="search" value="{{ request.GET.search }}" placeholder="Search chats" class="w-full p-2 rounded-lg bg-gray-800 border border-gray-600 text-gray-300">
                 </form>
-            </div>            
+            </div>
             <div id="chat_list" class="flex flex-col gap-2 overflow-y-auto">
                 {% if chat_list %}
                     {% for chat in chat_list %}
-                    <div class="chat-item p-2 rounded-lg hover:bg-gray-700 cursor-pointer">
+                    <div class="chat-item p-2 rounded-lg hover:bg-gray-700 cursor-pointer flex justify-between items-center"
+                         id="chat_{{ chat.group_name }}">
                         <a href="{% url 'chat:chatroom' chat.group_name %}" class="w-full">
                             <div class="flex items-center">
                                 <div class="chat-avatar w-10 h-10 rounded-full bg-gray-600 mr-3"></div>
                                 <div class="chat-info">
-                                    {% if chat.is_private %}
-                                        <p class="text-white font-semibold">{{ chat.other_user.username }}</p>
-                                    {% else %}
-                                        <p class="text-white font-semibold">{{ chat.group_name }}</p>
-                                    {% endif %}
+                                    <p class="text-white font-semibold">{{ chat.group_name }}</p>
                                     <p class="text-gray-400 text-sm">{{ chat.last_message|truncatechars:30 }}</p>
                                 </div>
                             </div>
                         </a>
+                        <button class="delete-chat-button text-red-500 hover:text-red-700 p-1 text-xl"
+                                data-chatname="{{ chat.group_name }}"
+                                hx-delete="{% url 'chat:delete-chat' chat.group_name %}"
+                                hx-target="#chat_list"
+                                hx-swap="outerHTML">
+                            🗑
+                        </button>
                     </div>
                     {% endfor %}
                 {% else %}
-                    <p>Чатов нет.</p>
+                    <p>Рабочих чатов нету.</p>
                 {% endif %}
-            </div>   
+            </div>
+            
+            <div id="delete-confirm-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                    <p class="text-gray-800 text-center mb-4">Вы уверены, что хотите удалить этот чат?</p>
+                    <div class="flex justify-center gap-4">
+                        <button id="confirm-delete" class="bg-red-500 text-white px-4 py-2 rounded">Удалить</button>
+                        <button id="cancel-delete" class="bg-gray-300 px-4 py-2 rounded">Отмена</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        {% endif %}         
+        {% endif %}
 
         <!-- Chat Window -->
         <div id="chat_window" class="w-3/4 flex flex-col bg-gray-800 rounded-2xl shadow-2xl relative p-1 ml-4">
@@ -53,6 +68,7 @@
             </div>
             <div class="sticky bottom-0 z-10 p-2 bg-gray-800">
                 <div class="flex flex-col gap-4 items-center rounded-xl px-2 py-2">
+                    <!-- Chat message form with WebSocket functionality -->
                     <form id="chat_message_form" class="w-full"
                           hx-ext="ws"
                           ws-connect="/ws/chatroom/{{ current_chatroom.group_name }}"
@@ -61,19 +77,22 @@
                         {% csrf_token %}
                         {{ form }}
                     </form>
-                    <form id="chat_file_form" enctype="multipart/form-data" class="flex items-center w-full" 
+
+                    <!-- Chat file upload form -->
+                    <form id="chat_file_form" enctype="multipart/form-data" class="flex items-center w-full"
                           hx-post="{% url 'chat:chat-file-upload' current_chatroom.group_name %}"
                           hx-target="#chat_messages"
-                          hx-swap="beforeend" 
+                          hx-swap="beforeend"
                           _="on htmx:beforeSend reset() me">
                         {% csrf_token %}
                         <input type="file" name="file" id="id_file" class="!bg-transparent text-gray-400">
                         <button type="submit" class="whitespace-nowrap !text-sm !py-3 !px-4 h-fit">Отправить</button>
                     </form>
-                    
                 </div>
             </div>
         </div>
     </div>
 </wrapper>
+
+<script src="{% static 'deps/js/chat.js' %}"></script>
 {% endblock content %}

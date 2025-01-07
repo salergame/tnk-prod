@@ -11,6 +11,10 @@ class ChatGroup(models.Model):
     
     def __str__(self):
         return self.group_name
+    
+    def delete_chat(self):
+        self.chat_messages.all().delete()
+        self.delete()
 
 class GroupMessage(models.Model):
     group = models.ForeignKey(ChatGroup, related_name='chat_messages', on_delete=models.CASCADE)

@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse , JsonResponse
+from django.template.loader import render_to_string
 from channels.layers import get_channel_layer
 from django.contrib.auth.models import User
-from asgiref.sync import async_to_sync
-from django.http import HttpResponse
-
-from .models import *
 from .forms import ChatmessageCreateForm
+from asgiref.sync import async_to_sync
+from .models import *
+
 
 @login_required
 def chat_views(request, chatroom_name=None):
@@ -16,7 +17,7 @@ def chat_views(request, chatroom_name=None):
     # Проверяем, если у пользователя нет чатов
     if not ChatGroup.objects.filter(users_in_chat=request.user).exists():
         # Если нет чатов, находим любого пользователя со статусом staff
-        staff_user = User.objects.filter(is_staff=True).first()
+        staff_user = User.objects.filter(is_staff=True).exclude(id=request.user.id).first()
 
         if staff_user:
             # Создаем новый чат с staff пользователем
@@ -26,8 +27,13 @@ def chat_views(request, chatroom_name=None):
             # Перенаправляем пользователя в новый созданный чат
             return redirect('chat:chatroom', chatroom_name=new_chat.group_name)
         else:
-            # Если нет staff пользователей, перенаправляем на главную
-            return redirect('main:index')
+            # Если нет staff пользователей, показываем сообщение
+            return render(request, 'chat/chat.html', {
+                'message': 'Рабочих чатов нету.',
+                'chat_list': [],
+                'current_chatroom': None,
+                'form': ChatmessageCreateForm()  # Передаем форму для отправки сообщений
+            })
 
     # Добавляем проверку: если пользователь уже имеет существующий чат, перенаправляем его в этот чат
     if not chatroom_name:
@@ -48,11 +54,16 @@ def chat_views(request, chatroom_name=None):
             else:
                 # Если поиска нет, показываем все чаты, где есть staff пользователь
                 chat_list = ChatGroup.objects.filter(users_in_chat=request.user)
-            first_chat = chat_list.first()
-            if first_chat:
+            if chat_list.exists():
+                first_chat = chat_list.first()
                 return redirect('chat:chatroom', chatroom_name=first_chat.group_name)
             else:
-                return redirect('main:index')  # Если чатов нет
+                return render(request, 'chat/chat.html', {
+                    'message': 'Рабочих чатов нету.',
+                    'chat_list': chat_list,
+                    'current_chatroom': None,
+                    'form': ChatmessageCreateForm()  # Передаем форму для отправки сообщений
+                })
         else:
             return redirect('main:index')  # Если не staff, перенаправляем на главную
 
@@ -90,7 +101,7 @@ def chat_views(request, chatroom_name=None):
         'chat_messages': chat_messages,
         'form': ChatmessageCreateForm(),
         'chat_list': chat_list,  # Список чатов для staff, с фильтрацией по названию чата
-        'current_chatroom': chat_group  # Текущая комната
+        'current_chatroom': chat_group,  # Текущая комната
     })
 
 def chat_file_upload(request, chatroom_name):
@@ -108,9 +119,7 @@ def chat_file_upload(request, chatroom_name):
             'type': 'message_handler',
             'message_id': message.id,
         }
-        async_to_sync(channel_layer.group_send)(
-            chatroom_name, event
-        )
+        async_to_sync(channel_layer.group_send)(chatroom_name, event)
     return HttpResponse()
 
 # Представление для скачивания файла
@@ -128,3 +137,22 @@ def download_file(request, message_id):
             return response
     else:
         return HttpResponse("Файл не найден", status=404)
+    
+
+@login_required
+def delete_chat_view(request, chatroom_name):
+    chat_group = get_object_or_404(ChatGroup, group_name=chatroom_name)
+    
+    if request.user not in chat_group.users_in_chat.all():
+        return JsonResponse({"error": "Вы не можете удалить этот чат"}, status=403)
+    
+    chat_group.delete_chat()
+
+    chat_list = ChatGroup.objects.filter(users_in_chat=request.user)
+    
+    if not chat_list.exists():
+        html = render_to_string('chat/partials/chat_list_empty.html', context={'message': 'Рабочих чатов нету.'})
+        return HttpResponse(html, content_type="text/html")
+
+    next_chat = chat_list.first()
+    return redirect('chat:chatroom', chatroom_name=next_chat.group_name)
