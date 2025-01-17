@@ -29,7 +29,12 @@ DEBUG = False
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1", cast=Csv())
 
-CSRF_TRUSTED_ORIGINS = ['https://tnk-ocenka.kz']  # Добавьте свои домены
+CSRF_TRUSTED_ORIGINS = [
+    'https://tnk-ocenka.kz',
+    'https://www.tnk-ocenka.kz',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True  # Разрешить все домены
 
 
 # Application definition
@@ -50,6 +55,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google', 
     'django_htmx',
+    'corsheaders',
     
     'main',
     'ps_account',
@@ -57,6 +63,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
