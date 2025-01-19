@@ -40,7 +40,7 @@ def account(request):
         'registration_date': user.date_joined.strftime('%d %B %Y'),
         'documents': documents,
         'avatar_form': avatar_form,
-        'avatar_url': profile.avatar.url if profile.avatar else '/media/avatars/default-avatar.png',
+        'avatar_url': profile.avatar.url if profile.avatar else '/static/deps/images/default-avatar.png',
         'profile': profile
     }
     return render(request, 'ps_account/sit2.html', context)
