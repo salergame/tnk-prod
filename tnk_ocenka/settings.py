@@ -193,7 +193,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'client_id': config("GOOGLE_CLIENT_ID"),
             'secret': config("GOOGLE_SECRET"),
             'key': ''
-        }
+        },
+        'REDIRECT_URI': 'https://tnk-ocenka.kz/accounts/google/login/callback/',
     },
 }
 

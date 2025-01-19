@@ -1,0 +1,358 @@
+Using selector: SelectSelector
+Using selector: SelectSelector
+Watching for file changes with StatReloader
+HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+Configuring endpoint tcp:port=8000:interface=127.0.0.1
+Listening on TCP address 127.0.0.1:8000
+HTTP b'GET' request for ['127.0.0.1', 60351]
+HTTP 200 response started for ['127.0.0.1', 60351]
+HTTP close for ['127.0.0.1', 60351]
+HTTP response complete for ['127.0.0.1', 60351]
+[mHTTP GET / 200 [0.03, 127.0.0.1:60351][0m
+HTTP b'GET' request for ['127.0.0.1', 60351]
+HTTP b'GET' request for ['127.0.0.1', 60354]
+HTTP b'GET' request for ['127.0.0.1', 60357]
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP b'GET' request for ['127.0.0.1', 60359]
+HTTP b'GET' request for ['127.0.0.1', 60360]
+HTTP 304 response started for ['127.0.0.1', 60354]
+HTTP 304 response started for ['127.0.0.1', 60351]
+HTTP 304 response started for ['127.0.0.1', 60357]
+HTTP 304 response started for ['127.0.0.1', 60358]
+HTTP 304 response started for ['127.0.0.1', 60359]
+HTTP close for ['127.0.0.1', 60354]
+HTTP response complete for ['127.0.0.1', 60354]
+[36mHTTP GET /static/deps/css/style.css 304 [0.01, 127.0.0.1:60354][0m
+HTTP close for ['127.0.0.1', 60351]
+HTTP response complete for ['127.0.0.1', 60351]
+[36mHTTP GET /static/deps/css/bootstrap.css 304 [0.02, 127.0.0.1:60351][0m
+HTTP close for ['127.0.0.1', 60357]
+HTTP response complete for ['127.0.0.1', 60357]
+[36mHTTP GET /static/deps/css/responsive.css 304 [0.02, 127.0.0.1:60357][0m
+HTTP 304 response started for ['127.0.0.1', 60360]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[36mHTTP GET /static/deps/images/chat-icon.png 304 [0.01, 127.0.0.1:60358][0m
+HTTP close for ['127.0.0.1', 60359]
+HTTP response complete for ['127.0.0.1', 60359]
+[36mHTTP GET /static/deps/images/logo.png 304 [0.01, 127.0.0.1:60359][0m
+HTTP b'GET' request for ['127.0.0.1', 60351]
+HTTP b'GET' request for ['127.0.0.1', 60354]
+HTTP close for ['127.0.0.1', 60360]
+HTTP response complete for ['127.0.0.1', 60360]
+[36mHTTP GET /static/deps/images/slider-img.png 304 [0.01, 127.0.0.1:60360][0m
+HTTP b'GET' request for ['127.0.0.1', 60359]
+HTTP b'GET' request for ['127.0.0.1', 60357]
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP b'GET' request for ['127.0.0.1', 60360]
+HTTP 304 response started for ['127.0.0.1', 60354]
+HTTP 304 response started for ['127.0.0.1', 60351]
+HTTP 304 response started for ['127.0.0.1', 60359]
+HTTP close for ['127.0.0.1', 60351]
+HTTP response complete for ['127.0.0.1', 60351]
+[36mHTTP GET /static/deps/js/jquery-3.4.1.min.js 304 [0.01, 127.0.0.1:60351][0m
+HTTP 304 response started for ['127.0.0.1', 60357]
+HTTP 304 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60354]
+HTTP response complete for ['127.0.0.1', 60354]
+[36mHTTP GET /static/deps/js/bootstrap.js 304 [0.01, 127.0.0.1:60354][0m
+HTTP 304 response started for ['127.0.0.1', 60360]
+HTTP close for ['127.0.0.1', 60359]
+HTTP response complete for ['127.0.0.1', 60359]
+[36mHTTP GET /static/deps/images/certificates/1_page_1.jpg 304 [0.01, 127.0.0.1:60359][0m
+HTTP b'GET' request for ['127.0.0.1', 60351]
+HTTP close for ['127.0.0.1', 60357]
+HTTP response complete for ['127.0.0.1', 60357]
+[36mHTTP GET /static/deps/images/certificates/%D0%94%D0%B2%D0%B8%D0%B6%D0%B8%D0%BC%D0%BE%D0%B5%20%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE_page_1.jpg 304 [0.02, 127.0.0.1:60357][0m
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[36mHTTP GET /static/deps/js/custom.js 304 [0.02, 127.0.0.1:60358][0m
+HTTP close for ['127.0.0.1', 60360]
+HTTP response complete for ['127.0.0.1', 60360]
+[36mHTTP GET /static/deps/images/certificates/%D0%94%D0%B2%D0%B8%D0%B6%D0%B8%D0%BC%D0%BE%D0%B5_page_1.jpg 304 [0.01, 127.0.0.1:60360][0m
+HTTP b'GET' request for ['127.0.0.1', 60359]
+HTTP b'GET' request for ['127.0.0.1', 60354]
+HTTP b'GET' request for ['127.0.0.1', 60360]
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP b'GET' request for ['127.0.0.1', 60357]
+HTTP 304 response started for ['127.0.0.1', 60351]
+HTTP 304 response started for ['127.0.0.1', 60359]
+HTTP 304 response started for ['127.0.0.1', 60354]
+HTTP close for ['127.0.0.1', 60351]
+HTTP response complete for ['127.0.0.1', 60351]
+[36mHTTP GET /static/deps/images/certificates/%D0%96%D0%B0%D0%BA%D1%81%D0%B0%D0%BB%D1%8B%D0%BA%D0%BE%D0%B2%20%D0%9A%D0%B0%D0%B8%CC%86%D1%80%D0%B0%D1%82%20%D0%9A%D1%83%D0%B0%D0%BD%D1%8B%D1%88%D0%BF%D0%B0%D0%B5%D0%B2%D0%B8%D1%87_page_1.jpg 304 [0.01, 127.0.0.1:60351][0m
+HTTP 304 response started for ['127.0.0.1', 60360]
+HTTP close for ['127.0.0.1', 60359]
+HTTP response complete for ['127.0.0.1', 60359]
+[36mHTTP GET /static/deps/images/certificates/%D0%96%D0%B0%D0%BA%D1%81%D0%B0%D0%BB%D1%8B%D0%BA%D0%BE%D0%B2_%D0%9A%D0%B0%D0%B8%CC%86%D1%80%D0%B0%D1%82_%D0%9A%D1%83%D0%B0%D0%BD%D1%8B%D1%88%D0%BF%D0%B0%D0%B5%D0%B2%D0%B8%D1%871_page_1.jpg 304 [0.01, 127.0.0.1:60359][0m
+HTTP close for ['127.0.0.1', 60354]
+HTTP response complete for ['127.0.0.1', 60354]
+[36mHTTP GET /static/deps/images/certificates/%D0%96%D0%B0%D0%BA%D1%81%D0%B0%D0%BB%D1%8B%D0%BA%D0%BE%D0%B2_%D0%9A%D0%B0%D0%B8%CC%86%D1%80%D0%B0%D1%82_%D0%9A%D1%83%D0%B0%D0%BD%D1%8B%D1%88%D0%BF%D0%B0%D0%B5%D0%B2%D0%B8%D1%872_page_1.jpg 304 [0.01, 127.0.0.1:60354][0m
+HTTP 304 response started for ['127.0.0.1', 60358]
+HTTP 304 response started for ['127.0.0.1', 60357]
+HTTP close for ['127.0.0.1', 60360]
+HTTP response complete for ['127.0.0.1', 60360]
+[36mHTTP GET /static/deps/images/certificates/%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D0%BA%D0%B0_page_1.jpg 304 [0.01, 127.0.0.1:60360][0m
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[36mHTTP GET /static/deps/images/certificates/%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B8%CC%86%20%D1%81%D0%BE%D0%B1%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8_page_1.jpg 304 [0.01, 127.0.0.1:60358][0m
+HTTP b'GET' request for ['127.0.0.1', 60359]
+HTTP close for ['127.0.0.1', 60357]
+HTTP response complete for ['127.0.0.1', 60357]
+[36mHTTP GET /static/deps/images/certificates/%D0%9D%D0%B5%D0%B4%D0%B2%D0%B8%D0%B6%D0%B8%D0%BC%D0%BE%D0%B5%20%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE_page_1.jpg 304 [0.01, 127.0.0.1:60357][0m
+HTTP 304 response started for ['127.0.0.1', 60359]
+HTTP b'GET' request for ['127.0.0.1', 60357]
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60359]
+HTTP response complete for ['127.0.0.1', 60359]
+[36mHTTP GET /static/deps/images/certificates/%D0%9D%D0%B5%D0%B4%D0%B2%D0%B8%D0%B6%D0%B8%D0%BC%D0%BE%D0%B5_page_1.jpg 304 [0.01, 127.0.0.1:60359][0m
+HTTP b'GET' request for ['127.0.0.1', 60360]
+HTTP b'GET' request for ['127.0.0.1', 60351]
+HTTP b'GET' request for ['127.0.0.1', 60354]
+HTTP b'GET' request for ['127.0.0.1', 60359]
+HTTP 304 response started for ['127.0.0.1', 60357]
+HTTP 304 response started for ['127.0.0.1', 60358]
+HTTP 304 response started for ['127.0.0.1', 60360]
+HTTP close for ['127.0.0.1', 60357]
+HTTP response complete for ['127.0.0.1', 60357]
+[36mHTTP GET /static/deps/images/certificates/%D0%A1%D0%B2%D0%B8%D0%B4%D0%B5%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D1%82%D0%B2%D0%BE%20%D0%BF%D0%B0%D0%BB%D0%B0%D1%82%D1%8B%202024%20%D0%B3._page_1.jpg 304 [0.06, 127.0.0.1:60357][0m
+HTTP 304 response started for ['127.0.0.1', 60351]
+HTTP 304 response started for ['127.0.0.1', 60354]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[36mHTTP GET /static/deps/images/certificates/%D3%98%D0%B4%D1%96%D0%BB%D1%85%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%20%D0%9D%D0%B0%D0%B7%D0%B5%D1%80%D0%BA%D0%B5_page_1.jpg 304 [0.07, 127.0.0.1:60358][0m
+HTTP close for ['127.0.0.1', 60360]
+HTTP response complete for ['127.0.0.1', 60360]
+[36mHTTP GET /static/deps/images/certificates/%D3%98%D0%B4%D1%96%D0%BB%D1%85%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%20%D0%9D%D0%B0%D0%B7%D0%B5%D1%80%D0%BA%D0%B51_page_1.jpg 304 [0.06, 127.0.0.1:60360][0m
+HTTP b'GET' request for ['127.0.0.1', 60357]
+HTTP 304 response started for ['127.0.0.1', 60359]
+HTTP close for ['127.0.0.1', 60351]
+HTTP response complete for ['127.0.0.1', 60351]
+[36mHTTP GET /static/deps/images/certificates/%D3%98%D0%B4%D1%96%D0%BB%D1%85%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%20%D0%9D%D0%B0%D0%B7%D0%B5%D1%80%D0%BA%D0%B53_page_1.jpg 304 [0.06, 127.0.0.1:60351][0m
+HTTP close for ['127.0.0.1', 60354]
+HTTP response complete for ['127.0.0.1', 60354]
+[36mHTTP GET /static/deps/images/certificates/%D3%98%D0%B4%D1%96%D0%BB%D1%85%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%20%D0%9D%D0%B0%D0%B7%D0%B5%D1%80%D0%BA%D0%B52_page_1.jpg 304 [0.06, 127.0.0.1:60354][0m
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP b'GET' request for ['127.0.0.1', 60360]
+HTTP close for ['127.0.0.1', 60359]
+HTTP response complete for ['127.0.0.1', 60359]
+[36mHTTP GET /static/deps/images/certificates/%D3%98%D0%B4%D1%96%D0%BB%D1%85%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%20%D0%9D%D0%B0%D0%B7%D0%B5%D1%80%D0%BA%D0%B54_page_1.jpg 304 [0.02, 127.0.0.1:60359][0m
+HTTP b'GET' request for ['127.0.0.1', 60351]
+HTTP 304 response started for ['127.0.0.1', 60357]
+HTTP 304 response started for ['127.0.0.1', 60358]
+HTTP b'GET' request for ['127.0.0.1', 60359]
+HTTP b'GET' request for ['127.0.0.1', 60354]
+HTTP 304 response started for ['127.0.0.1', 60360]
+HTTP close for ['127.0.0.1', 60357]
+HTTP response complete for ['127.0.0.1', 60357]
+[36mHTTP GET /static/deps/images/search-icon.png 304 [0.01, 127.0.0.1:60357][0m
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[36mHTTP GET /static/deps/images/next.png 304 [0.01, 127.0.0.1:60358][0m
+HTTP close for ['127.0.0.1', 60360]
+HTTP response complete for ['127.0.0.1', 60360]
+[36mHTTP GET /static/deps/images/prev.png 304 [0.01, 127.0.0.1:60360][0m
+HTTP b'GET' request for ['127.0.0.1', 60360]
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP b'GET' request for ['127.0.0.1', 60357]
+HTTP 304 response started for ['127.0.0.1', 60359]
+HTTP 304 response started for ['127.0.0.1', 60354]
+HTTP close for ['127.0.0.1', 60359]
+HTTP response complete for ['127.0.0.1', 60359]
+[36mHTTP GET /static/deps/images/certificates/%D3%98%D0%B4%D1%96%D0%BB%D1%85%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%20%D0%9D%D0%B0%D0%B7%D0%B5%D1%80%D0%BA%D0%B55_page_1.jpg 304 [0.01, 127.0.0.1:60359][0m
+HTTP close for ['127.0.0.1', 60354]
+HTTP response complete for ['127.0.0.1', 60354]
+[36mHTTP GET /static/deps/images/certificates/%D3%98%D0%B4%D1%96%D0%BB%D1%85%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0_%D0%9D%D0%B0%D0%B7%D0%B5%D1%80%D0%BA%D0%B5_%D3%98%D0%BC%D1%96%D1%80%D1%85%D0%B0%D0%BD%D2%9B%D1%8B%D0%B7%D1%8B_12_10_2023_page_1.jpg 304 [0.01, 127.0.0.1:60354][0m
+HTTP 304 response started for ['127.0.0.1', 60360]
+HTTP 304 response started for ['127.0.0.1', 60358]
+HTTP 304 response started for ['127.0.0.1', 60357]
+HTTP close for ['127.0.0.1', 60360]
+HTTP response complete for ['127.0.0.1', 60360]
+[36mHTTP GET /static/deps/images/certificates/%D3%98%D0%B4%D1%96%D0%BB%D1%85%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0_%D0%9D%D0%B0%D0%B7%D0%B5%D1%80%D0%BA%D0%B5_%D3%98%D0%BC%D1%96%D1%80%D1%85%D0%B0%D0%BD%D2%9B%D1%8B%D0%B7%D1%8B_2024_%D0%B3__page_1.jpg 304 [0.01, 127.0.0.1:60360][0m
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[36mHTTP GET /static/deps/images/certificates/%D3%98%D0%B4%D1%96%D0%BB%D1%85%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0_%D0%9D%D0%B0%D0%B7%D0%B5%D1%80%D0%BA%D0%B5_%D3%98%D0%BC%D1%96%D1%80%D1%85%D0%B0%D0%BD%D2%9B%D1%8B%D0%B7%D1%8B_28_09_2023_page_1.jpg 304 [0.01, 127.0.0.1:60358][0m
+HTTP close for ['127.0.0.1', 60357]
+HTTP response complete for ['127.0.0.1', 60357]
+[36mHTTP GET /static/deps/images/c1.png 304 [0.01, 127.0.0.1:60357][0m
+HTTP b'GET' request for ['127.0.0.1', 60359]
+HTTP b'GET' request for ['127.0.0.1', 60354]
+HTTP b'GET' request for ['127.0.0.1', 60357]
+HTTP b'GET' request for ['127.0.0.1', 60360]
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP 304 response started for ['127.0.0.1', 60354]
+HTTP 304 response started for ['127.0.0.1', 60359]
+HTTP 304 response started for ['127.0.0.1', 60357]
+HTTP 304 response started for ['127.0.0.1', 60360]
+HTTP 304 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60354]
+HTTP response complete for ['127.0.0.1', 60354]
+[36mHTTP GET /static/deps/images/c2.png 304 [0.01, 127.0.0.1:60354][0m
+HTTP close for ['127.0.0.1', 60359]
+HTTP response complete for ['127.0.0.1', 60359]
+[36mHTTP GET /static/deps/images/c3.png 304 [0.01, 127.0.0.1:60359][0m
+HTTP close for ['127.0.0.1', 60357]
+HTTP response complete for ['127.0.0.1', 60357]
+[36mHTTP GET /static/deps/images/c4.png 304 [0.01, 127.0.0.1:60357][0m
+HTTP close for ['127.0.0.1', 60360]
+HTTP response complete for ['127.0.0.1', 60360]
+[36mHTTP GET /static/deps/images/c6.png 304 [0.01, 127.0.0.1:60360][0m
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[36mHTTP GET /static/deps/images/c5.png 304 [0.01, 127.0.0.1:60358][0m
+HTTP b'GET' request for ['127.0.0.1', 60359]
+HTTP b'GET' request for ['127.0.0.1', 60354]
+HTTP 200 response started for ['127.0.0.1', 60351]
+HTTP close for ['127.0.0.1', 60351]
+HTTP response complete for ['127.0.0.1', 60351]
+[mHTTP GET / 200 [0.04, 127.0.0.1:60351][0m
+HTTP b'GET' request for ['127.0.0.1', 60360]
+HTTP b'GET' request for ['127.0.0.1', 60357]
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP b'GET' request for ['127.0.0.1', 60351]
+HTTP 304 response started for ['127.0.0.1', 60359]
+HTTP 304 response started for ['127.0.0.1', 60354]
+HTTP close for ['127.0.0.1', 60359]
+HTTP response complete for ['127.0.0.1', 60359]
+[36mHTTP GET /static/deps/images/f3.png 304 [0.01, 127.0.0.1:60359][0m
+HTTP close for ['127.0.0.1', 60354]
+HTTP response complete for ['127.0.0.1', 60354]
+[36mHTTP GET /static/deps/images/about-img.jpg 304 [0.01, 127.0.0.1:60354][0m
+HTTP 304 response started for ['127.0.0.1', 60360]
+HTTP 304 response started for ['127.0.0.1', 60357]
+HTTP 304 response started for ['127.0.0.1', 60358]
+HTTP 304 response started for ['127.0.0.1', 60351]
+HTTP close for ['127.0.0.1', 60360]
+HTTP response complete for ['127.0.0.1', 60360]
+[36mHTTP GET /static/deps/images/f4.png 304 [0.02, 127.0.0.1:60360][0m
+HTTP close for ['127.0.0.1', 60357]
+HTTP response complete for ['127.0.0.1', 60357]
+[36mHTTP GET /static/deps/images/f1.png 304 [0.02, 127.0.0.1:60357][0m
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[36mHTTP GET /static/deps/images/f2.png 304 [0.01, 127.0.0.1:60358][0m
+HTTP b'GET' request for ['127.0.0.1', 60359]
+HTTP b'GET' request for ['127.0.0.1', 60354]
+HTTP close for ['127.0.0.1', 60351]
+HTTP response complete for ['127.0.0.1', 60351]
+[36mHTTP GET /static/deps/images/freelance-img.jpg 304 [0.01, 127.0.0.1:60351][0m
+HTTP b'GET' request for ['127.0.0.1', 60360]
+HTTP b'GET' request for ['127.0.0.1', 60357]
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP b'GET' request for ['127.0.0.1', 60351]
+HTTP 304 response started for ['127.0.0.1', 60359]
+HTTP 304 response started for ['127.0.0.1', 60354]
+HTTP 304 response started for ['127.0.0.1', 60360]
+HTTP 304 response started for ['127.0.0.1', 60357]
+HTTP 304 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60359]
+HTTP response complete for ['127.0.0.1', 60359]
+[36mHTTP GET /static/deps/images/forte_bank.png 304 [0.01, 127.0.0.1:60359][0m
+HTTP close for ['127.0.0.1', 60354]
+HTTP response complete for ['127.0.0.1', 60354]
+[36mHTTP GET /static/deps/images/quote.png 304 [0.01, 127.0.0.1:60354][0m
+HTTP 304 response started for ['127.0.0.1', 60351]
+HTTP close for ['127.0.0.1', 60360]
+HTTP response complete for ['127.0.0.1', 60360]
+[36mHTTP GET /static/deps/images/kaspi_bank.png 304 [0.01, 127.0.0.1:60360][0m
+HTTP close for ['127.0.0.1', 60357]
+HTTP response complete for ['127.0.0.1', 60357]
+[36mHTTP GET /static/deps/images/Halyk_bank.svg 304 [0.01, 127.0.0.1:60357][0m
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[36mHTTP GET /static/deps/images/location.png 304 [0.01, 127.0.0.1:60358][0m
+HTTP close for ['127.0.0.1', 60351]
+HTTP response complete for ['127.0.0.1', 60351]
+[36mHTTP GET /static/deps/images/mail.png 304 [0.01, 127.0.0.1:60351][0m
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP b'GET' request for ['127.0.0.1', 60351]
+HTTP b'GET' request for ['127.0.0.1', 60357]
+HTTP 304 response started for ['127.0.0.1', 60358]
+HTTP 304 response started for ['127.0.0.1', 60351]
+HTTP 304 response started for ['127.0.0.1', 60357]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[36mHTTP GET /static/deps/images/call.png 304 [0.01, 127.0.0.1:60358][0m
+HTTP close for ['127.0.0.1', 60351]
+HTTP response complete for ['127.0.0.1', 60351]
+[36mHTTP GET /static/deps/images/next-angle.png 304 [0.00, 127.0.0.1:60351][0m
+HTTP close for ['127.0.0.1', 60357]
+HTTP response complete for ['127.0.0.1', 60357]
+[36mHTTP GET /static/deps/images/prev-angle.png 304 [0.00, 127.0.0.1:60357][0m
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP 302 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[32mHTTP GET /account/logout/ 302 [0.01, 127.0.0.1:60358][0m
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP 200 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[mHTTP GET / 200 [0.00, 127.0.0.1:60358][0m
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP 200 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[mHTTP GET / 200 [0.01, 127.0.0.1:60358][0m
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP 200 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[mHTTP GET /account/login/ 200 [0.01, 127.0.0.1:60358][0m
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP b'GET' request for ['127.0.0.1', 60357]
+HTTP 304 response started for ['127.0.0.1', 60358]
+HTTP 304 response started for ['127.0.0.1', 60357]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[36mHTTP GET /static/deps/css/account_style.css 304 [0.00, 127.0.0.1:60358][0m
+HTTP close for ['127.0.0.1', 60357]
+HTTP response complete for ['127.0.0.1', 60357]
+[36mHTTP GET /static/deps/js/account.js 304 [0.00, 127.0.0.1:60357][0m
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP b'GET' request for ['127.0.0.1', 60357]
+HTTP 304 response started for ['127.0.0.1', 60357]
+HTTP close for ['127.0.0.1', 60357]
+HTTP response complete for ['127.0.0.1', 60357]
+[36mHTTP GET /static/deps/images/white_g_no_background.png 304 [0.01, 127.0.0.1:60357][0m
+Not Found: /static/deps/css/front.jpg
+HTTP 404 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[33mHTTP GET /static/deps/css/front.jpg 404 [0.02, 127.0.0.1:60358][0m
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP 200 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[mHTTP GET /accounts/google/login/ 200 [0.02, 127.0.0.1:60358][0m
+HTTP b'POST' request for ['127.0.0.1', 60358]
+HTTP 302 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[32mHTTP POST /accounts/google/login/ 302 [0.01, 127.0.0.1:60358][0m
+HTTP b'GET' request for ['127.0.0.1', 60358]
+Redirect URI: http://127.0.0.1:8000/accounts/google/login/callback/?state=2RVHcvRX7j1YdhLb&code=4%2F0AanRRrt12XUcVlsBfD-QqzAyAHwfHOE67evdjgxdcOPLPAJF29WBEjMvHio3dH3_2Whu_w&scope=profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile
+Starting new HTTPS connection (1): oauth2.googleapis.com:443
+https://oauth2.googleapis.com:443 "POST /token HTTP/11" 200 None
+HTTP 302 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[32mHTTP GET /accounts/google/login/callback/?state=2RVHcvRX7j1YdhLb&code=4%2F0AanRRrt12XUcVlsBfD-QqzAyAHwfHOE67evdjgxdcOPLPAJF29WBEjMvHio3dH3_2Whu_w&scope=profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile 302 [0.47, 127.0.0.1:60358][0m
+HTTP b'GET' request for ['127.0.0.1', 60358]
+HTTP 200 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[mHTTP GET /account/profile/ 200 [0.02, 127.0.0.1:60358][0m
+HTTP b'GET' request for ['127.0.0.1', 60358]
+Not Found: /media/avatars/Снимок_экрана_41.png
+HTTP 404 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[33mHTTP GET /media/avatars/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA_%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0_41.png 404 [0.01, 127.0.0.1:60358][0m
+HTTP b'GET' request for ['127.0.0.1', 60358]
+Not Found: /static/deps/css/front.jpg
+HTTP 404 response started for ['127.0.0.1', 60358]
+HTTP close for ['127.0.0.1', 60358]
+HTTP response complete for ['127.0.0.1', 60358]
+[33mHTTP GET /static/deps/css/front.jpg 404 [0.01, 127.0.0.1:60358][0m
+C:\projects\tnk_ocenka\tnk_ocenka\settings.py changed, reloading.
