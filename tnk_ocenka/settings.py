@@ -204,8 +204,8 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/media/'  # URL для доступа к медиафайлам
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
 
 LOGGING = {
     'version': 1,
