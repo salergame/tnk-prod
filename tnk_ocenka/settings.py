@@ -185,7 +185,7 @@ AUTHENTICATION_BACKENDS = [
 ]  
 
 ACCOUNT_SIGNUP_REDIRECT_URL = '/account/profile'
-LOGIN_REDIRECT_URL = '/account/profile'
+LOGIN_REDIRECT_URL = '/'
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -194,9 +194,14 @@ SOCIALACCOUNT_PROVIDERS = {
             'secret': config("GOOGLE_SECRET"),
             'key': ''
         },
-        'REDIRECT_URI': 'https://tnk-ocenka.kz/accounts/google/login/callback/',
+        'REDIRECT_URI': 'https://tnk-ocenka.kz/accounts/google/login/callback',
     },
 }
+
+CORS_ALLOWED_ORIGINS = [
+    'https://tnk-ocenka.kz',
+    'https://www.tnk-ocenka.kz',
+]
 
 
 MEDIA_URL = '/media/'
