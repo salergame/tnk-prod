@@ -1,692 +1,1562 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
-
+<html lang="ru">
 <head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Sadyrbai Consulting</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="icon" type="image/png" href="{% static 'deps/images/logo.ico' %}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
 
-  <title>TNK Ocenka</title>
+        body {
+            font-family: var(--body-font);
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        :root {
+            --primary-color: #B1454A;      /* основной бордовый из логотипа */
+            --secondary-color: #C85F63;    /* чуть светлее основного */
+            --accent-color: #D87A7E;       /* еще светлее для акцентов */
+            --dark-bg: #2D2D2D;            /* тёмный фон */
+            --text-color: #333333;         /* для текста */
+            --light-text: #FFFFFF;         /* белый текст */
+            --form-bg: #FFFFFF;            /* белый фон */
+            --light-bg: #F5EDED;           /* светлый фон */
+            --white: #FFFFFF;              /* белый */
+            --heading-font: 'Outfit', sans-serif;
+            --body-font: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        h1, h2, h3 {
+            font-family: var(--heading-font);
+            letter-spacing: -0.02em;
+        }
+        
+        header {
+            background-color: #ffffff;
+            padding: 20px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+            font-weight: 500;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        .contact-info {
+            color: #ffffff;
+        }
+        
+        .contact-info i {
+            color: #B1454A;
+            margin-right: 10px;
+        }
+        
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+            padding: 50px;
+            background: linear-gradient(130deg, var(--dark-bg) 60%, var(--primary-color) 60%);
+            color: var(--white);
+        }
+        
+        .text-content {
+            flex: 1;
+            padding-right: 50px;
+        }
+        
+        .text-content h1 {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 30px;
+            color: var(--light-text);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            background: none;
+            -webkit-text-fill-color: initial;
+        }
+        
+        .text-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .text-content ul li {
+            margin-bottom: 20px;
+            font-size: 18px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            color: var(--light-text);
+        }
+        
+        .text-content ul li i {
+            color: var(--accent-color);
+            margin-right: 10px;
+        }
+        
+        .text-content ul li span {
+            color: #4CAF50;  /* оставляем зеленый для акцента процентов */
+            font-weight: 600;
+        }
+        
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        
+        .form-container h2 {
+            color: var(--text-color);
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .email-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .email-section p {
+            color: var(--text-color);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .email-link {
+            display: inline-block;
+            padding: 10px 25px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .email-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .register-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .register-section p {
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        
+        .register-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+            height: 45px;
+        }
+        
+        .register-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .divider {
+            text-align: center;
+            color: #666;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background-color: #ddd;
+        }
+        
+        .divider::before {
+            left: 0;
+        }
+        
+        .divider::after {
+            right: 0;
+        }
+        
+        .info-text {
+            color: #666;
+            font-size: 14px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #B1454A;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .form-container button:hover {
+            background-color: #B1454A;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .services {
+            padding: 50px;
+            background-color: #ffffff;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .service-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(177,69,74,0.1);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+            width: 100%;
+        }
+        
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(177,69,74,0.2);
+        }
+        
+        .service-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 20px 0;
+            color: var(--primary-color);
+        }
+        
+        .service-card p {
+            color: var(--primary-color);
+            margin: 10px 0;
+            font-weight: bold;
+            flex-grow: 0;
+        }
+        
+        .service-card a {
+            margin-top: auto;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-bottom: 2px solid var(--secondary-color);
+            align-self: flex-start;
+        }
+        
+        .steps-container {
+            background-color: var(--light-bg);
+            padding: 50px 0;
+            width: 100%;
+            position: relative;
+        }
+        
+        .steps-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .steps-container h2 {
+            color: var(--light-text);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .steps-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding-left: 20px;
+            color: var(--text-color);
+        }
+        
+        .step-number {
+            min-width: 35px;
+            height: 35px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 18px;
+            padding: 0;
+            line-height: 1;
+        }
+        
+        .step-number::after {
+            content: attr(data-number);
+        }
+        
+        .step-text {
+            flex: 1;
+            padding-top: 5px;
+            color: var(--text-color);
+            font-size: 18px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        
+        .button, 
+        .register-button {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-family: var(--heading-font);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            text-transform: none;
+        }
+        
+        .button:hover, 
+        .register-button:hover {
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+        }
+        
+        .footer {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            padding: 50px 0 0 0;
+            border-bottom: none; /* Убираем возможную границу */
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: auto 1fr; /* Левая колонка auto, правая занимает оставшееся место */
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .footer h4 {
+            color: #B1454A;
+            margin-bottom: 20px;
+        }
+        
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer ul li a:hover {
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .contact-item i {
+            color: #ffffff;
+            margin-right: 10px;
+            margin-top: 4px;
+        }
+        
+        .contact-item a, 
+        .contact-item p {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0;
+        }
+        
+        .contact-item a:hover {
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .map-container {
+            flex: 1;
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 450px;
+            border-radius: 8px;
+        }
+        
+        .schedule {
+            width: 250px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px 15px 0 15px;
+            padding: 15px;
+            position: relative;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .schedule::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            bottom: 0;
+            width: 15px;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            transform: skew(-45deg);
+            border-radius: 0 0 0 5px;
+        }
+        
+        .schedule-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .schedule-time {
+            color: #ffffff;
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .schedule-lunch {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            margin-top: 5px;
+            padding-left: 5px;
+            border-left: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .footer-info {
+            max-width: 300px; /* Ограничиваем ширину левой колонки */
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                background: linear-gradient(160deg, var(--dark-bg) 70%, var(--primary-color) 30%);
+            }
+            
+            .text-content {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+            
+            .form-container {
+                width: 100%;
+                padding: 20px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr; /* На мобильных одна колонка */
+            }
+            
+            .footer-contacts {
+                order: -1;
+            }
+            
+            .services {
+                gap: 20px;
+                padding: 20px 15px;
+                margin: 0;
+            }
+            
+            .steps-container {
+                padding: 30px 0;
+            }
+            
+            .steps-content {
+                padding: 0 15px;
+            }
+            
+            .step {
+                padding-left: 10px;
+            }
+            
+            .step-number {
+                min-width: 25px;
+                height: 25px;
+                font-size: 14px;
+            }
+            
+            .step-text {
+                font-size: 15px;
+            }
+            
+            .text-content h1 {
+                font-size: 32px;
+                line-height: 1.4;
+            }
+            
+            .text-content ul li {
+                font-size: 16px;
+            }
+            
+            .register-button {
+                width: 100%;
+            }
+        }
+        
+        /* Добавляем стили для FAQ секции */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 15px;
+        }
+        
+        .container h1 {
+            font-size: 36px;
+            font-weight: 600;
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .faq-item {
+            cursor: pointer;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .faq-item i {
+            color: var(--primary-color);
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active i {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            display: none;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 0 0 8px 8px;
+            margin-top: -15px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            line-height: 1.6;
+            transform-origin: top;
+            animation: slideDown 0.3s ease forwards;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .faq-answer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .faq-answer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 15px;
+            }
+            
+            .container h1 {
+                font-size: 28px;
+                margin: 30px 0;
+            }
+            
+            .faq-item {
+                padding: 15px;
+            }
+        }
+        
+        /* Стили для гамбургер-меню */
+        .burger-menu {
+            display: none;
+            width: 30px;
+            height: 25px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1000;
+        }
 
-  <link rel="icon" type="image/png" href="{% static 'deps/images/logo.ico' %}" />
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="{% static 'deps/css/bootstrap.css' %} " />
+        .burger-menu span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--primary-color);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
 
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link href="{% static 'deps/css/style.css' %}" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="{% static 'deps/css/responsive.css' %}" rel="stylesheet" />
+        .burger-menu span:nth-child(1) {
+            top: 0px;
+        }
+
+        .burger-menu span:nth-child(2) {
+            top: 10px;
+        }
+
+        .burger-menu span:nth-child(3) {
+            top: 20px;
+        }
+
+        .burger-menu.active span:nth-child(1) {
+            top: 10px;
+            transform: rotate(135deg);
+        }
+
+        .burger-menu.active span:nth-child(2) {
+            opacity: 0;
+            left: -60px;
+        }
+
+        .burger-menu.active span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-135deg);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 999;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-nav.active {
+            transform: translateY(0);
+            display: block;
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 15px 0;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(177,69,74,0.1);
+            transition: 0.3s;
+        }
+
+        .mobile-nav a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-nav a:hover {
+            background-color: rgba(177,69,74,0.05);
+            padding-left: 10px;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .burger-menu {
+                display: block;
+            }
+
+            .auth-buttons {
+                display: none;
+            }
+        }
+
+        /* Стили для секции услуг */
+        .services h1 {
+            font-size: 36px;
+            font-weight: 600;
+            text-align: center;
+            margin: 40px auto; /* Центрирование с помощью margin auto */
+            position: relative;
+            max-width: 800px; /* Ограничение ширины */
+            padding: 0 20px;
+            color: var(--text-color);
+        }
+        
+        .services .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        /* Стили для секции шагов */
+        .steps-container h1 {
+            font-size: 36px;
+            font-weight: 600;
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        /* Стили для заголовка "Наши услуги" */
+        main h1 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--text-color);
+            padding: 20px 40px;
+            margin: 80px auto 40px; /* Увеличили отступ сверху */
+            background: linear-gradient(to right, 
+                rgba(177, 69, 74, 0.05), 
+                rgba(177, 69, 74, 0.1), 
+                rgba(177, 69, 74, 0.05)
+            );
+            display: inline-block;
+            border-radius: 8px;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Вариант 2: С тенью */
+        main h1.variant2 {
+            background-color: #fafafa;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Вариант 3: С границей */
+        main h1.variant3 {
+            background-color: rgba(177, 69, 74, 0.05);
+            border: 1px solid rgba(177, 69, 74, 0.1);
+        }
+
+        /* Медиа-запрос для адаптивности */
+        @media (max-width: 768px) {
+            main h1 {
+                font-size: 28px;
+                padding: 15px 30px;
+                margin: 60px auto 30px; /* Адаптивный отступ для мобильных */
+            }
+        }
+
+        /* Стили для кнопок в навбаре */
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .auth-button {
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .login-button {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 20px; /* Явно указываем padding для кнопки входа */
+            width: auto; /* Позволяем ширине определяться содержимым */
+            white-space: nowrap; /* Предотвращаем перенос текста */
+        }
+
+        .login-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .register-button {
+            background-color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            color: white;
+            padding: 8px 20px;
+            width: auto;
+            white-space: nowrap;
+        }
+
+        .register-button:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        /* Стили для профиля пользователя */
+        .user-menu {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .profile-button {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .logout-button {
+            background-color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .auth-buttons, .user-menu {
+                display: none; /* Скрываем на мобильных */
+            }
+        }
+
+        /* Стили для плавающей кнопки чата */
+        .chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .chat-button i {
+            font-size: 24px;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary-color);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+
+        /* Анимация пульсации */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(177, 69, 74, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(177, 69, 74, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(177, 69, 74, 0);
+            }
+        }
+
+        .chat-button {
+            animation: pulse 2s infinite;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 768px) {
+            .chat-button {
+                width: 50px;
+                height: 50px;
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .chat-button i {
+                font-size: 20px;
+            }
+        }
+
+        /* Стили для социальных сетей */
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .social-links a i {
+            font-size: 20px;
+        }
+
+        .whatsapp:hover {
+            background-color: #25D366;
+            color: white;
+        }
+
+        .telegram:hover {
+            background-color: #0088cc;
+            color: white;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .social-links {
+                justify-content: center;
+            }
+
+            .social-links a {
+                width: 35px;
+                height: 35px;
+            }
+
+            .social-links a i {
+                font-size: 18px;
+            }
+        }
+
+        /* Стили для футера и карты */
+        .footer-map {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .map-container {
+            flex: 1;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 450px;
+            border-radius: 8px;
+        }
+
+        /* Стили для графика работы в виде сообщения */
+        .schedule {
+            width: 250px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px 15px 0 15px;
+            padding: 15px;
+            position: relative;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Улучшенный треугольник для эффекта сообщения */
+        .schedule::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: -12px;
+            width: 12px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            clip-path: polygon(0 0, 0% 100%, 100% 0);
+        }
+
+        .schedule-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .schedule-time {
+            color: #ffffff;
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .schedule-lunch {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            margin-top: 5px;
+            padding-left: 5px;
+            border-left: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .footer-map {
+                flex-direction: column;
+            }
+
+            .schedule {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .schedule::after {
+                display: none; /* Скрываем треугольник на мобильных */
+            }
+
+            .map-container iframe {
+                height: 350px;
+            }
+        }
+
+        /* Добавляем плавную прокрутку для всей страницы */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Добавляем отступ сверху для секций, чтобы учесть фиксированный header */
+        #services-section,
+        #steps-section,
+        #faq-section {
+            scroll-margin-top: 80px; /* Регулируйте значение в зависимости от высоты вашего header */
+        }
+
+        @media (max-width: 768px) {
+            /* Фиксим сетку услуг */
+            .services {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+                margin: 0 auto;
+                max-width: calc(100% - 40px);
+            }
+
+            .service-card {
+                width: 100%;
+                margin: 0 auto;
+                height: auto;
+                min-height: 400px;
+            }
+
+            /* Центрируем заголовки */
+            main h1,
+            .steps-container h1,
+            .container h1 {
+                width: calc(100% - 30px);
+                margin: 40px auto;
+                padding: 15px;
+                font-size: 28px;
+                text-align: center;
+            }
+
+            /* Фиксим шаги */
+            .steps-container {
+                padding: 30px 20px;
+            }
+
+            .steps-list {
+                width: 100%;
+                max-width: calc(100% - 40px);
+                margin: 0 auto;
+            }
+
+            .step {
+                margin: 0 auto 20px;
+                width: 100%;
+            }
+
+            /* Фиксим FAQ */
+            .container {
+                padding: 30px 20px;
+                width: calc(100% - 40px);
+                margin: 0 auto;
+            }
+
+            .faq-item,
+            .faq-answer {
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        /* Фиксим горизонтальную прокрутку */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            /* Фиксим контейнеры */
+            .container, 
+            .services,
+            .steps-container,
+            .footer-content,
+            main,
+            header {
+                width: 100%;
+                max-width: 100%;
+                padding-left: 15px;
+                padding-right: 15px;
+                margin-left: 0;
+                margin-right: 0;
+                box-sizing: border-box;
+            }
+
+            /* Фиксим навигацию */
+            nav {
+                padding: 0;
+                margin: 0;
+            }
+
+            /* Фиксим все секции */
+            .main-content,
+            .steps-content,
+            .faq-section,
+            .footer {
+                width: 100%;
+                max-width: 100%;
+                padding-left: 15px;
+                padding-right: 15px;
+                margin: 0;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+    <script>
+        // Функция для гамбургер-меню
+        function toggleMobileNav() {
+            const burgerMenu = document.querySelector('.burger-menu');
+            const mobileNav = document.querySelector('.mobile-nav');
+            
+            burgerMenu.classList.toggle('active');
+            
+            if (!mobileNav.classList.contains('active')) {
+                mobileNav.style.display = 'block';
+                setTimeout(() => {
+                    mobileNav.classList.add('active');
+                }, 10);
+            } else {
+                mobileNav.classList.remove('active');
+                setTimeout(() => {
+                    mobileNav.style.display = 'none';
+                }, 300);
+            }
+        }
+
+        // Функция для FAQ
+        function toggleAnswer(element) {
+            const faqItem = element;
+            const answer = element.nextElementSibling;
+            
+            // Закрываем все остальные ответы
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                    const otherAnswer = item.nextElementSibling;
+                    if (otherAnswer && otherAnswer.classList.contains('faq-answer')) {
+                        otherAnswer.style.display = 'none';
+                    }
+                }
+            });
+            
+            // Переключаем текущий ответ с анимацией
+            faqItem.classList.toggle('active');
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+            } else {
+                answer.style.display = 'block';
+                answer.style.animation = 'none';
+                answer.offsetHeight; // Trigger reflow
+                answer.style.animation = 'slideDown 0.3s ease forwards';
+            }
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Обработчики для FAQ
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    toggleAnswer(this);
+                });
+            });
+
+            // Закрытие мобильного меню при клике на ссылку
+            document.querySelectorAll('.mobile-nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    toggleMobileNav();
+                });
+            });
+        });
+    </script>
 </head>
-
 <body>
-  <a href="{% if user.is_authenticated %}{% url 'chat:index' %}{% else %}{% url 'ps_account:login' %}{% endif %}" class="chat-float-btn">
-    <img src="{% static 'deps/images/chat-icon.png' %}" alt="Иконка чата">
-  </a>
-  <div class="hero_area">
-    <!-- header section strats -->
-    <header class="header_section">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg custom_nav-container">
-          <a class="navbar-brand">
-            <img src="{% static 'deps/images/logo.png' %}" alt="" />
-            <span>
-              TNK Ocenka
-            </span>
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav  ">
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url "main:index" %}">Общее <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#About">О нас </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#work">Достижения </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#category">Категорий </a>
-              </li>
-              {% if user.is_staff %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'ps_account:staff_documents' %}">Документы </a>
-              </li>
-              {% endif %}
-            </ul>
-            <div class="user_option">
-              {% if user.is_authenticated %}
-                  <a href="{% url 'ps_account:account' %}">
-                      <span>Личный кабинет</span>
-                  </a>
-                  /
-                  <a href="{% url 'ps_account:logout' %}">
-                      <span>Выйти</span>
-                  </a>
-              {% else %}
-                  <a href="{% url 'ps_account:login' %}">
-                      <span>Войти</span>
-                  </a>
-                  /
-                  <a href="{% url 'ps_account:registration' %}">
-                      <span>Зарегистрироваться</span>
-                  </a>
-              {% endif %}
-              
-              <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
-                  <button class="btn my-2 my-sm-0 nav_search-btn" type="submit"></button>
-              </form>
-          </div>
-          
-          </div>
-          <div>
-            <div class="custom_menu-btn ">
-              <button>
-                <span class=" s-1">
-                </span>
-                <span class="s-2">
-                </span>
-                <span class="s-3">
-                </span>
-              </button>
+    <header>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+            <img src="{% static 'deps/images/logo.ico' %}" alt="ТНК ОЦЕНКА" style="width: 150px; height: auto; object-fit: contain;"/>
+            <nav>
+                <a href="/">Главная</a>
+                <a href="#services-section">Услуги</a>
+                <a href="#steps-section">Как мы работаем</a>
+                <a href="#faq-section">FAQ</a>
+                {% if user.is_staff %}
+                    <a href="{% url 'ps_account:staff_documents' %}">Документы</a>
+                {% endif %}
+            </nav>
+            <div class="contact-info">
+                {% if user.is_authenticated %}
+                    <div class="user-menu">
+                        <a href="{% url 'ps_account:account' %}" class="auth-button profile-button">Профиль</a>
+                        <a href="{% url 'ps_account:logout' %}" class="auth-button logout-button">Выход</a>
+                    </div>
+                {% else %}
+                    <div class="auth-buttons">
+                        <a href="{% url 'ps_account:login' %}" class="auth-button login-button">Вход</a>
+                        <a href="{% url 'ps_account:registration' %}" class="auth-button register-button">Регистрация</a>
+                    </div>
+                {% endif %}
             </div>
-          </div>
-
-        </nav>
-      </div>
+        </div>
+        <div class="burger-menu" onclick="toggleMobileNav()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="mobile-nav">
+            <a href="/">Главная</a>
+            <a href="#services-section">Услуги</a>
+            <a href="#steps-section">Как мы работаем</a>
+            <a href="#faq-section">FAQ</a>
+            {% if user.is_staff %}
+                <a href="{% url 'ps_account:staff_documents' %}">Документы</a>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <a href="{% url 'ps_account:account' %}">Профиль</a>
+                <a href="{% url 'ps_account:logout' %}">Выход</a>
+            {% else %}
+                <a href="{% url 'ps_account:login' %}">Вход</a>
+                <a href="{% url 'ps_account:registration' %}">Регистрация</a>
+            {% endif %}
+        </div>
     </header>
-    <!-- end header section -->
-    <!-- slider section -->
-    <section class="slider_section ">
-      <div class="carousel_btn-container">
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-          <span class="sr-only">Previous</span>
+    <div class="main-content">
+        <div class="text-content">
+            <h1>Закажите оценку своего имущества и получите результат в тот же день</h1>
+            <ul>
+                <li><i class="fas fa-check"></i>На <span style="color: green;">15% ниже</span> рыночной цены</li>
+                <li><i class="fas fa-check"></i>Все оценщики с опытом работы <span style="color: green;">от 10 лет</span></li>
+                <li><i class="fas fa-check"></i><span style="color: green;">Более тысячи</span> выполненных отчетов</li>
+            </ul>
+        </div>
+        <div class="form-container">
+            <h2>Остались вопросы?</h2>
+            
+            <div class="email-section">
+                <p>Отправьте ваш вопрос на почту:</p>
+                <a href="mailto:tnk01@list.ru" class="email-link">tnk01@list.ru</a>
+            </div>
+
+            <p class="divider">или</p>
+
+            <div>
+                <p>Вы можете зарегистрироваться</p>
+                <a href="{% url 'ps_account:registration' %}" class="register-button">Зарегистрироваться</a>
+            </div>
+
+            <p class="info-text">
+                Зарегистрированные пользователи получают доступ к чату поддержки
+            </p>
+        </div>
+    </div>
+    <main class="main" id="services-section">
+        <h1>Наши услуги</h1>
+        <div class="services">
+            <div class="service-card">
+                <img alt="Image of a modern building" height="200" src="https://storage.googleapis.com/a1aa/image/vJI3otYhXAATCytszDuIqOdHggBgUjhN3yRY-5sGulY.jpg" width="300"/>
+                <h3>Оценка недвижимости</h3>
+                <p>Качественная оценка недвижимости в кратчайшие сроки</p>
+                <a href="{% url 'chat:index' %}">Узнать подробнее</a>
+            </div>
+            <div class="service-card">
+                <img alt="Image of parked cars" height="200" src="https://storage.googleapis.com/a1aa/image/AI4Anly52za3Kpsm9EH9ZZ1YwmmSxm5d8vDywNJoLf4.jpg" width="300"/>
+                <h3>Оценка движимого имущества</h3>
+                <p>Четкая и не затратная оценка транспортных средств</p>
+                <a href="{% url 'chat:index' %}">Узнать подробнее</a>
+            </div>
+            <div class="service-card">
+                <img alt="Image of business charts and graphs" height="200" src="https://storage.googleapis.com/a1aa/image/xOlsTgBhIHlcpK4Gtm1z3CD_GsPM1XJaGq4rYyIVNY8.jpg" width="300"/>
+                <h3>Оценка бизнеса</h3>
+                <p>Справедливая оценка стоимости бизнеса и имущества</p>
+                <a href="{% url 'chat:index' %}">Узнать подробнее</a>
+            </div>
+            <div class="service-card">
+                <img alt="Image of intellectual property items" height="200" src="https://storage.googleapis.com/a1aa/image/ihGXF-04bzmXhFoBsy9qb-haN0rmLRnrcvFy500RNxA.jpg" width="300"/>
+                <h3>Оценка интеллектуальной собственности</h3>
+                <p>Быстрая оценка стоимости интеллектуальной собственности</p>
+                <a href="{% url 'chat:index' %}">Узнать подробнее</a>
+            </div>
+        </div>
+    </main>
+
+    <div class="steps-container" id="steps-section">
+        <h1>Порядок оказания оценочных услуг</h1>
+        <div class="steps-list">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-text">Консультация по телефону и WhatsApp (прием документов);</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-text">Предварительный расчет стоимости услуг;</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-text">Заключение договора на оценку;</div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-text">Осмотр объекта оценки;</div>
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-text">Оценщик составляет отчет об оценке;</div>
+            </div>
+            <div class="step">
+                <div class="step-number">6</div>
+                <div class="step-text">Отчет об оценке передается заказчику.</div>
+            </div>
+        </div>
+        <div class="button-container">
+            <a href="#" class="button">Заказать оценку</a>
+        </div>
+    </div>
+    <div class="container" id="faq-section">
+        <h1>Ответы на часто-задаваемые вопросы</h1>
+        <div class="faq-item">
+            <span>Какие банки принимают оценку?</span>
+            <i class="fas fa-plus"></i>
+        </div>
+        <div class="faq-answer">
+            Нашу оценку принимают все банки РК
+        </div>
+        
+        <div class="faq-item">
+            <span>Бесплатный ли выезд на объект оценки?</span>
+            <i class="fas fa-plus"></i>
+        </div>
+        <div class="faq-answer">
+            Выезд, фотографирование и консультация – бесплатны
+        </div>
+        
+        <div class="faq-item">
+            <span>Какие нужны документы для оценки квартиры?</span>
+            <i class="fas fa-plus"></i>
+        </div>
+        <div class="faq-answer">
+            Список необходимых документов для оценки квартиры: <a href="https://sc-ocenka.kz/kvartiry">https://sc-ocenka.kz/kvartiry</a>
+        </div>
+        
+        <div class="faq-item">
+            <span>За какой срок вы можете оценить автомобиль?</span>
+            <i class="fas fa-plus"></i>
+        </div>
+        <div class="faq-answer">
+            Сделаем качественную оценку автомобиля в минимальные сроки – от 30 минут
+        </div>
+        
+        <div class="faq-item">
+            <span>Делаете ли вы предварительный расчет по предоставленным данным?</span>
+            <i class="fas fa-plus"></i>
+        </div>
+        <div class="faq-answer">
+            Да, мы делаем при консультации. Для этого данные должны быть точными
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="company-info">
+                <h3>ТНК ОЦЕНКА</h3>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Астана, Проспект Республики, 32<br>Этаж 6, офис 605</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <a href="tel:+77026264998">+7 (702) 626-49-98</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:tnk01@list.ru">tnk01@list.ru</a>
+                </div>
+                <div class="social-links">
+                    <a href="https://wa.me/77026264998" target="_blank" class="whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-map">
+                <div class="schedule">
+                    <div class="schedule-title">
+                        <i class="far fa-clock"></i>
+                        График работы
+                    </div>
+                    <div class="schedule-time">ПН-ВС 9:00 - 18:30</div>
+                    <div class="schedule-lunch">Обед: 13:00 - 14:00</div>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2381.23367453417!2d71.42467107626491!3d51.16819113542735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424586d4b657ad8d%3A0xbf49b02d1912c9a6!2z0L_RgNC-0YHQvy4g0KDQtdGB0L_Rg9Cx0LvQuNC60LggMzIsINCQ0YHRgtCw0L3QsCAwMjAwMDA!5e1!3m2!1sru!2skz!4v1738428998880!5m2!1sru!2skz" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Копирайт должен быть здесь, после футера -->
+    <div class="footer-bottom">
+        <p>&copy; © 2025 Сделано Svist.co.</p>
+    </div>
+
+    <!-- Плавающая кнопка чата -->
+    {% if user.is_authenticated %}
+        <a href="{% url 'chat:index' %}" class="chat-button">
+            <i class="far fa-comment"></i>
         </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-          <span class="sr-only">Next</span>
+    {% else %}
+        <a href="{% url 'ps_account:login' %}" class="chat-button">
+            <i class="far fa-comment"></i>
         </a>
-      </div>
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">01</li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1">02</li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2">03</li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-5 offset-md-1">
-                  <div class="detail-box">
-                    <h1>
-                      Независимая<br>
-                      Oценка имущества<br>
-                    <span style="color: rgb(212, 184, 131);">В Казахстане</span>
-                    </h1>
-                    <p>
-                      Максимизируйте свои выгоды с нашей экспертной оценкой, которая станет ключом к осознанным и выгодным финансовым решениям. 
-                      Доверьтесь нам — и достигайте новых высот!
-                    </p>
-                    <div class="btn-box">
-                      <a href="#About" class="btn-1">
-                        <b>О нас</b>
-                      </a>
-                      <a href="" class="btn-2">
-                        <b>Получить оценку</b>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="offset-md-1 col-md-4 img-container">
-                  <div class="img-box">
-                    <img src="{% static 'deps/images/slider-img.png' %}" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item ">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-5 offset-md-1">
-                  <div class="detail-box">
-                    <h1>
-                      Независимая<br>
-                      Oценка имущества<br>
-                    <span style="color: rgb(212, 184, 131);">В Казахстане</span>
-                    </h1>
-                    <p>
-                      Получите максимум выгоды с нашей компанией! Наша надежная оценка поможет вам принимать взвешенные финансовые решения и добиться успеха.
-                    </p>
-                    <div class="btn-box">
-                      <a href="about.html" class="btn-1">
-                        <b>О нас</b>
-                      </a>
-                      <a href="" class="btn-2">
-                        <b>Получить оценку</b>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="offset-md-1 col-md-4 img-container">
-                  <div class="img-box">
-                    <img src="{% static 'deps/images/slider-img.png' %}" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item ">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-5 offset-md-1">
-                  <div class="detail-box">
-                    <h1>
-                      Независимая<br>
-                      Oценка имущества<br>
-                    <span style="color: rgb(212, 184, 131);">В Казахстане</span>
-                    </h1>
-                    <p>
-                      Добейтесь максимальной выгоды с нашей компанией! Надежная оценка от наших экспертов поможет вам принимать 
-                      взвешенные финансовые решения и достигать новых высот.
-                    </p>
-                    <div class="btn-box">
-                      <a href="about.html" class="btn-1">
-                        <b>О нас</b>
-                      </a>
-                      <a href="" class="btn-2">
-                        <b>Получить оценку</b>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="offset-md-1 col-md-4 img-container">
-                  <div class="img-box">
-                    <img src="{% static 'deps/images/slider-img.png' %}" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </section>
-    <!-- end slider section -->
-  </div>
+    {% endif %}
 
 
-  <!-- experience section -->
-  <h2 id="About"></h2>
-  <section class="experience_section layout_padding">
-      <div class="container">
-          <div class="heading_container">
-              <h2 style="text-align: center;">Наши сертификаты</h2>
-          </div>
-          <div id="carousel_certificates" class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner">
-                  {% for certificate in certificates %}
-                  <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                      <div class="certificate-box" style="height: 500px; width: 100%; display: flex; justify-content: center; align-items: center;">
-                          <img src="{% static 'deps/images/certificates/' %}{{ certificate }}" alt="{{ certificate }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
-                      </div>
-                  </div>
-                  {% endfor %}
-              </div>
-              <!-- Стрелки -->
-              <a class="carousel-control-prev custom-prev" href="#carousel_certificates" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true">‹</span>
-                  <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next custom-next" href="#carousel_certificates" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true">›</span>
-                  <span class="sr-only">Next</span>
-              </a>
-          </div>
-      </div>
-  </section>
-  
-  <!-- Стили для центрирования заголовка и стрелок -->
-  <style>
-      /* Центрирование заголовка */
-      .heading_container h2 {
-          text-align: center;
-          font-size: 32px; /* Увеличен размер шрифта для наглядности */
-          margin-bottom: 30px;
-      }
-    
-      /* Стрелки */
-      .custom-prev, .custom-next {
-          background-color: black;
-          border-radius: 50%;
-          width: 50px; /* Увеличен размер кнопок */
-          height: 50px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          z-index: 10;
-      }
-    
-      /* Белая стрелка */
-      .custom-prev-icon, .custom-next-icon {
-          color: white;
-          font-size: 30px; /* Увеличен размер стрелок */
-      }
-    
-      /* Позиционирование стрелок по бокам */
-      .custom-prev {
-          left: 20px; /* Расстояние от левого края */
-      }
-    
-      .custom-next {
-          right: 20px; /* Расстояние от правого края */
-      }
-    
-      .custom-prev:hover, .custom-next:hover {
-          background-color: black;
-          opacity: 0.8;
-      }
-  </style>
-
-
-  <!-- end experience section -->
-
-  <!-- category section -->
-  <h2 id="category"></h2>
-  <section class="category_section layout_padding">
-    <div class="container">
-      <div class="heading_container">
-        <h2>
-          Что мы оцениваем
-        </h2>
-      </div>
-      <div class="category_container">
-        <div class="box">
-          <div class="img-box">
-            <img src="{% static 'deps/images/c1.png' %}" alt="">
-          </div>
-          <div class="detail-box">
-            <h5>
-              Бизнесы
-            </h5>
-          </div>
-        </div>
-        <div class="box">
-          <div class="img-box">
-            <img src="{% static 'deps/images/c2.png' %}" alt="">
-          </div>
-          <div class="detail-box">
-            <h5>
-              Бизнес центры
-            </h5>
-          </div>
-        </div>
-        <div class="box">
-          <div class="img-box">
-            <img src="{% static 'deps/images/c3.png' %}" alt="">
-          </div>
-          <div class="detail-box">
-            <h5>
-              Незавершенное проекты
-            </h5>
-          </div>
-        </div>
-        <div class="box">
-          <div class="img-box">
-            <img src="{% static 'deps/images/c4.png' %}" alt="">
-          </div>
-          <div class="detail-box">
-            <h5>
-              Акции
-            </h5>
-          </div>
-        </div>
-        <div class="box">
-          <div class="img-box">
-            <img src="{% static 'deps/images/c5.png' %}" alt="">
-          </div>
-          <div class="detail-box">
-            <h5>
-              Предприятия
-            </h5>
-          </div>
-        </div>
-        <div class="box">
-          <div class="img-box">
-            <img src="{% static 'deps/images/c6.png' %}" alt="">
-          </div>
-          <div class="detail-box">
-            <h5>
-              Недвижимоть
-            </h5>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- end category section -->
-
-  <!-- about section -->
-  
-  <section class="about_section layout_padding">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-10 col-lg-9 mx-auto">
-          <div class="img-box">
-            <img src="{% static 'deps/images/about-img.jpg' %}" alt="">
-          </div>
-        </div>
-      </div>
-      <div class="detail-box">
-        <h2>
-          Про компанию TNK Ocenka
-        </h2>
-        <p>
-          Мы используем современные методы оценки и тщательно анализируем все доступные данные, чтобы предоставить максимально объективную и точную информацию о стоимости недвижимости. «TNK Оценка» стремится к высоким стандартам качества и индивидуальному подходу к каждому клиенту, обеспечивая надежность и прозрачность в проведении всех этапов оценки.
-        </p>
-        <a href="">
-          Read More
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- end about section -->
-
-  <!-- freelance section -->
-  <h2 id="work"></h2>
-  <section class="freelance_section ">
-    <div id="accordion">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-5 offset-md-1">
-            <div class="detail-box">
-              <div class="heading_container">
-                <h2>
-                  Мы достигли
-                </h2>
-              </div>
-              <div class="tab_container">
-                <div class="t-link-box" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  <div class="img-box">
-                    <img src="{% static 'deps/images/f3.png' %}" alt="">
-                  </div>
-                  <div class="detail-box">
-                    <h5>
-                      7 лет
-                    </h5>
-                    <h3>
-                      Работы на рынке
-                    </h3>
-                  </div>
-                </div>
-                <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  <div class="img-box">
-                    <img src="{% static 'deps/images/f2.png' %}" alt="">
-                  </div>
-                  <div class="detail-box">
-                    <h5>
-                      1 тысячу
-                    </h5>
-                    <h3>
-                      Заказов в год
-                    </h3>
-                  </div>
-                </div>
-                <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  <div class="img-box">
-                    <img src="{% static 'deps/images/f1.png' %}" alt="">
-                  </div>
-                  <div class="detail-box">
-                    <h5>
-                      700,000тг
-                    </h5>
-                    <h3>
-                      Хорошей прибыли
-                    </h3>
-                  </div>
-                </div>
-                <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                  <div class="img-box">
-                    <img src="{% static 'deps/images/f4.png' %}" alt="">
-                  </div>
-                  <div class="detail-box">
-                    <h5>
-                      98%
-                    </h5>
-                    <h3>
-                      Довольных <br>
-                      Клиентов
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="collapse show" id="collapseOne" aria-labelledby="headingOne" data-parent="#accordion">
-              <div class="img-box">
-                <img src="{% static 'deps/images/freelance-img.jpg' %}" alt="">
-              </div>
-            </div>
-            <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordion">
-              <div class="img-box">
-                <img src="{% static 'deps/images/freelance-img.jpg' %}" alt="">
-              </div>
-            </div>
-            <div class="collapse" id="collapseThree" aria-labelledby="headingThree" data-parent="#accordion">
-              <div class="img-box">
-                <img src="{% static 'deps/images/freelance-img.jpg' %}" alt="">
-              </div>
-            </div>
-            <div class="collapse" id="collapseFour" aria-labelledby="headingfour" data-parent="#accordion">
-              <div class="img-box">
-                <img src="{% static 'deps/images/freelance-img.jpg' %}" alt="">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- end freelance section -->
-
-  <!-- client section -->
-
-  <section class="client_section layout_padding">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-9 col-md-10 mx-auto">
-          <div class="heading_container">
-            <h2>
-              Отзывы
-            </h2>
-          </div>
-          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <div class="detail-box">
-                  <h4>
-                    Базаров Азамат
-                  </h4>
-                  <p>
-                    Профисиональная и чистая оценка. Как мне сказали "Скупой платит дважды, а умный - обращается к нам!
-                    " и это так!
-                  </p>
-                  <img src="{% static 'deps/images/quote.png' %}" alt="">
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="detail-box">
-                  <h4>
-                    Алимжанов Бахтияр
-                  </h4>
-                  <p>
-                    Думал продать участок и не знал кому обращаться, так как предложеная гос. цена меня 
-                    не устраивала. Но я нашел этих ребят и не пожелел, спасибо выручили!
-                  </p>
-                  <img src="{% static 'deps/images/quote.png' %}" alt="">
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="detail-box">
-                  <h4>
-                    Светослава Анастасия
-                  </h4>
-                  <p>
-                    Боже, не люди а машины. Быстрый сервис и чёткая работа, я довольна окончательной ценой.
-                  </p>
-                  <img src="{% static 'deps/images/quote.png' %}" alt="">
-                </div>
-              </div>
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- end client section -->
-
-
-
-  <!-- info section -->
-
-  <section class="info_section">
-    <div class="info_container layout_padding-top">
-      <div class="container">
-        <div class="info_top">
-          <div class="info_logo">
-            <img src="{% static 'deps/images/logo.png' %}" alt="" />
-            <span>TNK Ocenka</span>
-          </div>
-        </div>
-  
-        <div class="info_main">
-          <div class="row">
-            <div class="col-md-3 col-lg-2">
-              <div class="info_link-box">
-                <h5>Ссылки</h5>
-                <ul>
-                  <li class="active">
-                    <a class="nav-link" href={% url "main:index" %}>Общее <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li><a class="nav-link" href="#About">О нас</a></li>
-                  <li><a class="nav-link" href="#work">Достижения</a></li>
-                  <li><a class="nav-link" href="#category">Категорий</a></li>
-                </ul>
-              </div>
-            </div>
-  
-            <div class="col-md-3">
-              <h5>Офис</h5>
-              <p>Астана. Проспект Республики, 32</p>
-              <p>Этаж 6, офис 605</p>
-            </div>
-  
-            <div class="col-md-3 col-lg-2 offset-lg-1">
-              <h5>График</h5>
-              <p>ПН-ВС 9:00 - 18:30</p>
-              <p>Обед: 13:00 - 14:00</p>
-            </div>
-  
-            <div class="col-md-3 col-lg-3">
-              <h5>Партнеры</h5>
-              <div class="partners_logos d-flex justify-content-end">
-                <a><img src="{% static 'deps/images/forte_bank.png' %}" alt="Forte Bank Logo"></a>
-                <a><img src="{% static 'deps/images/Halyk_bank.svg' %}" alt="Halyk Bank Logo"></a>
-                <a><img src="{% static 'deps/images/kaspi_bank.png' %}" alt="Kaspi Bank Logo"></a>
-              </div>
-            </div>
-          </div>
-        </div>
-  
-        <div class="row">
-          <div class="col-lg-9 col-md-10 mx-auto">
-            <div class="info_contact layout_padding2">
-              <div class="row">
-                <div class="col-md-3">
-                  <a href="https://go.2gis.com/4p9sbt" class="link-box">
-                    <div class="img-box">
-                      <img src="{% static 'deps/images/location.png' %}" alt="">
-                    </div>
-                    <div class="detail-box">
-                      <h6>Астана. Проспект Республики, 32</h6>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-md-4">
-                  <a href="mailto:tnk01@list.ru" class="link-box">
-                    <div class="img-box">
-                      <img src="{% static 'deps/images/mail.png' %}" alt="">
-                    </div>
-                    <div class="detail-box">
-                      <h6>tnk01@list.ru</h6>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-md-5">
-                  <a href="https://wa.me/77026264998?text=Здравствуйте,%20пишу%20с%20сайта%20можете%20рассказать%20об%20услугах?" class="link-box">
-                    <div class="img-box">
-                      <img src="{% static 'deps/images/call.png' %}" alt="">
-                    </div>
-                    <div class="detail-box">
-                      <h6>Телефон +7 (702) 626 49-98</h6>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-  
-      </div>
-    </div>
-  </section>
-  
-  <!-- end info section -->
-
-  <!-- footer section -->
-  <footer class="container-fluid footer_section ">
-    <div class="container">
-      <p>
-        &copy; <span id="displayDate"></span> Сделано
-        <a href="https://html.design/">Svist.co</a>
-      </p>
-    </div>
-  </footer>
-  <!-- end  footer section -->
-
-
-  <script src="{% static 'deps/js/jquery-3.4.1.min.js' %}"></script>
-  <script src="{% static 'deps/js/bootstrap.js' %}"></script>
-  <script src="{% static 'deps/js/custom.js' %}"></script>
-
-
+    <!-- JavaScript -->
+    <script src="{% static 'deps/js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'deps/js/bootstrap.js' %}"></script>
+    <script src="{% static 'deps/js/custom.js' %}"></script>
 </body>
 </html>
