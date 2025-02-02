@@ -4,34 +4,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Изменение email</title>
-    <link rel="stylesheet" href="{% static 'deps/css/account_style.css' %}">
+    <title>Изменение email | Sadyrbai Consulting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'deps/images/logo.ico' %}" sizes="32x32">
+    <style>
+        :root {
+            --primary-color: #B1454A;
+            --secondary-color: #C85F63;
+            --accent-color: #D87A7E;
+            --dark-bg: #2D2D2D;
+            --text-color: #333333;
+            --light-text: #FFFFFF;
+            --form-bg: #FFFFFF;
+            --light-bg: #F5EDED;
+            --white: #FFFFFF;
+            --heading-font: 'Outfit', sans-serif;
+            --body-font: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--body-font);
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Навбар */
+        header {
+            background-color: var(--white);
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            font-family: var(--heading-font);
+        }
+
+        nav a {
+            color: #2D2D2D;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-family: var(--heading-font);
+            color: var(--dark-bg);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .messages {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f8d7da;
+            color: #721c24;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 20px auto;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <header>
         <nav>
-            <a href="{% url 'main:index' %}">Главная</a>
-            <a href="{% url 'chat:index' %}">Чат</a>
-            <a href="{% url 'ps_account:account' %}">Личный кабинет</a>
+            <a href="{% url 'main:index' %}">ГЛАВНАЯ</a>
+            <a href="{% url 'chat:index' %}">ЧАТ</a>
+            <a href="{% url 'ps_account:account' %}">ЛИЧНЫЙ КАБИНЕТ</a>
         </nav>
-        <h1>Изменение email</h1>
-        <div class="profile-section">
-            <div class="profile-info">
-                <h2>Введите новый email</h2>
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="settings-button">Изменить email</button>
-                </form>
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <h1>Изменение email</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Изменить email</button>
+            </form>
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
             </div>
+            {% endif %}
         </div>
-        {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
-        </div>
-        {% endif %}
     </div>
 </body>
 </html>

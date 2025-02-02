@@ -13,8 +13,13 @@ class UserDocument(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='avatars/', default='media\avatars\default-avatar.png')
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
     def __str__(self):
         return self.user.username
+
+    def get_avatar_url(self):
+        if self.avatar and hasattr(self.avatar, 'url') and self.avatar.name:
+            return self.avatar.url
+        return None
 

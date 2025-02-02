@@ -4,105 +4,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Выбор пользователя</title>
-    <link rel="stylesheet" href="{% static 'deps/css/account_style.css' %}">
+    <title>Выбор пользователя | Sadyrbai Consulting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'deps/images/logo.ico' %}" sizes="32x32">
     <style>
-        body, html {
+        :root {
+            --primary-color: #B1454A;
+            --secondary-color: #C85F63;
+            --accent-color: #D87A7E;
+            --dark-bg: #2D2D2D;
+            --text-color: #333333;
+            --light-text: #FFFFFF;
+            --form-bg: #FFFFFF;
+            --light-bg: #F5EDED;
+            --white: #FFFFFF;
+            --heading-font: 'Outfit', sans-serif;
+            --body-font: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--body-font);
             margin: 0;
             padding: 0;
-            height: 100%;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        .container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 20px;
-        }
-
-        nav {
-            background-color: #2c3e50;
-            padding: 10px;
-            text-align: center;
+        /* Навбар */
+        header {
+            background-color: var(--white);
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        .user-list {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .user-item {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            font-family: var(--heading-font);
         }
 
-        .user-item a {
+        nav a {
+            color: var(--dark-bg);
             text-decoration: none;
-            color: #2c3e50;
-            font-weight: bold;
+            padding: 10px 20px;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-family: var(--heading-font);
+            color: var(--dark-bg);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+        }
+
+        .search-bar {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .search-bar form {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .search-bar input {
+            width: 50%;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(177,69,74,0.1);
+        }
+
+        .search-bar button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .user-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .user-item {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
         }
 
         .user-item:hover {
-            background-color: #ecf0f1;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
-        .search-bar {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-    
-        .search-bar input[type="text"] {
-            padding: 10px;
-            width: 50%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+
+        .user-info {
             font-size: 16px;
+            color: var(--text-color);
         }
-    
-        .search-bar button {
-            padding: 10px 20px;
-            background-color: #2c3e50;
+
+        .user-item a {
+            background: var(--primary-color);
             color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
-    
-        .search-bar button:hover {
-            background-color: #34495e;
+
+        .user-item a:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 20px auto;
+            }
+
+            .search-bar form {
+                flex-direction: column;
+            }
+
+            .search-bar input {
+                width: 100%;
+            }
+
+            .user-item {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <header>
         <nav>
-            <a href="{% url 'main:index' %}">Главная</a>
-            <a href="{% url 'chat:index' %}">Чат</a>
-            <a href="{% url 'ps_account:account' %}">Личный кабинет</a>
+            <a href="{% url 'main:index' %}">ГЛАВНАЯ</a>
+            <a href="{% url 'chat:index' %}">ЧАТ</a>
+            <a href="{% url 'ps_account:account' %}">ЛИЧНЫЙ КАБИНЕТ</a>
         </nav>
+    </header>
 
+    <div class="container">
         <h1>Выберите пользователя для загрузки документов</h1>
 
         <div class="search-bar">
@@ -111,13 +203,14 @@
                 <button type="submit">Поиск</button>
             </form>
         </div>
-        
 
         <div class="user-list">
             {% for user in users %}
                 <div class="user-item">
-                    <span>{{ user.get_full_name }} ({{ user.email }})</span>
-                    <a href="{% url 'ps_account:user_account_for_staff' user.id %}">Перейти</a>
+                    <div class="user-info">
+                        <span>{{ user.get_full_name }} ({{ user.email }})</span>
+                    </div>
+                    <a href="{% url 'ps_account:user_account_for_staff' user.id %}">Перейти к документам</a>
                 </div>
             {% endfor %}
         </div>

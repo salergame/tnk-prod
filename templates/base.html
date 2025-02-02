@@ -1,113 +1,122 @@
 {% load static %}
 {% load django_htmx %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Django Template">
-    <title>Project Title</title>
+    <meta name="description" content="TNK Ocenka">
+    <title>TNK Ocenka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'deps/images/logo.ico' %}" sizes="32x32">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="https://unpkg.com/htmx.org@2.0.2"></script>
     {% django_htmx_script %}
     <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style type="text/tailwindcss">
+    <style>
+        :root {
+            --primary-color: #B1454A;
+            --secondary-color: #C85F63;
+            --accent-color: #D87A7E;
+            --dark-bg: #2D2D2D;
+            --text-color: #333333;
+            --light-text: #FFFFFF;
+            --form-bg: #FFFFFF;
+            --light-bg: #F5EDED;
+            --white: #FFFFFF;
+            --heading-font: 'Outfit', sans-serif;
+            --body-font: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--body-font);
+            color: var(--text-color);
+            background: var(--light-bg);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--heading-font);
+            letter-spacing: -0.02em;
+        }
+
         [x-cloak] { 
             display: none !important; 
         }
-        h1 {
-            @apply text-4xl font-bold mb-4
-        }
-        h2 {
-            @apply text-xl font-bold mb-2
-        }
-        p {
-            @apply mb-4
-        }
+
+        /* Базовые стили текста */
+        h1 { @apply text-4xl font-bold mb-4 }
+        h2 { @apply text-xl font-bold mb-2 }
+        p { @apply mb-4 }
+
+        /* Кнопки */
         .button, button, [type='submit'], [type='button'] {
-            @apply bg-indigo-600 text-white font-bold px-6 py-4 inline-block 
-            rounded-lg shadow-lg transition-all cursor-pointer
+            @apply bg-[var(--primary-color)] text-white font-bold px-6 py-4 
+            inline-block rounded-lg shadow-lg transition-all cursor-pointer;
         }
+
         .button:hover, button:hover, [type='submit']:hover, [type='button']:hover {
-            @apply bg-indigo-700
+            @apply bg-[var(--secondary-color)] transform -translate-y-0.5;
         }
+
         .button:active, button:active, [type='submit']:active, [type='button']:active {
-            @apply scale-95
+            @apply scale-95;
         }
-        .button.alert, button.alert {
-            @apply bg-red-700
+
+        /* Формы */
+        .textarea, textarea, input:not([type=file]):not([type=checkbox]) {
+            @apply w-full rounded-lg py-4 px-5 bg-gray-100 border border-gray-200 
+            focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-opacity-50;
         }
-        .button.alert:hover, button.alert:hover {
-            @apply bg-red-600
+
+        input[type=file] {
+            @apply bg-white pl-0 cursor-pointer;
         }
-        .button-red {
-            @apply !bg-red-500 hover:!bg-red-600
+
+        label {
+            @apply block text-sm font-medium text-gray-700 mb-1;
         }
-        .button-gray {
-            @apply !bg-gray-300 hover:!bg-[#c3c9d0]
-        }
+
+        /* Навигация */
         .navitems>li>a {
-            @apply flex items-center gap-2 h-12 px-4 hover:bg-[rgba(31,41,55,0.3)] rounded-lg;
+            @apply flex items-center gap-2 h-12 px-4 hover:bg-[rgba(177,69,74,0.1)] rounded-lg 
+            text-[var(--text-color)] transition-all duration-300;
         }
+
+        /* Списки с ховером */
         .hoverlist>* {
-            @apply hover:bg-gray-100 rounded-md transition duration-150;
+            @apply hover:bg-[rgba(177,69,74,0.1)] rounded-md transition duration-150;
         }
+
         .hoverlist>*>a {
             @apply flex items-center p-2;
         }
-        .highlight {
-            @apply !bg-indigo-100;
-        }
-        .allauth content a {
-            @apply underline underline-offset-2
-        }
-        .allauth content a:hover {
-            @apply text-indigo-500
-        }
-        .allauth form[action="/accounts/signup/"] ul {
-            @apply hidden
-        }
-        .allauth form[action="/accounts/signup/"] ul.errorlist {
-            @apply block
-        }
-        .allauth .helptext {
-            @apply block mt-4
-        }
-        label {
-            @apply hidden
-        }
-        input[type=file] {
-            @apply bg-white pl-0
-        }
-        .textarea, textarea, input {
-            @apply w-full rounded-lg py-4 px-5 bg-gray-100
-        }
+
+        /* Сообщения об ошибках */
         .errorlist li {
-            @apply p-1 pl-4 border-l-red-500 border-l-4 border-solid mb-2 text-red-500
+            @apply p-1 pl-4 border-l-[var(--primary-color)] border-l-4 border-solid mb-2 text-[var(--primary-color)];
         }
-        label[for="id_remember"] {
-            @apply inline-block w-auto mr-2
-        }
-        input[name="remember"] {
-            @apply w-auto
-        }
-        .alert-info { @apply bg-sky-600 }
+
+        /* Цветовые классы для уведомлений */
+        .alert-info { @apply bg-blue-600 }
         .alert-success { @apply bg-emerald-600 }
         .alert-warning { @apply bg-orange-600 }
         .alert-danger { @apply bg-red-600 }
+
+        /* Специальные классы для кнопок */
+        .button-red { @apply !bg-red-500 hover:!bg-red-600 }
+        .button-gray { @apply !bg-gray-300 hover:!bg-gray-400 }
     </style>
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="{% block class %}{% endblock %}">
-	
+    
     {% include 'includes/messages.html' %}
-
     {% include 'includes/header.html' %}
 
-    {% block layout %}
-    {% endblock %}
+    {% block layout %}{% endblock %}
 
     {% block javascript %}{% endblock %}
 

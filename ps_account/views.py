@@ -14,6 +14,7 @@ from django.db.models import Q
 
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.conf import settings
 
 
 # Create your views here.
@@ -23,27 +24,28 @@ def account(request):
     profile, created = UserProfile.objects.get_or_create(user=user)
     documents = UserDocument.objects.filter(user=user)
 
-    if request.method == 'POST':
+    if request.method == 'POST' and request.FILES.get('avatar'):
         avatar_form = AvatarChangeForm(request.POST, request.FILES, instance=profile)
         if avatar_form.is_valid():
-            avatar_form.save()
-            print("Аватар загружен:", profile.avatar.url)  # Отладочный вывод
+            profile = avatar_form.save()
             return redirect('ps_account:account')
-        else:
-            print("Ошибки формы:", avatar_form.errors)  # Вывод ошибок формы для отладки
     else:
         avatar_form = AvatarChangeForm(instance=profile)
 
+    # Безопасное получение URL аватарки
+    avatar_url = profile.get_avatar_url() if profile.avatar else None
+    
     context = {
         'user_name': user.get_full_name() or user.username,
         'user_email': user.email,
         'registration_date': user.date_joined.strftime('%d %B %Y'),
         'documents': documents,
         'avatar_form': avatar_form,
-        'avatar_url': profile.avatar.url if profile.avatar else '/static/deps/images/default-avatar.png',
-        'profile': profile
+        'profile': profile,
+        'avatar_url': avatar_url,
     }
     return render(request, 'ps_account/sit2.html', context)
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -117,6 +119,7 @@ def change_password(request):
         form = PasswordChangeForm(request.user)
 
     return render(request, 'ps_account/change_password.html', {'form': form})
+
 def staff_check(user):
     return user.is_staff
 

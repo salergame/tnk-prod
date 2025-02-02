@@ -5,128 +5,365 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация пользователя</title>
-    <link rel="stylesheet" href="{% static 'deps/css/account_style.css' %}">
+    <title>Регистрация | Sadyrbai Consulting</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'deps/images/logo.ico' %}" sizes="32x32">
     <style>
+        :root {
+            --primary-color: #B1454A;
+            --secondary-color: #C85F63;
+            --accent-color: #D87A7E;
+            --dark-bg: #2D2D2D;
+            --text-color: #333333;
+            --light-text: #FFFFFF;
+            --form-bg: #FFFFFF;
+            --light-bg: #F5EDED;
+            --white: #FFFFFF;
+            --heading-font: 'Outfit', sans-serif;
+            --body-font: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--body-font);
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Навбар */
+        header {
+            background-color: var(--white);
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            font-family: var(--heading-font);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .nav-left a:not(.logo) {
+            margin-left: auto;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #2D2D2D;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:not(.logo):hover {
+            color: var(--primary-color);
+            background: none;
+        }
+
+        .logo {
+            padding: 0 !important;
+            margin-right: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo:hover {
+            background: none !important;
+        }
+
+        /* Форма регистрации */
+        .login-container {
+            max-width: 550px;
+            margin: 80px auto;
+            padding: 60px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(177,69,74,0.1);
+            border: 1px solid rgba(177,69,74,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .login-container h1 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: var(--text-color);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 35px;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: var(--text-color);
+            font-weight: 500;
+            display: block;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            border: 2px solid rgba(177,69,74,0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 0 5px 15px rgba(177,69,74,0.1);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(177,69,74,0.2);
+        }
+
+        .social-login {
+            margin-top: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .social-login p {
+            color: var(--text-color);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-login p::before,
+        .social-login p::after {
+            content: '';
+            height: 1px;
+            width: 100px;
+            background: rgba(177,69,74,0.1);
+        }
+
+        .btn-google {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: white;
+            border: 2px solid rgba(177,69,74,0.1);
+            border-radius: 12px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            gap: 12px;
+        }
+
+        .btn-google:hover {
+            background: #f8f9fa;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(177,69,74,0.1);
+        }
+
+        .google-icon {
+            width: 24px;
+            height: 24px;
+            background: url('{% static "deps/images/google-icon.png" %}') no-repeat center/contain;
+        }
+
         .password-wrapper {
             position: relative;
-            width: 100%;
         }
-        .password-wrapper input {
-            width: calc(100% - 40px); /* Оставляем место для иконки */
-        }
+
         .toggle-password {
             position: absolute;
+            right: 16px;
             top: 50%;
-            right: 10px;
             transform: translateY(-50%);
             cursor: pointer;
+            color: var(--text-color);
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .logo img {
+                height: 30px;
+            }
+
+            nav {
+                padding: 0 10px;
+            }
+
+            .nav-left {
+                gap: 10px;
+            }
+
+            .nav-left a:not(.logo) {
+                margin-left: 0;
+                font-size: 14px;
+            }
+
+            .login-container {
+                margin: 40px 20px;
+                padding: 40px 30px;
+            }
+
+            .social-login p::before,
+            .social-login p::after {
+                width: 50px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <header>
         <nav>
-            <a href="{% url 'main:index' %}">Главная</a>
-            <a href="{% url 'ps_account:login' %}">Войти</a>
+            <div class="nav-left">
+                <a href="{% url 'main:index' %}" class="logo">
+                    <img src="{% static 'deps/images/logo.jpg' %}" alt="Sadyrbai Consulting">
+                </a>
+                <a href="{% url 'main:index' %}">ГЛАВНАЯ</a>
+                <a href="{% url 'main:index' %}#services-section">УСЛУГИ</a>
+                <a href="{% url 'main:index' %}#steps-section">КАК МЫ РАБОТАЕМ</a>
+                <a href="{% url 'main:index' %}#certificates-section">СЕРТИФИКАТЫ</a>
+
+                <a href="{% url 'main:index' %}#faq-section">FAQ</a>
+            </div>
+            <div class="nav-right">
+                {% if user.is_staff %}
+                    <a href="{% url 'ps_account:staff_documents' %}">Документы</a>
+                {% endif %}
+            </div>
         </nav>
-        <h1>Регистрация пользователя</h1>
-        <div class="registration-section">
-            <form action="{% url 'ps_account:registration' %}" method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="username">Имя пользователя:</label>
-                    <input type="text" id="username" name="username" required>
+    </header>
+
+    <div class="login-container">
+        <h1>Регистрация</h1>
+        <form action="{% url 'ps_account:registration' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Имя пользователя</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password1">Пароль</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password1" name="password1" required>
+                    <span class="toggle-password">
+                        <i class="far fa-eye" id="togglePassword1"></i>
+                    </span>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password2">Подтвердите пароль</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password2" name="password2" required>
+                    <span class="toggle-password">
+                        <i class="far fa-eye" id="togglePassword2"></i>
+                    </span>
                 </div>
-                <div class="form-group">
-                    <label for="password1">Пароль:</label>
-                    <div class="password-wrapper">
-                        <input type="password" id="password1" name="password1" required>
-                        <span id="togglePassword1" class="toggle-password">
-                            <!-- Иконка глаза -->
-                            <svg id="eyeOpen1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" style="display: none;">
-                                <path d="M12 4.5C7.30558 4.5 3.32203 7.36251 1.5 12C3.32203 16.6375 7.30558 19.5 12 19.5C16.6944 19.5 20.6779 16.6375 22.5 12C20.6779 7.36251 16.6944 4.5 12 4.5ZM12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12C16.5 14.4853 14.4853 16.5 12 16.5ZM12 9C10.6203 9 9.5 10.1203 9.5 11.5C9.5 12.8797 10.6203 14 12 14C13.3797 14 14.5 12.8797 14.5 11.5C14.5 10.1203 13.3797 9 12 9Z"/>
-                            </svg>
-                            <!-- Иконка перечеркнутого глаза -->
-                            <svg id="eyeClosed1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                                <path d="M12 5C7 5 2.73 7.61 1 12C1.67 13.87 2.77 15.44 4.18 16.63L5.61 15.2C4.49 14.3 3.62 13.19 3.05 12C4.5 8.67 7.68 6.5 12 6.5C12.93 6.5 13.8 6.65 14.6 6.91L16.14 5.37C14.96 5.13 13.5 5 12 5ZM17.45 9.13L19.26 7.32C19.53 7.68 19.79 8.05 20.04 8.44L18.64 9.84C18.31 9.21 17.91 8.62 17.45 9.13ZM19.87 5.87L18.5 4.5L3.5 19.5L4.87 20.87L7.42 18.32C8.32 18.76 9.32 19 10.38 19C15.32 19 19.26 16.39 21 12C20.41 10.9 19.62 9.93 18.67 9.14L20.05 7.76C20.79 8.63 21.5 9.72 22.08 11C20.53 14.87 16.5 17 12 17C10.83 17 9.72 16.79 8.7 16.4L11 14.1C11.61 14.35 12.29 14.5 13 14.5C14.93 14.5 16.5 12.93 16.5 11C16.5 10.32 16.35 9.68 16.1 9.07L19.87 5.87Z"/>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password2">Подтвердите пароль:</label>
-                    <div class="password-wrapper">
-                        <input type="password" id="password2" name="password2" required>
-                        <span id="togglePassword2" class="toggle-password">
-                            <!-- Иконка глаза -->
-                            <svg id="eyeOpen2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" style="display: none;">
-                                <path d="M12 4.5C7.30558 4.5 3.32203 7.36251 1.5 12C3.32203 16.6375 7.30558 19.5 12 19.5C16.6944 19.5 20.6779 16.6375 22.5 12C20.6779 7.36251 16.6944 4.5 12 4.5ZM12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12C16.5 14.4853 14.4853 16.5 12 16.5ZM12 9C10.6203 9 9.5 10.1203 9.5 11.5C9.5 12.8797 10.6203 14 12 14C13.3797 14 14.5 12.8797 14.5 11.5C14.5 10.1203 13.3797 9 12 9Z"/>
-                            </svg>
-                            <!-- Иконка перечеркнутого глаза -->
-                            <svg id="eyeClosed2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                                <path d="M12 5C7 5 2.73 7.61 1 12C1.67 13.87 2.77 15.44 4.18 16.63L5.61 15.2C4.49 14.3 3.62 13.19 3.05 12C4.5 8.67 7.68 6.5 12 6.5C12.93 6.5 13.8 6.65 14.6 6.91L16.14 5.37C14.96 5.13 13.5 5 12 5ZM17.45 9.13L19.26 7.32C19.53 7.68 19.79 8.05 20.04 8.44L18.64 9.84C18.31 9.21 17.91 8.62 17.45 9.13ZM19.87 5.87L18.5 4.5L3.5 19.5L4.87 20.87L7.42 18.32C8.32 18.76 9.32 19 10.38 19C15.32 19 19.26 16.39 21 12C20.41 10.9 19.62 9.93 18.67 9.14L20.05 7.76C20.79 8.63 21.5 9.72 22.08 11C20.53 14.87 16.5 17 12 17C10.83 17 9.72 16.79 8.7 16.4L11 14.1C11.61 14.35 12.29 14.5 13 14.5C14.93 14.5 16.5 12.93 16.5 11C16.5 10.32 16.35 9.68 16.1 9.07L19.87 5.87Z"/>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="register-button">Зарегистрироваться</button>
-                </div>
-                <div class="text-center">
-                    <p>Или авторизуйтесь через:</p>
-                    
-                    <div class="auth-buttons">
-                        <a href="{% provider_login_url 'google' %}" class="btn-google">
-                            <span class="google-icon"></span> Вход через Google
-                        </a>
-                    </div>                    
-                </div>
-            </form>
-        </div>
+            </div>
+            <button type="submit" class="login-button">Зарегистрироваться</button>
+            
+            <div class="social-login">
+                <p>Или зарегистрируйтесь через</p>
+                <a href="{% provider_login_url 'google' %}" class="btn-google">
+                    <span class="google-icon"></span>
+                    Регистрация через Google
+                </a>
+            </div>
+        </form>
     </div>
 
     <script>
-        // Логика для показа/скрытия пароля для первого поля
-        const passwordInput1 = document.getElementById('password1');
-        const togglePassword1 = document.getElementById('togglePassword1');
-        const eyeOpen1 = document.getElementById('eyeOpen1');
-        const eyeClosed1 = document.getElementById('eyeClosed1');
+        const togglePassword1 = document.querySelector('#togglePassword1');
+        const togglePassword2 = document.querySelector('#togglePassword2');
+        const password1 = document.querySelector('#password1');
+        const password2 = document.querySelector('#password2');
 
-        togglePassword1.addEventListener('click', function() {
-            if (passwordInput1.type === 'password') {
-                passwordInput1.type = 'text';
-                eyeOpen1.style.display = 'inline';
-                eyeClosed1.style.display = 'none';
-            } else {
-                passwordInput1.type = 'password';
-                eyeOpen1.style.display = 'none';
-                eyeClosed1.style.display = 'inline';
-            }
+        togglePassword1.addEventListener('click', function (e) {
+            const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
+            password1.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
         });
 
-        // Логика для показа/скрытия пароля для второго поля (Подтвердить пароль)
-        const passwordInput2 = document.getElementById('password2');
-        const togglePassword2 = document.getElementById('togglePassword2');
-        const eyeOpen2 = document.getElementById('eyeOpen2');
-        const eyeClosed2 = document.getElementById('eyeClosed2');
-
-        togglePassword2.addEventListener('click', function() {
-            if (passwordInput2.type === 'password') {
-                passwordInput2.type = 'text';
-                eyeOpen2.style.display = 'inline';
-                eyeClosed2.style.display = 'none';
-            } else {
-                passwordInput2.type = 'password';
-                eyeOpen2.style.display = 'none';
-                eyeClosed2.style.display = 'inline';
-            }
+        togglePassword2.addEventListener('click', function (e) {
+            const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+            password2.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
         });
     </script>
-    <script src="{% static 'deps/js/account.js' %}"></script>
 </body>
 </html>

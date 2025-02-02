@@ -8,7 +8,18 @@
     <title>Tnk-ocenka</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
-    <link rel="icon" type="image/png" href="{% static 'deps/images/logo.ico' %}"/>
+    <link rel="icon" type="image/ico" href="{% static 'deps/images/logo.ico' %}" sizes="500x500">
+    <link rel="icon" type="image/ico" href="{% static 'deps/images/logo.ico' %}" sizes="500x500">
+
+    <link rel="icon" type="image/ico" href="{% static 'deps/images/logo.ico' %}" sizes="500x500">
+    <link rel="icon" type="image/ico" href="{% static 'deps/images/logo.ico' %}" sizes="500x500">
+    <link rel="icon" type="image/ico" href="{% static 'deps/images/logo.ico' %}" sizes="500x500">
+    <link rel="apple-touch-icon" href="{% static 'deps/images/logo.ico' %}" sizes="500x500">
+    <link rel="manifest" href="{% static 'deps/images/site.webmanifest' %}">
+    <meta name="msapplication-TileImage" content="{% static 'deps/images/logo.ico' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="shortcut icon" type="image/png" href="{% static 'deps/images/logo.ico' %}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
@@ -473,48 +484,41 @@
         .schedule {
             width: 250px;
             background: rgba(255, 255, 255, 0.15);
-            border-radius: 15px 15px 0 15px;
-            padding: 15px;
+            border-radius: 20px 20px 5px 20px;
+            padding: 20px;
             position: relative;
             margin-top: 20px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .schedule::after {
-            content: '';
-            position: absolute;
-            right: -8px;
-            bottom: 0;
-            width: 15px;
-            height: 15px;
-            background: rgba(255, 255, 255, 0.15);
-            transform: skew(-45deg);
-            border-radius: 0 0 0 5px;
+            backdrop-filter: blur(5px);
         }
         
         .schedule-title {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             color: #ffffff;
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .schedule-time {
             color: #ffffff;
-            font-size: 15px;
+            font-size: 16px;
             line-height: 1.6;
             margin: 0;
+            padding-left: 5px;
         }
         
         .schedule-lunch {
             color: rgba(255, 255, 255, 0.8);
             font-size: 14px;
-            margin-top: 5px;
+            margin-top: 8px;
             padding-left: 5px;
             border-left: 2px solid rgba(255, 255, 255, 0.3);
+            margin-left: 5px;
         }
         
         .footer-info {
@@ -1060,52 +1064,20 @@
             border-radius: 8px;
         }
 
-        /* Стили для графика работы в виде сообщения */
+        /* Добавляем анимацию появления */
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .schedule {
-            width: 250px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 15px 15px 0 15px;
-            padding: 15px;
-            position: relative;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Улучшенный треугольник для эффекта сообщения */
-        .schedule::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            right: -12px;
-            width: 12px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.15);
-            clip-path: polygon(0 0, 0% 100%, 100% 0);
-        }
-
-        .schedule-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .schedule-time {
-            color: #ffffff;
-            font-size: 15px;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        .schedule-lunch {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            margin-top: 5px;
-            padding-left: 5px;
-            border-left: 2px solid rgba(255, 255, 255, 0.3);
+            animation: messageAppear 0.3s ease-out;
         }
 
         /* Адаптивность */
@@ -1117,14 +1089,6 @@
             .schedule {
                 width: 100%;
                 margin-top: 20px;
-            }
-
-            .schedule::after {
-                display: none; /* Скрываем треугольник на мобильных */
-            }
-
-            .map-container iframe {
-                height: 350px;
             }
         }
 
@@ -1244,6 +1208,190 @@
                 box-sizing: border-box;
             }
         }
+
+        /* Добавляем стили для сертификатов */
+        .certificates-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .certificates-section::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(45deg, rgba(177,69,74,0.03) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .certificates-section h1 {
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--text-color);
+            font-size: 36px;
+            font-weight: 600;
+            position: relative;
+            padding: 20px 40px;
+            background: linear-gradient(to right, 
+                rgba(177, 69, 74, 0.05), 
+                rgba(177, 69, 74, 0.1), 
+                rgba(177, 69, 74, 0.05)
+            );
+            display: inline-block;
+            border-radius: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .certificates-scroll {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding: 40px 0;
+        }
+
+        .scroll-track {
+            display: flex;
+            gap: 30px;
+            padding: 30px 0;
+            width: fit-content;
+        }
+
+        .track1 {
+            animation: scroll 80s linear infinite;
+            margin-bottom: 50px;
+        }
+
+        .track2 {
+            animation: scroll-reverse 70s linear infinite;
+        }
+
+        .certificate-card {
+            flex: 0 0 350px;
+            height: 450px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(177,69,74,0.1);
+            position: relative;
+        }
+
+        .certificate-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(177,69,74,0.05),
+                rgba(177,69,74,0.02)
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .certificate-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(177,69,74,0.1);
+            border-color: var(--primary-color);
+        }
+
+        .certificate-card:hover::before {
+            opacity: 1;
+        }
+
+        .certificate-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .certificate-card:hover img {
+            transform: scale(1.05);
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-50% - 15px));
+            }
+        }
+
+        @keyframes scroll-reverse {
+            0% {
+                transform: translateX(calc(-50% - 15px));
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .scroll-track:hover {
+            animation-play-state: paused;
+        }
+
+        .certificates-scroll::before,
+        .certificates-scroll::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 200px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .certificates-scroll::before {
+            left: 0;
+            background: linear-gradient(90deg, #fff, transparent);
+        }
+
+        .certificates-scroll::after {
+            right: 0;
+            background: linear-gradient(-90deg, #fff, transparent);
+        }
+
+        @media (max-width: 768px) {
+            .certificates-section {
+                padding: 60px 0;
+            }
+
+            .certificates-section h1 {
+                font-size: 28px;
+                padding: 15px 30px;
+                margin: 0 20px 40px;
+                width: calc(100% - 40px);
+            }
+
+            .certificate-card {
+                flex: 0 0 280px;
+                height: 380px;
+            }
+
+            .track1 {
+                animation-duration: 60s;
+            }
+
+            .track2 {
+                animation-duration: 50s;
+            }
+
+            .certificates-scroll::before,
+            .certificates-scroll::after {
+                width: 100px;
+            }
+        }
     </style>
     <script>
         // Функция для гамбургер-меню
@@ -1316,14 +1464,15 @@
 <body>
     <header>
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
-            <img src="{% static 'deps/images/logo.ico' %}" alt="ТНК ОЦЕНКА" style="width: 150px; height: auto; object-fit: contain;"/>
+            <img src="{% static 'deps/images/logo.jpg' %}" alt="ТНК ОЦЕНКА" style="width: 150px; height: auto; object-fit: contain;"/>
             <nav>
-                <a href="/">Главная</a>
-                <a href="#services-section">Услуги</a>
-                <a href="#steps-section">Как мы работаем</a>
+                <a href="/">ГЛАВНАЯ</a>
+                <a href="#services-section">УСЛУГИ</a>
+                <a href="#steps-section">КАК МЫ РАБОТАЕМ</a>
+                <a href="#certificates-section">СЕРТИФИКАТЫ</a>
                 <a href="#faq-section">FAQ</a>
                 {% if user.is_staff %}
-                    <a href="{% url 'ps_account:staff_documents' %}">Документы</a>
+                    <a href="{% url 'ps_account:staff_documents' %}">ДОКУМЕНТЫ</a>
                 {% endif %}
             </nav>
             <div class="contact-info">
@@ -1346,16 +1495,17 @@
             <span></span>
         </div>
         <div class="mobile-nav">
-            <a href="/">Главная</a>
-            <a href="#services-section">Услуги</a>
-            <a href="#steps-section">Как мы работаем</a>
+            <a href="/">ГЛАВНАЯ</a>
+            <a href="#services-section">УСЛУГИ</a>
+            <a href="#steps-section">КАК МЫ РАБОТАЕМ</a>
+            <a href="#certificates-section">СЕРТИФИКАТЫ</a>
             <a href="#faq-section">FAQ</a>
             {% if user.is_staff %}
-                <a href="{% url 'ps_account:staff_documents' %}">Документы</a>
+                <a href="{% url 'ps_account:staff_documents' %}">ДОКУМЕНТЫ</a>
             {% endif %}
             {% if user.is_authenticated %}
-                <a href="{% url 'ps_account:account' %}">Профиль</a>
-                <a href="{% url 'ps_account:logout' %}">Выход</a>
+                <a href="{% url 'ps_account:account' %}">ПРОФИЛЬ</a>
+                <a href="{% url 'ps_account:logout' %}">ВЫХОД</a>
             {% else %}
                 <a href="{% url 'ps_account:login' %}">Вход</a>
                 <a href="{% url 'ps_account:registration' %}">Регистрация</a>
@@ -1453,6 +1603,37 @@
             <a href="#" class="button">Заказать оценку</a>
         </div>
     </div>
+    <div class="certificates-section" id="certificates-section">
+        <h1>Наши сертификаты</h1>
+        <div class="certificates-scroll">
+            <div class="scroll-track track1">
+                {% for certificate in certificates %}
+                    <div class="certificate-card">
+                        <img src="{% static 'deps/images/certificates/'|add:certificate %}" alt="Сертификат" loading="lazy">
+                    </div>
+                {% endfor %}
+                <!-- Дублируем для бесконечной прокрутки -->
+                {% for certificate in certificates %}
+                    <div class="certificate-card">
+                        <img src="{% static 'deps/images/certificates/'|add:certificate %}" alt="Сертификат" loading="lazy">
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="scroll-track track2">
+                {% for certificate in certificates %}
+                    <div class="certificate-card">
+                        <img src="{% static 'deps/images/certificates/'|add:certificate %}" alt="Сертификат" loading="lazy">
+                    </div>
+                {% endfor %}
+                <!-- Дублируем для бесконечной прокрутки -->
+                {% for certificate in certificates %}
+                    <div class="certificate-card">
+                        <img src="{% static 'deps/images/certificates/'|add:certificate %}" alt="Сертификат" loading="lazy">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
     <div class="container" id="faq-section">
         <h1>Ответы на часто-задаваемые вопросы</h1>
         <div class="faq-item">
@@ -1530,7 +1711,7 @@
 
     <!-- Копирайт должен быть здесь, после футера -->
     <div class="footer-bottom">
-        <p>&copy; © 2025 Сделано Svist.co.</p>
+        <p>&copy; 2025 Сделано Svist.co.</p>
     </div>
 
     <!-- Плавающая кнопка чата -->
