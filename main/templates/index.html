@@ -66,17 +66,35 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            font-family: var(--heading-font);
         }
         
         nav a {
-            color: var(--text-color);
+            position: relative;
+            color: #333;
             text-decoration: none;
-            margin: 0 15px;
-            transition: color 0.3s;
             font-weight: 500;
-            font-size: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            transition: color 0.3s;
+            font-size: 15px;
+            padding: 10px 20px;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
         }
         
         nav a:hover {
@@ -160,7 +178,7 @@
         
         .email-section p {
             color: var(--text-color);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             font-size: 16px;
         }
         
@@ -290,8 +308,9 @@
             transition: transform 0.3s;
             display: flex;
             flex-direction: column;
-            height: 400px;
+            height: 450px;
             width: 100%;
+            position: relative;
         }
         
         .service-card img {
@@ -326,6 +345,46 @@
             text-decoration: none;
             border-bottom: 2px solid var(--secondary-color);
             align-self: flex-start;
+        }
+        
+        .service-card .whatsapp-button {
+            position: absolute;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 120px);
+        }
+        
+        .service-card .telegram-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 120px);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            background-color: #0088cc;
+            color: white !important;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .service-card .telegram-button:hover {
+            background-color: #0077b5;
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .service-card .telegram-button i {
+            font-size: 20px;
+            color: white !important;
+            margin-right: 8px;
         }
         
         .steps-container {
@@ -412,16 +471,18 @@
         .footer {
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             padding: 50px 0 0 0;
-            border-bottom: none; /* Убираем возможную границу */
+            border-bottom: none;
+            position: relative;
         }
         
         .footer-content {
             display: grid;
-            grid-template-columns: auto 1fr; /* Левая колонка auto, правая занимает оставшееся место */
+            grid-template-columns: 0.7fr 1.3fr;
             gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 15px;
+            align-items: start;
         }
         
         .footer h4 {
@@ -472,13 +533,19 @@
         }
         
         .map-container {
-            flex: 1;
+            width: 100%;
+            height: 450px;
+            margin-top: 25px;
+            position: relative;
+            z-index: 1;
         }
         
         .map-container iframe {
             width: 100%;
-            height: 450px;
+            height: 100%;
+            border: none;
             border-radius: 8px;
+            margin-top: 0;
         }
         
         .schedule {
@@ -522,7 +589,19 @@
         }
         
         .footer-info {
-            max-width: 300px; /* Ограничиваем ширину левой колонки */
+            padding-top: 0;
+            margin-top: 0;
+        }
+        
+        .footer-bottom {
+            margin-top: 30px;
+            padding: 15px 0;
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            position: relative;
+            z-index: 2;
         }
         
         @media (max-width: 768px) {
@@ -542,7 +621,7 @@
             }
             
             .footer-content {
-                grid-template-columns: 1fr; /* На мобильных одна колонка */
+                grid-template-columns: 1fr;
             }
             
             .footer-contacts {
@@ -591,7 +670,6 @@
             }
         }
         
-        /* Добавляем стили для FAQ секции */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -684,7 +762,6 @@
             }
         }
         
-        /* Стили для гамбургер-меню */
         .burger-menu {
             display: none;
             width: 30px;
@@ -786,14 +863,13 @@
             }
         }
 
-        /* Стили для секции услуг */
         .services h1 {
             font-size: 36px;
             font-weight: 600;
             text-align: center;
-            margin: 40px auto; /* Центрирование с помощью margin auto */
+            margin: 40px auto;
             position: relative;
-            max-width: 800px; /* Ограничение ширины */
+            max-width: 800px;
             padding: 0 20px;
             color: var(--text-color);
         }
@@ -805,7 +881,6 @@
             border-radius: 8px;
         }
         
-        /* Стили для секции шагов */
         .steps-container h1 {
             font-size: 36px;
             font-weight: 600;
@@ -821,14 +896,13 @@
             margin-top: 40px;
         }
         
-        /* Стили для заголовка "Наши услуги" */
         main h1 {
             text-align: center;
             font-size: 36px;
             font-weight: 600;
             color: var(--text-color);
             padding: 20px 40px;
-            margin: 80px auto 40px; /* Увеличили отступ сверху */
+            margin: 80px auto 40px;
             background: linear-gradient(to right, 
                 rgba(177, 69, 74, 0.05), 
                 rgba(177, 69, 74, 0.1), 
@@ -841,50 +915,54 @@
             transform: translateX(-50%);
         }
 
-        /* Вариант 2: С тенью */
         main h1.variant2 {
             background-color: #fafafa;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03);
         }
 
-        /* Вариант 3: С границей */
         main h1.variant3 {
             background-color: rgba(177, 69, 74, 0.05);
             border: 1px solid rgba(177, 69, 74, 0.1);
         }
 
-        /* Медиа-запрос для адаптивности */
         @media (max-width: 768px) {
             main h1 {
                 font-size: 28px;
                 padding: 15px 30px;
-                margin: 60px auto 30px; /* Адаптивный отступ для мобильных */
+                margin: 60px auto 30px;
             }
         }
 
-        /* Стили для кнопок в навбаре */
         .auth-buttons {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             align-items: center;
         }
 
         .auth-button {
-            padding: 8px 20px;
+            padding: 8px 16px;
             border-radius: 5px;
-            font-weight: 500;
             text-decoration: none;
-            transition: all 0.3s ease;
-            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 32px;
+            font-size: 13px;
         }
 
         .login-button {
             background-color: transparent;
-            border: 2px solid var(--primary-color);
             color: var(--primary-color);
-            padding: 8px 20px; /* Явно указываем padding для кнопки входа */
-            width: auto; /* Позволяем ширине определяться содержимым */
-            white-space: nowrap; /* Предотвращаем перенос текста */
+            border: 2px solid var(--primary-color);
+        }
+
+        .register-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: 2px solid var(--primary-color);
         }
 
         .login-button:hover {
@@ -892,21 +970,11 @@
             color: white;
         }
 
-        .register-button {
-            background-color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-            color: white;
-            padding: 8px 20px;
-            width: auto;
-            white-space: nowrap;
-        }
-
         .register-button:hover {
             background-color: var(--secondary-color);
             border-color: var(--secondary-color);
         }
 
-        /* Стили для профиля пользователя */
         .user-menu {
             display: flex;
             gap: 15px;
@@ -927,11 +995,10 @@
 
         @media (max-width: 768px) {
             .auth-buttons, .user-menu {
-                display: none; /* Скрываем на мобильных */
+                display: none;
             }
         }
 
-        /* Стили для плавающей кнопки чата */
         .chat-button {
             position: fixed;
             bottom: 20px;
@@ -960,7 +1027,6 @@
             box-shadow: 0 6px 16px rgba(0,0,0,0.2);
         }
 
-        /* Анимация пульсации */
         @keyframes pulse {
             0% {
                 box-shadow: 0 0 0 0 rgba(177, 69, 74, 0.4);
@@ -977,7 +1043,6 @@
             animation: pulse 2s infinite;
         }
 
-        /* Адаптивность для мобильных устройств */
         @media (max-width: 768px) {
             .chat-button {
                 width: 50px;
@@ -991,7 +1056,6 @@
             }
         }
 
-        /* Стили для социальных сетей */
         .social-links {
             display: flex;
             gap: 15px;
@@ -999,39 +1063,33 @@
         }
 
         .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: white;
-            color: var(--primary-color);
-            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border: 2px solid white;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .social-links a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .social-links a i {
             font-size: 20px;
+            text-decoration: none;
         }
 
         .whatsapp:hover {
             background-color: #25D366;
             color: white;
+            border-color: #25D366;
+            text-decoration: none;
         }
 
         .telegram:hover {
             background-color: #0088cc;
             color: white;
+            border-color: #0088cc;
+            text-decoration: none;
         }
 
-        /* Адаптивность */
         @media (max-width: 768px) {
             .social-links {
                 justify-content: center;
@@ -1047,7 +1105,6 @@
             }
         }
 
-        /* Стили для футера и карты */
         .footer-map {
             display: flex;
             gap: 30px;
@@ -1064,7 +1121,6 @@
             border-radius: 8px;
         }
 
-        /* Добавляем анимацию появления */
         @keyframes messageAppear {
             from {
                 opacity: 0;
@@ -1080,7 +1136,6 @@
             animation: messageAppear 0.3s ease-out;
         }
 
-        /* Адаптивность */
         @media (max-width: 1024px) {
             .footer-map {
                 flex-direction: column;
@@ -1092,20 +1147,17 @@
             }
         }
 
-        /* Добавляем плавную прокрутку для всей страницы */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Добавляем отступ сверху для секций, чтобы учесть фиксированный header */
         #services-section,
         #steps-section,
         #faq-section {
-            scroll-margin-top: 80px; /* Регулируйте значение в зависимости от высоты вашего header */
+            scroll-margin-top: 80px;
         }
 
         @media (max-width: 768px) {
-            /* Фиксим сетку услуг */
             .services {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -1121,7 +1173,6 @@
                 min-height: 400px;
             }
 
-            /* Центрируем заголовки */
             main h1,
             .steps-container h1,
             .container h1 {
@@ -1132,7 +1183,6 @@
                 text-align: center;
             }
 
-            /* Фиксим шаги */
             .steps-container {
                 padding: 30px 20px;
             }
@@ -1148,7 +1198,6 @@
                 width: 100%;
             }
 
-            /* Фиксим FAQ */
             .container {
                 padding: 30px 20px;
                 width: calc(100% - 40px);
@@ -1163,7 +1212,6 @@
             }
         }
 
-        /* Фиксим горизонтальную прокрутку */
         html, body {
             overflow-x: hidden;
             width: 100%;
@@ -1173,7 +1221,6 @@
         }
 
         @media (max-width: 768px) {
-            /* Фиксим контейнеры */
             .container, 
             .services,
             .steps-container,
@@ -1189,13 +1236,11 @@
                 box-sizing: border-box;
             }
 
-            /* Фиксим навигацию */
             nav {
                 padding: 0;
                 margin: 0;
             }
 
-            /* Фиксим все секции */
             .main-content,
             .steps-content,
             .faq-section,
@@ -1209,7 +1254,6 @@
             }
         }
 
-        /* Добавляем стили для сертификатов */
         .certificates-section {
             padding: 100px 0;
             background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
@@ -1392,9 +1436,172 @@
                 width: 100px;
             }
         }
+
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background-color: #25D366;
+            color: white !important;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .service-card .whatsapp-button {
+            position: absolute;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 120px);
+        }
+
+        .service-card .telegram-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 120px);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            background-color: #0088cc;
+            color: white !important;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .service-card .telegram-button:hover {
+            background-color: #0077b5;
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .service-card .telegram-button i {
+            font-size: 20px;
+            color: white !important;
+            margin-right: 8px;
+        }
+
+        .whatsapp-button i {
+            font-size: 20px;
+            color: white !important;
+        }
+
+        .telegram-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background-color: #0088cc;
+            color: white !important;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            width: auto;
+            margin: 0;
+        }
+
+        .telegram-button i {
+            font-size: 20px;
+            color: white !important;
+        }
+
+        .telegram-button:hover {
+            background-color: #0077b5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            color: white !important;
+        }
+
+        /* Обновляем стили для контейнера кнопок */
+        .messenger-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Стили для контейнера сертификатов */
+        .certificates {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .certificate-img {
+            width: 100%;
+            height: 300px; /* Фиксированная высота */
+            object-fit: cover; /* Сохраняем пропорции */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .certificate-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        /* Стили для модального окна остаются прежними */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 10px;
+        }
     </style>
     <script>
-        // Функция для гамбургер-меню
         function toggleMobileNav() {
             const burgerMenu = document.querySelector('.burger-menu');
             const mobileNav = document.querySelector('.mobile-nav');
@@ -1414,12 +1621,10 @@
             }
         }
 
-        // Функция для FAQ
         function toggleAnswer(element) {
             const faqItem = element;
             const answer = element.nextElementSibling;
             
-            // Закрываем все остальные ответы
             document.querySelectorAll('.faq-item').forEach(item => {
                 if (item !== faqItem) {
                     item.classList.remove('active');
@@ -1430,21 +1635,18 @@
                 }
             });
             
-            // Переключаем текущий ответ с анимацией
             faqItem.classList.toggle('active');
             if (answer.style.display === 'block') {
                 answer.style.display = 'none';
             } else {
                 answer.style.display = 'block';
                 answer.style.animation = 'none';
-                answer.offsetHeight; // Trigger reflow
+                answer.offsetHeight;
                 answer.style.animation = 'slideDown 0.3s ease forwards';
             }
         }
 
-        // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
-            // Обработчики для FAQ
             document.querySelectorAll('.faq-item').forEach(item => {
                 item.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -1452,7 +1654,6 @@
                 });
             });
 
-            // Закрытие мобильного меню при клике на ссылку
             document.querySelectorAll('.mobile-nav a').forEach(link => {
                 link.addEventListener('click', () => {
                     toggleMobileNav();
@@ -1524,9 +1725,11 @@
         <div class="form-container">
             <h2>Остались вопросы?</h2>
             
-            <div class="email-section">
-                <p>Отправьте ваш вопрос на почту:</p>
-                <a href="mailto:tnk01@list.ru" class="email-link">tnk01@list.ru</a>
+            <div class="messenger-buttons">
+                <a href="https://wa.me/77026264998" class="whatsapp-button" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Заказать через WhatsApp
+                </a>
             </div>
 
             <p class="divider">или</p>
@@ -1537,7 +1740,7 @@
             </div>
 
             <p class="info-text">
-                Зарегистрированные пользователи получают доступ к чату поддержки
+                Вы также можете заказать оценку через личный чат на нашем сайте 
             </p>
         </div>
     </div>
@@ -1548,25 +1751,53 @@
                 <img alt="Image of a modern building" height="200" src="https://storage.googleapis.com/a1aa/image/vJI3otYhXAATCytszDuIqOdHggBgUjhN3yRY-5sGulY.jpg" width="300"/>
                 <h3>Оценка недвижимости</h3>
                 <p>Качественная оценка недвижимости в кратчайшие сроки</p>
-                <a href="{% url 'chat:index' %}">Узнать подробнее</a>
+                <a href="https://wa.me/77026264998" class="whatsapp-button" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Заказать через WhatsApp
+                </a>
+                <a href="https://t.me/Kairat_Zhaxalykov" class="telegram-button" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                    Заказать через Telegram
+                </a>
             </div>
             <div class="service-card">
                 <img alt="Image of parked cars" height="200" src="https://storage.googleapis.com/a1aa/image/AI4Anly52za3Kpsm9EH9ZZ1YwmmSxm5d8vDywNJoLf4.jpg" width="300"/>
                 <h3>Оценка движимого имущества</h3>
                 <p>Четкая и не затратная оценка транспортных средств</p>
-                <a href="{% url 'chat:index' %}">Узнать подробнее</a>
+                <a href="https://wa.me/77026264998" class="whatsapp-button" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Заказать через WhatsApp
+                </a>
+                <a href="https://t.me/Kairat_Zhaxalykov" class="telegram-button" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                    Заказать через Telegram
+                </a>
             </div>
             <div class="service-card">
                 <img alt="Image of business charts and graphs" height="200" src="https://storage.googleapis.com/a1aa/image/xOlsTgBhIHlcpK4Gtm1z3CD_GsPM1XJaGq4rYyIVNY8.jpg" width="300"/>
                 <h3>Оценка бизнеса</h3>
                 <p>Справедливая оценка стоимости бизнеса и имущества</p>
-                <a href="{% url 'chat:index' %}">Узнать подробнее</a>
+                <a href="https://wa.me/77026264998" class="whatsapp-button" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Заказать через WhatsApp
+                </a>
+                <a href="https://t.me/Kairat_Zhaxalykov" class="telegram-button" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                    Заказать через Telegram
+                </a>
             </div>
             <div class="service-card">
                 <img alt="Image of intellectual property items" height="200" src="https://storage.googleapis.com/a1aa/image/ihGXF-04bzmXhFoBsy9qb-haN0rmLRnrcvFy500RNxA.jpg" width="300"/>
                 <h3>Оценка интеллектуальной собственности</h3>
                 <p>Быстрая оценка стоимости интеллектуальной собственности</p>
-                <a href="{% url 'chat:index' %}">Узнать подробнее</a>
+                <a href="https://wa.me/77026264998" class="whatsapp-button" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Заказать через WhatsApp
+                </a>
+                <a href="https://t.me/Kairat_Zhaxalykov" class="telegram-button" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                    Заказать через Telegram
+                </a>
             </div>
         </div>
     </main>
@@ -1612,7 +1843,6 @@
                         <img src="{% static 'deps/images/certificates/'|add:certificate %}" alt="Сертификат" loading="lazy">
                     </div>
                 {% endfor %}
-                <!-- Дублируем для бесконечной прокрутки -->
                 {% for certificate in certificates %}
                     <div class="certificate-card">
                         <img src="{% static 'deps/images/certificates/'|add:certificate %}" alt="Сертификат" loading="lazy">
@@ -1625,7 +1855,6 @@
                         <img src="{% static 'deps/images/certificates/'|add:certificate %}" alt="Сертификат" loading="lazy">
                     </div>
                 {% endfor %}
-                <!-- Дублируем для бесконечной прокрутки -->
                 {% for certificate in certificates %}
                     <div class="certificate-card">
                         <img src="{% static 'deps/images/certificates/'|add:certificate %}" alt="Сертификат" loading="lazy">
@@ -1687,6 +1916,9 @@
                     <a href="https://wa.me/77026264998" target="_blank" class="whatsapp">
                         <i class="fab fa-whatsapp"></i>
                     </a>
+                    <a href="https://t.me/Kairat_Zhaxalykov" target="_blank" class="telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
                 </div>
             </div>
             <div class="footer-map">
@@ -1707,14 +1939,11 @@
                 </div>
             </div>
         </div>
+        <div class="footer-bottom">
+            © 2025 Сделано Svist.co.
+        </div>
     </footer>
 
-    <!-- Копирайт должен быть здесь, после футера -->
-    <div class="footer-bottom">
-        <p>&copy; 2025 Сделано Svist.co.</p>
-    </div>
-
-    <!-- Плавающая кнопка чата -->
     {% if user.is_authenticated %}
         <a href="{% url 'chat:index' %}" class="chat-button">
             <i class="far fa-comment"></i>
@@ -1725,8 +1954,6 @@
         </a>
     {% endif %}
 
-
-    <!-- JavaScript -->
     <script src="{% static 'deps/js/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'deps/js/bootstrap.js' %}"></script>
     <script src="{% static 'deps/js/custom.js' %}"></script>

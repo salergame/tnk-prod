@@ -54,11 +54,27 @@
         }
 
         nav a {
+            position: relative;
             color: #2D2D2D;
             text-decoration: none;
             padding: 10px 20px;
             transition: color 0.3s ease;
             font-weight: 500;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover:after {
+            width: 100%;
         }
 
         nav a:hover {

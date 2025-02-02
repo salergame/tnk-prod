@@ -1,30 +1,17 @@
 {% load static %}
 <header>
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 40px;">
         <img src="{% static 'deps/images/logo.jpg' %}" alt="ТНК ОЦЕНКА" style="width: 150px; height: auto; object-fit: contain;"/>
-        <nav style="display: flex; gap: 30px;">
-            <a href="/" style="color: #333; text-decoration: none; font-weight: 500; transition: color 0.3s;">ГЛАВНАЯ</a>
-            <a href="#services-section" style="color: #333; text-decoration: none; font-weight: 500; transition: color 0.3s;">УСЛУГИ</a>
-            <a href="#steps-section" style="color: #333; text-decoration: none; font-weight: 500; transition: color 0.3s;">КАК МЫ РАБОТАЕМ</a>
-            <a href="#certificates-section" style="color: #333; text-decoration: none; font-weight: 500; transition: color 0.3s;">СЕРТИФИКАТЫ</a>
-            <a href="#faq-section" style="color: #333; text-decoration: none; font-weight: 500; transition: color 0.3s;">FAQ</a>
+        <nav style="display: flex; gap: 50px; margin: 0 auto; padding-right: 150px;">
+            <a href="/" style="color: #333; text-decoration: none; font-weight: 500; transition: color 0.3s; font-size: 15px;">ГЛАВНАЯ</a>
+            <a href="#services-section" style="color: #333; text-decoration: none; font-weight: 500; transition: color 0.3s; font-size: 15px;">УСЛУГИ</a>
+            <a href="#steps-section" style="color: #333; text-decoration: none; font-weight: 500; transition: color 0.3s; font-size: 15px;">КАК МЫ РАБОТАЕМ</a>
+            <a href="#certificates-section" style="color: #333; text-decoration: none; font-weight: 500; transition: color 0.3s; font-size: 15px;">СЕРТИФИКАТЫ</a>
+            <a href="#faq-section" style="color: #333; text-decoration: none; font-weight: 500; transition: color 0.3s; font-size: 15px;">FAQ</a>
             {% if user.is_staff %}
-                <a href="{% url 'ps_account:staff_documents' %}" style="color: #333; text-decoration: none; font-weight: 500; transition: color 0.3s;">ДОКУМЕНТЫ</a>
+                <a href="{% url 'ps_account:staff_documents' %}" style="color: #333; text-decoration: none; font-weight: 500; transition: color 0.3s; font-size: 15px;">ДОКУМЕНТЫ</a>
             {% endif %}
         </nav>
-        <div class="contact-info">
-            <div class="user-menu">
-                <a href="{% url 'ps_account:account' %}" style="
-                    padding: 10px 20px;
-                    background-color: var(--primary-color);
-                    color: white;
-                    border-radius: 5px;
-                    text-decoration: none;
-                    font-weight: 500;
-                    transition: background-color 0.3s;
-                ">Профиль</a>
-            </div>
-        </div>
     </div>
     <div class="burger-menu" onclick="toggleMobileNav()" style="display: none; cursor: pointer;">
         <span style="display: block; width: 25px; height: 3px; background-color: #333; margin: 5px 0; transition: 0.4s;"></span>
@@ -46,11 +33,30 @@
 <style>
 header {
     background-color: white;
-    padding: 10px 0;
+    padding: 15px 0;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     position: sticky;
     top: 0;
     z-index: 1000;
+}
+
+nav a {
+    position: relative;
+}
+
+nav a:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    left: 0;
+    bottom: -5px;
+    transition: width 0.3s ease;
+}
+
+nav a:hover:after {
+    width: 100%;
 }
 
 nav a:hover {
