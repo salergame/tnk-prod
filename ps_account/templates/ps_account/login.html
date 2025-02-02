@@ -324,11 +324,84 @@
         .logo:hover {
             background: none !important;
         }
+
+        /* Стили для бургер-меню */
+        .burger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-color);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Анимация бургера */
+        .burger.active .line1 {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .burger.active .line2 {
+            opacity: 0;
+        }
+
+        .burger.active .line3 {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .burger {
+                display: block;
+            }
+
+            .nav-left, .nav-right {
+                position: fixed;
+                top: -100%;
+                left: 0;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                height: calc(100vh - 70px);
+                padding: 20px;
+                transition: 0.5s ease;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-left.active, .nav-right.active {
+                top: 70px;
+            }
+
+            .nav-left {
+                gap: 30px;
+                align-items: center;
+            }
+
+            .nav-left a:not(.logo) {
+                margin: 0;
+                font-size: 18px;
+            }
+
+            .logo {
+                position: absolute;
+                left: 20px;
+                top: 15px;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
         <nav>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
             <div class="nav-left">
                 <a href="{% url 'main:index' %}" class="logo">
                     <img src="{% static 'deps/images/logo.jpg' %}" alt="Sadyrbai Consulting">
@@ -337,12 +410,17 @@
                 <a href="{% url 'main:index' %}#services-section">УСЛУГИ</a>
                 <a href="{% url 'main:index' %}#steps-section">КАК МЫ РАБОТАЕМ</a>
                 <a href="{% url 'main:index' %}#certificates-section">СЕРТИФИКАТЫ</a>
-
-                <a href="{% url 'main:index' %}#faq-section">FAQ</a>
-            </div>
-            <div class="nav-right">
+                <a href="{% url 'chat:index' %}#faq-section">ЧАТ</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'ps_account:profile' %}">ПРОФИЛЬ</a>
+                    <a href="{% url 'ps_account:logout' %}">ВЫЙТИ</a>
+                {% else %}
+                    <a href="{% url 'ps_account:login' %}">ВОЙТИ</a>
+                    <a href="{% url 'ps_account:registration' %}">РЕГИСТРАЦИЯ</a>
+                {% endif %}
                 {% if user.is_staff %}
-                    <a href="{% url 'ps_account:staff_documents' %}">Документы</a>
+                    <a href="{% url 'ps_account:staff_documents' %}">ДОКУМЕНТЫ</a>
+                    <a href="{% url 'admin:index' %}">АДМИН ПАНЕЛЬ</a>
                 {% endif %}
             </div>
         </nav>
@@ -395,6 +473,27 @@
             password.setAttribute('type', type);
             this.classList.toggle('fa-eye');
             this.classList.toggle('fa-eye-slash');
+        });
+
+        // Добавляем код для бургер-меню
+        const burger = document.querySelector('.burger');
+        const navLeft = document.querySelector('.nav-left');
+        const navRight = document.querySelector('.nav-right');
+
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            navLeft.classList.toggle('active');
+            navRight.classList.toggle('active');
+            document.body.style.overflow = burger.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        document.querySelectorAll('.nav-left a, .nav-right a').forEach(link => {
+            link.addEventListener('click', () => {
+                burger.classList.remove('active');
+                navLeft.classList.remove('active');
+                navRight.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
         });
     </script>
 </body>
