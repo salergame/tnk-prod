@@ -1,1966 +1,276 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Tnk-ocenka</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
-    <link rel="icon" type="image/ico" href="{% static 'deps/images/logo.ico' %}" sizes="500x500">
-    <link rel="icon" type="image/ico" href="{% static 'deps/images/logo.ico' %}" sizes="500x500">
-
-    <link rel="icon" type="image/ico" href="{% static 'deps/images/logo.ico' %}" sizes="500x500">
-    <link rel="icon" type="image/ico" href="{% static 'deps/images/logo.ico' %}" sizes="500x500">
-    <link rel="icon" type="image/ico" href="{% static 'deps/images/logo.ico' %}" sizes="500x500">
-    <link rel="apple-touch-icon" href="{% static 'deps/images/logo.ico' %}" sizes="500x500">
-    <link rel="manifest" href="{% static 'deps/images/site.webmanifest' %}">
-    <meta name="msapplication-TileImage" content="{% static 'deps/images/logo.ico' %}">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="shortcut icon" type="image/png" href="{% static 'deps/images/logo.ico' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
-
-        body {
-            font-family: var(--body-font);
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background-color: #ffffff;
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-        
-        :root {
-            --primary-color: #B1454A;      /* основной бордовый из логотипа */
-            --secondary-color: #C85F63;    /* чуть светлее основного */
-            --accent-color: #D87A7E;       /* еще светлее для акцентов */
-            --dark-bg: #2D2D2D;            /* тёмный фон */
-            --text-color: #333333;         /* для текста */
-            --light-text: #FFFFFF;         /* белый текст */
-            --form-bg: #FFFFFF;            /* белый фон */
-            --light-bg: #F5EDED;           /* светлый фон */
-            --white: #FFFFFF;              /* белый */
-            --heading-font: 'Outfit', sans-serif;
-            --body-font: 'Plus Jakarta Sans', sans-serif;
-        }
-        
-        h1, h2, h3 {
-            font-family: var(--heading-font);
-            letter-spacing: -0.02em;
-        }
-        
-        header {
-            background-color: #ffffff;
-            padding: 20px 40px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            font-family: var(--heading-font);
-        }
-        
-        nav a {
-            position: relative;
-            color: #333;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            font-size: 15px;
-            padding: 10px 20px;
-        }
-        
-        nav a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            left: 0;
-            bottom: -5px;
-            transition: width 0.3s ease;
-        }
-        
-        nav a:hover:after {
-            width: 100%;
-        }
-        
-        nav a:hover {
-            color: var(--primary-color);
-        }
-        
-        .contact-info {
-            color: #ffffff;
-        }
-        
-        .contact-info i {
-            color: #B1454A;
-            margin-right: 10px;
-        }
-        
-        .main-content {
-            display: flex;
-            justify-content: space-between;
-            padding: 50px;
-            background: linear-gradient(130deg, var(--dark-bg) 60%, var(--primary-color) 60%);
-            color: var(--white);
-        }
-        
-        .text-content {
-            flex: 1;
-            padding-right: 50px;
-        }
-        
-        .text-content h1 {
-            font-size: 42px;
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 30px;
-            color: var(--light-text);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            background: none;
-            -webkit-text-fill-color: initial;
-        }
-        
-        .text-content ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .text-content ul li {
-            margin-bottom: 20px;
-            font-size: 18px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            color: var(--light-text);
-        }
-        
-        .text-content ul li i {
-            color: var(--accent-color);
-            margin-right: 10px;
-        }
-        
-        .text-content ul li span {
-            color: #4CAF50;  /* оставляем зеленый для акцента процентов */
-            font-weight: 600;
-        }
-        
-        .form-container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            width: 400px;
-        }
-        
-        .form-container h2 {
-            color: var(--text-color);
-            margin-bottom: 20px;
-            font-size: 24px;
-            font-weight: 600;
-        }
-        
-        .email-section {
-            text-align: center;
-            margin: 20px 0;
-        }
-        
-        .email-section p {
-            color: var(--text-color);
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-        
-        .email-link {
-            display: inline-block;
-            padding: 10px 25px;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 18px;
-            border: 2px solid var(--primary-color);
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-        
-        .email-link:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .register-section {
-            text-align: center;
-            margin: 20px 0;
-        }
-        
-        .register-section p {
-            margin-bottom: 15px;
-            color: var(--text-color);
-        }
-        
-        .register-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 12px 30px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            width: 80%;
-            margin: 0 auto;
-            text-align: center;
-            height: 45px;
-        }
-        
-        .register-button:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .divider {
-            text-align: center;
-            color: #666;
-            margin: 20px 0;
-            position: relative;
-        }
-        
-        .divider::before,
-        .divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 45%;
-            height: 1px;
-            background-color: #ddd;
-        }
-        
-        .divider::before {
-            left: 0;
-        }
-        
-        .divider::after {
-            right: 0;
-        }
-        
-        .info-text {
-            color: #666;
-            font-size: 14px;
-            margin-top: 15px;
-            text-align: center;
-        }
-        
-        .form-container input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        
-        .form-container button {
-            width: 100%;
-            padding: 12px;
-            background-color: #B1454A;
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .form-container button:hover {
-            background-color: #B1454A;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-        
-        .services {
-            padding: 50px;
-            background-color: #ffffff;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 60px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .service-card {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(177,69,74,0.1);
-            transition: transform 0.3s;
-            display: flex;
-            flex-direction: column;
-            height: 450px;
-            width: 100%;
-            position: relative;
-            padding-bottom: 160px;
-        }
-        
-        .service-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(177,69,74,0.2);
-        }
-        
-        .service-card h3 {
-            font-size: 22px;
-            font-weight: 600;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-        
-        .service-card p {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            font-weight: bold;
-            flex-grow: 0;
-        }
-        
-        .service-card a {
-            margin-top: auto;
-            color: var(--primary-color);
-            text-decoration: none;
-            border-bottom: 2px solid var(--secondary-color);
-            align-self: flex-start;
-        }
-        
-        .service-card .whatsapp-button {
-            position: absolute;
-            bottom: 90px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 40px);
-            margin-bottom: 15px;
-        }
-        
-        .service-card .telegram-button {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 40px);
-        }
-        
-        .service-card .telegram-button:hover {
-            background-color: #0077b5;
-            transform: translateX(-50%) translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .service-card .telegram-button i {
-            font-size: 20px;
-            color: white !important;
-            margin-right: 8px;
-        }
-        
-        .steps-container {
-            background-color: var(--light-bg);
-            padding: 50px 0;
-            width: 100%;
-            position: relative;
-        }
-        
-        .steps-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .steps-container h2 {
-            color: var(--light-text);
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .steps-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 auto;
-            max-width: 800px;
-        }
-        
-        .step {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 25px;
-            padding-left: 20px;
-            color: var(--text-color);
-        }
-        
-        .step-number {
-            min-width: 35px;
-            height: 35px;
-            border: 2px solid var(--primary-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 20px;
-            font-weight: 600;
-            color: var(--primary-color);
-            font-size: 18px;
-            padding: 0;
-            line-height: 1;
-        }
-        
-        .step-number::after {
-            content: attr(data-number);
-        }
-        
-        .step-text {
-            flex: 1;
-            padding-top: 5px;
-            color: var(--text-color);
-            font-size: 18px;
-            line-height: 1.6;
-            font-weight: 500;
-        }
-        
-        .button, 
-        .register-button {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 12px 25px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            font-family: var(--heading-font);
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            text-transform: none;
-        }
-        
-        .button:hover, 
-        .register-button:hover {
-            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
-        }
-        
-        .footer {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            padding: 50px 0 0 0;
-            border-bottom: none;
-            position: relative;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: 0.7fr 1.3fr;
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-            align-items: start;
-        }
-        
-        .footer h4 {
-            color: #B1454A;
-            margin-bottom: 20px;
-        }
-        
-        .footer ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .footer ul li {
-            margin-bottom: 10px;
-        }
-        
-        .footer ul li a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer ul li a:hover {
-            color: rgba(255,255,255,0.8);
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-        
-        .contact-item i {
-            color: #ffffff;
-            margin-right: 10px;
-            margin-top: 4px;
-        }
-        
-        .contact-item a, 
-        .contact-item p {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0;
-        }
-        
-        .contact-item a:hover {
-            color: rgba(255,255,255,0.8);
-        }
-        
-        .map-container {
-            width: 100%;
-            height: 450px;
-            margin-top: 25px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .map-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 8px;
-            margin-top: 0;
-        }
-        
-        .schedule {
-            width: 250px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 20px 20px 5px 20px;
-            padding: 20px;
-            position: relative;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(5px);
-        }
-        
-        .schedule-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .schedule-time {
-            color: #ffffff;
-            font-size: 16px;
-            line-height: 1.6;
-            margin: 0;
-            padding-left: 5px;
-        }
-        
-        .schedule-lunch {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            margin-top: 8px;
-            padding-left: 5px;
-            border-left: 2px solid rgba(255, 255, 255, 0.3);
-            margin-left: 5px;
-        }
-        
-        .footer-info {
-            padding-top: 0;
-            margin-top: 0;
-        }
-        
-        .footer-bottom {
-            margin-top: 30px;
-            padding: 15px 0;
-            text-align: center;
-            color: white;
-            font-size: 14px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            position: relative;
-            z-index: 2;
-        }
-        
-        @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
-                background: linear-gradient(160deg, var(--dark-bg) 70%, var(--primary-color) 30%);
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>tnk-property-evaluator</title>
+        <meta name="description" content="Lovable Generated Project"/>
+        <meta name="author" content="Lovable"/>
+        <meta property="og:image" content="/og-image.png"/>
+        <script type="module" crossorigin src="/assets/index-DC_BIlaC.js"></script>
+        <link rel="stylesheet" crossorigin href="/assets/index-DZTVoFjB.css">
+        <style>
+            #lovable-badge {
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                width: 141px;
+                padding: 5px 13px;
+                background-color: #000;
+                color: #fff;
+                font-size: 12px;
+                border-radius: 5px;
+                font-family: sans-serif;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                z-index: 1000000;
             }
-            
-            .text-content {
-                padding-right: 0;
-                margin-bottom: 30px;
-            }
-            
-            .form-container {
-                width: 100%;
-                padding: 20px;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-contacts {
-                order: -1;
-            }
-            
-            .services {
-                gap: 20px;
-                padding: 20px 15px;
-                margin: 0;
-            }
-            
-            .steps-container {
-                padding: 30px 0;
-            }
-            
-            .steps-content {
-                padding: 0 15px;
-            }
-            
-            .step {
-                padding-left: 10px;
-            }
-            
-            .step-number {
-                min-width: 25px;
-                height: 25px;
-                font-size: 14px;
-            }
-            
-            .step-text {
-                font-size: 15px;
-            }
-            
-            .text-content h1 {
-                font-size: 32px;
-                line-height: 1.4;
-            }
-            
-            .text-content ul li {
-                font-size: 16px;
-            }
-            
-            .register-button {
-                width: 100%;
-            }
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 50px 15px;
-        }
-        
-        .container h1 {
-            font-size: 36px;
-            font-weight: 600;
-            text-align: center;
-            margin: 40px 0;
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-        
-        .faq-item {
-            cursor: pointer;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-        
-        .faq-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        }
-        
-        .faq-item i {
-            color: var(--primary-color);
-            font-size: 20px;
-            transition: transform 0.3s ease;
-        }
-        
-        .faq-item.active i {
-            transform: rotate(45deg);
-        }
-        
-        .faq-answer {
-            display: none;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 0 0 8px 8px;
-            margin-top: -15px;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            line-height: 1.6;
-            transform-origin: top;
-            animation: slideDown 0.3s ease forwards;
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .faq-answer a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-        
-        .faq-answer a:hover {
-            text-decoration: underline;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 30px 15px;
-            }
-            
-            .container h1 {
-                font-size: 28px;
-                margin: 30px 0;
-            }
-            
-            .faq-item {
-                padding: 15px;
-            }
-        }
-        
-        .burger-menu {
-            display: none;
-            width: 30px;
-            height: 25px;
-            position: relative;
-            cursor: pointer;
-            z-index: 1000;
-        }
-
-        .burger-menu span {
-            display: block;
-            position: absolute;
-            height: 3px;
-            width: 100%;
-            background: var(--primary-color);
-            border-radius: 3px;
-            opacity: 1;
-            left: 0;
-            transform: rotate(0deg);
-            transition: .25s ease-in-out;
-        }
-
-        .burger-menu span:nth-child(1) {
-            top: 0px;
-        }
-
-        .burger-menu span:nth-child(2) {
-            top: 10px;
-        }
-
-        .burger-menu span:nth-child(3) {
-            top: 20px;
-        }
-
-        .burger-menu.active span:nth-child(1) {
-            top: 10px;
-            transform: rotate(135deg);
-        }
-
-        .burger-menu.active span:nth-child(2) {
-            opacity: 0;
-            left: -60px;
-        }
-
-        .burger-menu.active span:nth-child(3) {
-            top: 10px;
-            transform: rotate(-135deg);
-        }
-
-        .mobile-nav {
-            display: none;
-            position: fixed;
-            top: 70px;
-            left: 0;
-            width: 100%;
-            background: white;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            z-index: 999;
-            transform: translateY(-100%);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .mobile-nav.active {
-            transform: translateY(0);
-            display: block;
-        }
-
-        .mobile-nav a {
-            display: block;
-            padding: 15px 0;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-size: 18px;
-            border-bottom: 1px solid rgba(177,69,74,0.1);
-            transition: 0.3s;
-        }
-
-        .mobile-nav a:last-child {
-            border-bottom: none;
-        }
-
-        .mobile-nav a:hover {
-            background-color: rgba(177,69,74,0.05);
-            padding-left: 10px;
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                display: none;
-            }
-
-            .burger-menu {
-                display: block;
-            }
-
-            .auth-buttons {
-                display: none;
-            }
-        }
-
-        .services h1 {
-            font-size: 36px;
-            font-weight: 600;
-            text-align: center;
-            margin: 40px auto;
-            position: relative;
-            max-width: 800px;
-            padding: 0 20px;
-            color: var(--text-color);
-        }
-        
-        .services .service-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        
-        .steps-container h1 {
-            font-size: 36px;
-            font-weight: 600;
-            text-align: center;
-            margin: 40px 0;
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-        
-        .button-container {
-            text-align: center;
-            margin-top: 40px;
-        }
-        
-        main h1 {
-            text-align: center;
-            font-size: 36px;
-            font-weight: 600;
-            color: var(--text-color);
-            padding: 20px 40px;
-            margin: 80px auto 40px;
-            background: linear-gradient(to right, 
-                rgba(177, 69, 74, 0.05), 
-                rgba(177, 69, 74, 0.1), 
-                rgba(177, 69, 74, 0.05)
-            );
-            display: inline-block;
-            border-radius: 8px;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        main h1.variant2 {
-            background-color: #fafafa;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03);
-        }
-
-        main h1.variant3 {
-            background-color: rgba(177, 69, 74, 0.05);
-            border: 1px solid rgba(177, 69, 74, 0.1);
-        }
-
-        @media (max-width: 768px) {
-            main h1 {
-                font-size: 28px;
-                padding: 15px 30px;
-                margin: 60px auto 30px;
-            }
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .auth-button {
-            padding: 8px 16px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100px;
-            height: 32px;
-            font-size: 13px;
-        }
-
-        .login-button {
-            background-color: transparent;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-        }
-
-        .register-button {
-            background-color: var(--primary-color);
-            color: white;
-            border: 2px solid var(--primary-color);
-        }
-
-        .login-button:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .register-button:hover {
-            background-color: var(--secondary-color);
-            border-color: var(--secondary-color);
-        }
-
-        .user-menu {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .profile-button {
-            background-color: transparent;
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        .logout-button {
-            background-color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-            color: white;
-        }
-
-        @media (max-width: 768px) {
-            .auth-buttons, .user-menu {
-                display: none;
-            }
-        }
-
-        .chat-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .chat-button i {
-            font-size: 24px;
-        }
-
-        .chat-button:hover {
-            transform: scale(1.1);
-            background-color: var(--secondary-color);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(177, 69, 74, 0.4);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(177, 69, 74, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(177, 69, 74, 0);
-            }
-        }
-
-        .chat-button {
-            animation: pulse 2s infinite;
-        }
-
-        @media (max-width: 768px) {
-            .chat-button {
-                width: 50px;
-                height: 50px;
-                bottom: 15px;
-                right: 15px;
-            }
-
-            .chat-button i {
-                font-size: 20px;
-            }
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            border: 2px solid white;
-            transition: all 0.3s ease;
-            font-size: 20px;
-            text-decoration: none;
-        }
-
-        .whatsapp:hover {
-            background-color: #25D366;
-            color: white;
-            border-color: #25D366;
-            text-decoration: none;
-        }
-
-        .telegram:hover {
-            background-color: #0088cc;
-            color: white;
-            border-color: #0088cc;
-            text-decoration: none;
-        }
-
-        @media (max-width: 768px) {
-            .social-links {
-                justify-content: center;
-            }
-
-            .social-links a {
-                width: 35px;
-                height: 35px;
-            }
-
-            .social-links a i {
-                font-size: 18px;
-            }
-        }
-
-        .footer-map {
-            display: flex;
-            gap: 30px;
-            align-items: flex-start;
-        }
-
-        .map-container {
-            flex: 1;
-        }
-
-        .map-container iframe {
-            width: 100%;
-            height: 450px;
-            border-radius: 8px;
-        }
-
-        @keyframes messageAppear {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .schedule {
-            animation: messageAppear 0.3s ease-out;
-        }
-
-        @media (max-width: 1024px) {
-            .footer-map {
-                flex-direction: column;
-            }
-
-            .schedule {
-                width: 100%;
-                margin-top: 20px;
-            }
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        #services-section,
-        #steps-section,
-        #faq-section {
-            scroll-margin-top: 80px;
-        }
-
-        @media (max-width: 768px) {
-            .services {
-                grid-template-columns: 1fr;
-                gap: 20px;
-                padding: 20px;
-                margin: 0 auto;
-                max-width: calc(100% - 40px);
-            }
-
-            .service-card {
-                width: 100%;
-                margin: 0 auto;
-                height: auto;
-                min-height: 400px;
-                padding-bottom: 180px;
-            }
-
-            .service-card p {
-                margin-bottom: 30px;
-            }
-
-            .service-card .whatsapp-button,
-            .service-card .telegram-button {
-                width: calc(100% - 30px);
-                font-size: 14px;
-            }
-
-            .service-card .whatsapp-button {
-                bottom: 100px;
-                margin-bottom: 20px;
-            }
-
-            .service-card .telegram-button {
-                bottom: 35px;
-            }
-
-            .service-card .whatsapp-button,
-            .service-card .telegram-button {
-                padding: 12px 15px;
-            }
-
-            main h1,
-            .steps-container h1,
-            .container h1 {
-                width: calc(100% - 30px);
-                margin: 40px auto;
-                padding: 15px;
-                font-size: 28px;
-                text-align: center;
-            }
-
-            .steps-container {
-                padding: 30px 20px;
-            }
-
-            .steps-list {
-                width: 100%;
-                max-width: calc(100% - 40px);
-                margin: 0 auto;
-            }
-
-            .step {
-                margin: 0 auto 20px;
-                width: 100%;
-            }
-
-            .container {
-                padding: 30px 20px;
-                width: calc(100% - 40px);
-                margin: 0 auto;
-            }
-
-            .faq-item,
-            .faq-answer {
-                width: 100%;
-                margin-left: auto;
-                margin-right: auto;
-            }
-        }
-
-        html, body {
-            overflow-x: hidden;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            position: relative;
-        }
-
-        @media (max-width: 768px) {
-            .container, 
-            .services,
-            .steps-container,
-            .footer-content,
-            main,
-            header {
-                width: 100%;
-                max-width: 100%;
-                padding-left: 15px;
-                padding-right: 15px;
-                margin-left: 0;
-                margin-right: 0;
-                box-sizing: border-box;
-            }
-
-            nav {
-                padding: 0;
-                margin: 0;
-            }
-
-            .main-content,
-            .steps-content,
-            .faq-section,
-            .footer {
-                width: 100%;
-                max-width: 100%;
-                padding-left: 15px;
-                padding-right: 15px;
-                margin: 0;
-                box-sizing: border-box;
-            }
-        }
-
-        .certificates-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .certificates-section::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background: linear-gradient(45deg, rgba(177,69,74,0.03) 0%, transparent 100%);
-            pointer-events: none;
-        }
-
-        .certificates-section h1 {
-            text-align: center;
-            margin-bottom: 60px;
-            color: var(--text-color);
-            font-size: 36px;
-            font-weight: 600;
-            position: relative;
-            padding: 20px 40px;
-            background: linear-gradient(to right, 
-                rgba(177, 69, 74, 0.05), 
-                rgba(177, 69, 74, 0.1), 
-                rgba(177, 69, 74, 0.05)
-            );
-            display: inline-block;
-            border-radius: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .certificates-scroll {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            padding: 40px 0;
-        }
-
-        .scroll-track {
-            display: flex;
-            gap: 30px;
-            padding: 30px 0;
-            width: fit-content;
-        }
-
-        .track1 {
-            animation: scroll 80s linear infinite;
-            margin-bottom: 50px;
-        }
-
-        .track2 {
-            animation: scroll-reverse 70s linear infinite;
-        }
-
-        .certificate-card {
-            flex: 0 0 350px;
-            height: 450px;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(177,69,74,0.1);
-            position: relative;
-        }
-
-        .certificate-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                45deg,
-                rgba(177,69,74,0.05),
-                rgba(177,69,74,0.02)
-            );
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .certificate-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(177,69,74,0.1);
-            border-color: var(--primary-color);
-        }
-
-        .certificate-card:hover::before {
-            opacity: 1;
-        }
-
-        .certificate-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .certificate-card:hover img {
-            transform: scale(1.05);
-        }
-
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(calc(-50% - 15px));
-            }
-        }
-
-        @keyframes scroll-reverse {
-            0% {
-                transform: translateX(calc(-50% - 15px));
-            }
-            100% {
-                transform: translateX(0);
-            }
-        }
-
-        .scroll-track:hover {
-            animation-play-state: paused;
-        }
-
-        .certificates-scroll::before,
-        .certificates-scroll::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            width: 200px;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .certificates-scroll::before {
-            left: 0;
-            background: linear-gradient(90deg, #fff, transparent);
-        }
-
-        .certificates-scroll::after {
-            right: 0;
-            background: linear-gradient(-90deg, #fff, transparent);
-        }
-
-        @media (max-width: 768px) {
-            .certificates-section {
-                padding: 60px 0;
-            }
-
-            .certificates-section h1 {
-                font-size: 28px;
-                padding: 15px 30px;
-                margin: 0 20px 40px;
-                width: calc(100% - 40px);
-            }
-
-            .certificate-card {
-                flex: 0 0 280px;
-                height: 380px;
-            }
-
-            .track1 {
-                animation-duration: 60s;
-            }
-
-            .track2 {
-                animation-duration: 50s;
-            }
-
-            .certificates-scroll::before,
-            .certificates-scroll::after {
-                width: 100px;
-            }
-        }
-
-        .whatsapp-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 12px 25px;
-            background-color: #25D366;
-            color: white !important;
-            border: none;
-            border-radius: 5px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 16px;
-        }
-
-        .service-card .whatsapp-button {
-            position: absolute;
-            bottom: 90px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 40px);
-            margin-bottom: 15px;
-        }
-
-        .service-card .telegram-button {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 40px);
-        }
-
-        .service-card .telegram-button:hover {
-            background-color: #0077b5;
-            transform: translateX(-50%) translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .service-card .telegram-button i {
-            font-size: 20px;
-            color: white !important;
-            margin-right: 8px;
-        }
-
-        .whatsapp-button i {
-            font-size: 20px;
-            color: white !important;
-        }
-
-        .telegram-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 12px 25px;
-            background-color: #0088cc;
-            color: white !important;
-            border: none;
-            border-radius: 5px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 16px;
-            width: auto;
-            margin: 0;
-        }
-
-        .telegram-button i {
-            font-size: 20px;
-            color: white !important;
-        }
-
-        .telegram-button:hover {
-            background-color: #0077b5;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            color: white !important;
-        }
-
-        /* Обновляем стили для контейнера кнопок */
-        .messenger-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        /* Стили для контейнера сертификатов */
-        .certificates {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .certificate-img {
-            width: 100%;
-            height: 300px; /* Фиксированная высота */
-            object-fit: cover; /* Сохраняем пропорции */
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .certificate-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        }
-
-        /* Стили для модального окна остаются прежними */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            max-width: 90%;
-            max-height: 90vh;
-            position: relative;
-        }
-
-        .modal-content img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            color: white;
-            font-size: 30px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 10px;
-        }
-    </style>
-    <script>
-        function toggleMobileNav() {
-            const burgerMenu = document.querySelector('.burger-menu');
-            const mobileNav = document.querySelector('.mobile-nav');
-            
-            burgerMenu.classList.toggle('active');
-            
-            if (!mobileNav.classList.contains('active')) {
-                mobileNav.style.display = 'block';
-                setTimeout(() => {
-                    mobileNav.classList.add('active');
-                }, 10);
-            } else {
-                mobileNav.classList.remove('active');
-                setTimeout(() => {
-                    mobileNav.style.display = 'none';
-                }, 300);
-            }
-        }
-
-        function toggleAnswer(element) {
-            const faqItem = element;
-            const answer = element.nextElementSibling;
-            
-            document.querySelectorAll('.faq-item').forEach(item => {
-                if (item !== faqItem) {
-                    item.classList.remove('active');
-                    const otherAnswer = item.nextElementSibling;
-                    if (otherAnswer && otherAnswer.classList.contains('faq-answer')) {
-                        otherAnswer.style.display = 'none';
-                    }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+        <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+        <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+        <a id="lovable-badge" target="_blank" href=https://lovable.dev/projects/63ae1d0f-b375-4609-aea0-39985f500e35?utm_source= gpt-engineer-badge>
+            <span style="color: #A1A1AA;">Edit with</span>
+            <svg width="60" height="12" viewBox="0 0 901 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <mask id="mask0_0_1" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="203" height="180">
+                    <path d="M101.17 180C99.1471 180 97.1093 179.634 95.0573 178.902C93.0069 178.172 91.2229 177.048 89.7054 175.531L74.9496 161.956C55.0528 143.577 37.5874 125.83 22.5534 108.715C7.51781 91.6006 0 73.4043 0 54.1262C0 38.7264 5.17066 25.855 15.512 15.512C25.855 5.17066 38.6699 0 53.9567 0C62.6692 0 71.1566 2.00908 79.4188 6.02724C87.6811 10.0471 94.9316 16.3003 101.17 24.7868C107.971 16.3003 115.334 10.0471 123.259 6.02724C131.184 2.00908 139.559 0 148.384 0C163.671 0 176.486 5.17066 186.829 15.512C197.17 25.855 202.341 38.7264 202.341 54.1262C202.341 73.4043 194.838 91.6149 179.831 108.758C164.824 125.902 147.315 143.663 127.305 162.042L112.636 175.531C111.118 177.048 109.334 178.172 107.284 178.902C105.232 179.634 103.194 180 101.17 180Z" fill="white"/>
+                </mask>
+                <g mask="url(#mask0_0_1)">
+                    <path d="M101.17 180C99.1471 180 97.1093 179.634 95.0573 178.902C93.0069 178.172 91.2229 177.048 89.7054 175.531L74.9496 161.956C55.0528 143.577 37.5874 125.83 22.5534 108.715C7.51781 91.6006 0 73.4043 0 54.1262C0 38.7264 5.17066 25.855 15.512 15.512C25.855 5.17066 38.6699 0 53.9567 0C62.6692 0 71.1566 2.00908 79.4188 6.02724C87.6811 10.0471 94.9316 16.3003 101.17 24.7868C107.971 16.3003 115.334 10.0471 123.259 6.02724C131.184 2.00908 139.559 0 148.384 0C163.671 0 176.486 5.17066 186.829 15.512C197.17 25.855 202.341 38.7264 202.341 54.1262C202.341 73.4043 194.838 91.6149 179.831 108.758C164.824 125.902 147.315 143.663 127.305 162.042L112.636 175.531C111.118 177.048 109.334 178.172 107.284 178.902C105.232 179.634 103.194 180 101.17 180Z" fill="#FF1814"/>
+                    <g filter="url(#filter0_f_0_1)">
+                        <ellipse cx="129.441" cy="219.795" rx="76.5" ry="77.5" transform="rotate(-105 129.441 219.795)" fill="#FFAB25"/>
+                    </g>
+                    <g filter="url(#filter1_f_0_1)">
+                        <ellipse cx="177.737" cy="206.854" rx="76.5" ry="77.5" transform="rotate(-105 177.737 206.854)" fill="#FFAB25"/>
+                    </g>
+                    <g filter="url(#filter2_f_0_1)">
+                        <ellipse cx="55.2627" cy="136.143" rx="76.5" ry="77.5" transform="rotate(-105 55.2627 136.143)" fill="#FFAB25"/>
+                    </g>
+                    <g filter="url(#filter3_f_0_1)">
+                        <ellipse cx="103.559" cy="123.202" rx="76.5" ry="77.5" transform="rotate(-105 103.559 123.202)" fill="#FFAB25"/>
+                    </g>
+                    <g filter="url(#filter4_f_0_1)">
+                        <circle cx="-70.8088" cy="38.1911" r="85.7011" transform="rotate(2.38352 -70.8088 38.1911)" fill="#BE2B29"/>
+                    </g>
+                    <g filter="url(#filter5_f_0_1)">
+                        <ellipse cx="64.431" cy="55.7415" rx="64.431" ry="55.7415" transform="matrix(-0.67039 -0.742009 0.730841 -0.682548 163.103 96.668)" fill="#00C986"/>
+                    </g>
+                    <g style="mix-blend-mode:hard-light" filter="url(#filter6_f_0_1)">
+                        <ellipse cx="72.6324" cy="62.7936" rx="72.6324" ry="62.7936" transform="matrix(-0.67039 -0.742009 0.730841 -0.682548 202.229 151.008)" fill="#297FFF"/>
+                    </g>
+                </g>
+                <path d="M856.097 66.2109C883.509 66.2109 899.957 83.6374 899.957 114.574V119.274H832.404C833.775 133.176 843.957 141.204 857.859 141.204C870.782 141.204 879.789 133.959 884.88 128.868L897.019 146.294C888.992 153.735 876.852 162.546 857.859 162.546C828.293 162.546 809.104 143.357 809.104 114.574C809.104 85.7913 827.705 66.2109 856.097 66.2109ZM854.922 85.5954C843.369 85.5954 834.95 91.2737 832.992 103.805H875.677C874.894 92.2528 866.67 85.5954 854.922 85.5954Z" fill="#FAFAFA"/>
+                <path d="M768.703 22.5586H792.786V159.621H768.703V22.5586Z" fill="#FAFAFA"/>
+                <path d="M709.181 162.558C694.496 162.558 684.706 156.292 679.028 146.894H678.636V159.621H654.552V22.5586H678.636V81.8869H679.028C684.706 72.4884 694.496 66.2227 709.181 66.2227C732.873 66.2227 752.65 83.4534 752.65 114.39C752.65 145.327 732.873 162.558 709.181 162.558ZM703.111 139.845C717.601 139.845 727.587 129.663 727.587 114.39C727.587 99.1176 717.601 88.9358 703.111 88.9358C688.622 88.9358 678.636 99.1176 678.636 114.39C678.636 129.663 688.622 139.845 703.111 139.845Z" fill="#FAFAFA"/>
+                <path d="M578.939 162.546C555.247 162.546 535.471 145.315 535.471 114.379C535.471 83.4416 555.247 66.2109 578.939 66.2109C593.625 66.2109 603.415 72.4766 609.093 81.8752H609.485V69.148H633.373V159.609H609.485V146.882H609.093C603.415 156.28 593.625 162.546 578.939 162.546ZM585.009 139.833C599.499 139.833 609.485 129.651 609.485 114.379C609.485 99.1059 599.499 88.9241 585.009 88.9241C570.52 88.9241 560.534 99.1059 560.534 114.379C560.534 129.651 570.52 139.833 585.009 139.833Z" fill="#FAFAFA"/>
+                <path d="M486.412 131.817L507.755 69.1602H535.167L498.16 159.621H474.664L437.853 69.1602H465.07L486.412 131.817Z" fill="#FAFAFA"/>
+                <path d="M387.501 66.2109C416.284 66.2109 437.627 85.9871 437.627 114.379C437.627 142.77 416.284 162.546 387.501 162.546C358.718 162.546 337.375 142.77 337.375 114.379C337.375 85.9871 358.718 66.2109 387.501 66.2109ZM387.501 88.9241C372.816 88.9241 362.047 98.9101 362.047 114.379C362.047 129.847 372.816 139.833 387.501 139.833C402.186 139.833 412.76 129.847 412.76 114.379C412.76 98.9101 402.186 88.9241 387.501 88.9241Z" fill="#FAFAFA"/>
+                <path d="M296.974 22.5586H321.058V159.621H296.974V22.5586Z" fill="#FAFAFA"/>
+                <mask id="mask1_0_1" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="203" height="180">
+                    <path d="M101.17 180C99.1471 180 97.1093 179.634 95.0573 178.902C93.0069 178.172 91.2229 177.048 89.7054 175.531L74.9496 161.956C55.0528 143.577 37.5874 125.83 22.5534 108.715C7.51781 91.6006 0 73.4043 0 54.1262C0 38.7264 5.17066 25.855 15.512 15.512C25.855 5.17066 38.6699 0 53.9567 0C62.6692 0 71.1566 2.00908 79.4188 6.02724C87.6811 10.0471 94.9316 16.3003 101.17 24.7868C107.971 16.3003 115.334 10.0471 123.259 6.02724C131.184 2.00908 139.559 0 148.384 0C163.671 0 176.486 5.17066 186.829 15.512C197.17 25.855 202.341 38.7264 202.341 54.1262C202.341 73.4043 194.838 91.6149 179.831 108.758C164.824 125.902 147.315 143.663 127.305 162.042L112.636 175.531C111.118 177.048 109.334 178.172 107.284 178.902C105.232 179.634 103.194 180 101.17 180Z" fill="white"/>
+                </mask>
+                <g mask="url(#mask1_0_1)">
+                    <path d="M101.17 180C99.1471 180 97.1093 179.634 95.0573 178.902C93.0069 178.172 91.2229 177.048 89.7054 175.531L74.9496 161.956C55.0528 143.577 37.5874 125.83 22.5534 108.715C7.51781 91.6006 0 73.4043 0 54.1262C0 38.7264 5.17066 25.855 15.512 15.512C25.855 5.17066 38.6699 0 53.9567 0C62.6692 0 71.1566 2.00908 79.4188 6.02724C87.6811 10.0471 94.9316 16.3003 101.17 24.7868C107.971 16.3003 115.334 10.0471 123.259 6.02724C131.184 2.00908 139.559 0 148.384 0C163.671 0 176.486 5.17066 186.829 15.512C197.17 25.855 202.341 38.7264 202.341 54.1262C202.341 73.4043 194.838 91.6149 179.831 108.758C164.824 125.902 147.315 143.663 127.305 162.042L112.636 175.531C111.118 177.048 109.334 178.172 107.284 178.902C105.232 179.634 103.194 180 101.17 180Z" fill="#FF1814"/>
+                    <g filter="url(#filter7_f_0_1)">
+                        <ellipse cx="129.441" cy="219.795" rx="76.5" ry="77.5" transform="rotate(-105 129.441 219.795)" fill="#FFAB25"/>
+                    </g>
+                    <g filter="url(#filter8_f_0_1)">
+                        <ellipse cx="177.737" cy="206.854" rx="76.5" ry="77.5" transform="rotate(-105 177.737 206.854)" fill="#FFAB25"/>
+                    </g>
+                    <g filter="url(#filter9_f_0_1)">
+                        <ellipse cx="55.2627" cy="136.143" rx="76.5" ry="77.5" transform="rotate(-105 55.2627 136.143)" fill="#FFAB25"/>
+                    </g>
+                    <g filter="url(#filter10_f_0_1)">
+                        <ellipse cx="103.559" cy="123.202" rx="76.5" ry="77.5" transform="rotate(-105 103.559 123.202)" fill="#FFAB25"/>
+                    </g>
+                    <g filter="url(#filter11_f_0_1)">
+                        <circle cx="-70.8088" cy="38.1911" r="85.7011" transform="rotate(2.38352 -70.8088 38.1911)" fill="#BE2B29"/>
+                    </g>
+                    <g filter="url(#filter12_f_0_1)">
+                        <ellipse cx="64.431" cy="55.7415" rx="64.431" ry="55.7415" transform="matrix(-0.67039 -0.742009 0.730841 -0.682548 163.103 96.668)" fill="#00C986"/>
+                    </g>
+                    <g style="mix-blend-mode:hard-light" filter="url(#filter13_f_0_1)">
+                        <ellipse cx="72.6324" cy="62.7936" rx="72.6324" ry="62.7936" transform="matrix(-0.67039 -0.742009 0.730841 -0.682548 202.229 151.008)" fill="#297FFF"/>
+                    </g>
+                </g>
+                <path d="M856.464 66.2109C883.876 66.2109 900.323 83.6374 900.323 114.574V119.274H832.771C834.142 133.176 844.324 141.204 858.226 141.204C871.149 141.204 880.156 133.959 885.247 128.868L897.386 146.294C889.358 153.735 877.219 162.546 858.226 162.546C828.66 162.546 809.471 143.357 809.471 114.574C809.471 85.7913 828.072 66.2109 856.464 66.2109ZM855.289 85.5954C843.736 85.5954 835.317 91.2737 833.359 103.805H876.044C875.261 92.2528 867.037 85.5954 855.289 85.5954Z" fill="#FAFAFA"/>
+                <path d="M769.07 22.5586H793.153V159.621H769.07V22.5586Z" fill="#FAFAFA"/>
+                <path d="M709.548 162.558C694.863 162.558 685.073 156.292 679.395 146.894H679.003V159.621H654.919V22.5586H679.003V81.8869H679.395C685.073 72.4884 694.863 66.2227 709.548 66.2227C733.24 66.2227 753.017 83.4534 753.017 114.39C753.017 145.327 733.24 162.558 709.548 162.558ZM703.478 139.845C717.968 139.845 727.954 129.663 727.954 114.39C727.954 99.1176 717.968 88.9358 703.478 88.9358C688.989 88.9358 679.003 99.1176 679.003 114.39C679.003 129.663 688.989 139.845 703.478 139.845Z" fill="#FAFAFA"/>
+                <path d="M579.306 162.546C555.614 162.546 535.838 145.315 535.838 114.379C535.838 83.4416 555.614 66.2109 579.306 66.2109C593.992 66.2109 603.782 72.4766 609.46 81.8752H609.852V69.148H633.74V159.609H609.852V146.882H609.46C603.782 156.28 593.992 162.546 579.306 162.546ZM585.376 139.833C599.866 139.833 609.852 129.651 609.852 114.379C609.852 99.1059 599.866 88.9241 585.376 88.9241C570.887 88.9241 560.901 99.1059 560.901 114.379C560.901 129.651 570.887 139.833 585.376 139.833Z" fill="#FAFAFA"/>
+                <path d="M486.779 131.817L508.122 69.1602H535.534L498.527 159.621H475.031L438.22 69.1602H465.437L486.779 131.817Z" fill="#FAFAFA"/>
+                <path d="M387.868 66.2109C416.651 66.2109 437.994 85.9871 437.994 114.379C437.994 142.77 416.651 162.546 387.868 162.546C359.085 162.546 337.742 142.77 337.742 114.379C337.742 85.9871 359.085 66.2109 387.868 66.2109ZM387.868 88.9241C373.183 88.9241 362.414 98.9101 362.414 114.379C362.414 129.847 373.183 139.833 387.868 139.833C402.553 139.833 413.127 129.847 413.127 114.379C413.127 98.9101 402.553 88.9241 387.868 88.9241Z" fill="#FAFAFA"/>
+                <path d="M297.341 22.5586H321.425V159.621H297.341V22.5586Z" fill="#FAFAFA"/>
+                <mask id="mask2_0_1" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="203" height="180">
+                    <path d="M101.17 180C99.1471 180 97.1093 179.634 95.0573 178.902C93.0069 178.172 91.2229 177.048 89.7054 175.531L74.9496 161.956C55.0528 143.577 37.5874 125.83 22.5534 108.715C7.51781 91.6006 0 73.4043 0 54.1262C0 38.7264 5.17066 25.855 15.512 15.512C25.855 5.17066 38.6699 0 53.9567 0C62.6692 0 71.1566 2.00908 79.4188 6.02724C87.6811 10.0471 94.9316 16.3003 101.17 24.7868C107.971 16.3003 115.334 10.0471 123.259 6.02724C131.184 2.00908 139.559 0 148.384 0C163.671 0 176.486 5.17066 186.829 15.512C197.17 25.855 202.341 38.7264 202.341 54.1262C202.341 73.4043 194.838 91.6149 179.831 108.758C164.824 125.902 147.315 143.663 127.305 162.042L112.636 175.531C111.118 177.048 109.334 178.172 107.284 178.902C105.232 179.634 103.194 180 101.17 180Z" fill="white"/>
+                </mask>
+                <g mask="url(#mask2_0_1)">
+                    <path d="M101.17 180C99.1471 180 97.1093 179.634 95.0573 178.902C93.0069 178.172 91.2229 177.048 89.7054 175.531L74.9496 161.956C55.0528 143.577 37.5874 125.83 22.5534 108.715C7.51781 91.6006 0 73.4043 0 54.1262C0 38.7264 5.17066 25.855 15.512 15.512C25.855 5.17066 38.6699 0 53.9567 0C62.6692 0 71.1566 2.00908 79.4188 6.02724C87.6811 10.0471 94.9316 16.3003 101.17 24.7868C107.971 16.3003 115.334 10.0471 123.259 6.02724C131.184 2.00908 139.559 0 148.384 0C163.671 0 176.486 5.17066 186.829 15.512C197.17 25.855 202.341 38.7264 202.341 54.1262C202.341 73.4043 194.838 91.6149 179.831 108.758C164.824 125.902 147.315 143.663 127.305 162.042L112.636 175.531C111.118 177.048 109.334 178.172 107.284 178.902C105.232 179.634 103.194 180 101.17 180Z" fill="#FF1814"/>
+                    <g filter="url(#filter14_f_0_1)">
+                        <ellipse cx="129.441" cy="219.795" rx="76.5" ry="77.5" transform="rotate(-105 129.441 219.795)" fill="#FFAB25"/>
+                    </g>
+                    <g filter="url(#filter15_f_0_1)">
+                        <ellipse cx="177.737" cy="206.854" rx="76.5" ry="77.5" transform="rotate(-105 177.737 206.854)" fill="#FFAB25"/>
+                    </g>
+                    <g filter="url(#filter16_f_0_1)">
+                        <ellipse cx="55.2627" cy="136.143" rx="76.5" ry="77.5" transform="rotate(-105 55.2627 136.143)" fill="#FFAB25"/>
+                    </g>
+                    <g filter="url(#filter17_f_0_1)">
+                        <ellipse cx="103.559" cy="123.202" rx="76.5" ry="77.5" transform="rotate(-105 103.559 123.202)" fill="#FFAB25"/>
+                    </g>
+                    <g filter="url(#filter18_f_0_1)">
+                        <circle cx="-70.8088" cy="38.1911" r="85.7011" transform="rotate(2.38352 -70.8088 38.1911)" fill="#BE2B29"/>
+                    </g>
+                    <g filter="url(#filter19_f_0_1)">
+                        <ellipse cx="64.431" cy="55.7415" rx="64.431" ry="55.7415" transform="matrix(-0.67039 -0.742009 0.730841 -0.682548 163.103 96.668)" fill="#00C986"/>
+                    </g>
+                    <g style="mix-blend-mode:hard-light" filter="url(#filter20_f_0_1)">
+                        <ellipse cx="72.6324" cy="62.7936" rx="72.6324" ry="62.7936" transform="matrix(-0.67039 -0.742009 0.730841 -0.682548 202.229 151.008)" fill="#297FFF"/>
+                    </g>
+                </g>
+                <path d="M856.464 66.2109C883.876 66.2109 900.323 83.6374 900.323 114.574V119.274H832.771C834.142 133.176 844.324 141.204 858.226 141.204C871.149 141.204 880.156 133.959 885.247 128.868L897.386 146.294C889.358 153.735 877.219 162.546 858.226 162.546C828.66 162.546 809.471 143.357 809.471 114.574C809.471 85.7913 828.072 66.2109 856.464 66.2109ZM855.289 85.5954C843.736 85.5954 835.317 91.2737 833.359 103.805H876.044C875.261 92.2528 867.037 85.5954 855.289 85.5954Z" fill="#FAFAFA"/>
+                <path d="M769.07 22.5586H793.153V159.621H769.07V22.5586Z" fill="#FAFAFA"/>
+                <path d="M709.548 162.558C694.863 162.558 685.073 156.292 679.395 146.894H679.003V159.621H654.919V22.5586H679.003V81.8869H679.395C685.073 72.4884 694.863 66.2227 709.548 66.2227C733.24 66.2227 753.017 83.4534 753.017 114.39C753.017 145.327 733.24 162.558 709.548 162.558ZM703.478 139.845C717.968 139.845 727.954 129.663 727.954 114.39C727.954 99.1176 717.968 88.9358 703.478 88.9358C688.989 88.9358 679.003 99.1176 679.003 114.39C679.003 129.663 688.989 139.845 703.478 139.845Z" fill="#FAFAFA"/>
+                <path d="M579.306 162.546C555.614 162.546 535.838 145.315 535.838 114.379C535.838 83.4416 555.614 66.2109 579.306 66.2109C593.992 66.2109 603.782 72.4766 609.46 81.8752H609.852V69.148H633.74V159.609H609.852V146.882H609.46C603.782 156.28 593.992 162.546 579.306 162.546ZM585.376 139.833C599.866 139.833 609.852 129.651 609.852 114.379C609.852 99.1059 599.866 88.9241 585.376 88.9241C570.887 88.9241 560.901 99.1059 560.901 114.379C560.901 129.651 570.887 139.833 585.376 139.833Z" fill="#FAFAFA"/>
+                <path d="M486.779 131.817L508.122 69.1602H535.534L498.527 159.621H475.031L438.22 69.1602H465.437L486.779 131.817Z" fill="#FAFAFA"/>
+                <path d="M387.868 66.2109C416.651 66.2109 437.994 85.9871 437.994 114.379C437.994 142.77 416.651 162.546 387.868 162.546C359.085 162.546 337.742 142.77 337.742 114.379C337.742 85.9871 359.085 66.2109 387.868 66.2109ZM387.868 88.9241C373.183 88.9241 362.414 98.9101 362.414 114.379C362.414 129.847 373.183 139.833 387.868 139.833C402.553 139.833 413.127 129.847 413.127 114.379C413.127 98.9101 402.553 88.9241 387.868 88.9241Z" fill="#FAFAFA"/>
+                <path d="M297.341 22.5586H321.425V159.621H297.341V22.5586Z" fill="#FAFAFA"/>
+                <defs>
+                    <filter id="filter0_f_0_1" x="-20.0115" y="71.2083" width="298.905" height="297.173" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter1_f_0_1" x="28.2847" y="58.2673" width="298.905" height="297.173" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter2_f_0_1" x="-94.1897" y="-12.4434" width="298.905" height="297.173" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter3_f_0_1" x="-45.8936" y="-25.3843" width="298.905" height="297.173" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter4_f_0_1" x="-284.511" y="-175.511" width="427.405" height="427.405" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="64" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter5_f_0_1" x="29.2722" y="-122.289" width="262.749" height="266.204" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter6_f_0_1" x="60.519" y="-86.6069" width="277.821" height="281.722" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter7_f_0_1" x="-20.0115" y="71.2083" width="298.905" height="297.173" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter8_f_0_1" x="28.2847" y="58.2673" width="298.905" height="297.173" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter9_f_0_1" x="-94.1897" y="-12.4434" width="298.905" height="297.173" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter10_f_0_1" x="-45.8936" y="-25.3843" width="298.905" height="297.173" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter11_f_0_1" x="-284.511" y="-175.511" width="427.405" height="427.405" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="64" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter12_f_0_1" x="29.2722" y="-122.289" width="262.749" height="266.204" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter13_f_0_1" x="60.519" y="-86.6069" width="277.821" height="281.722" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter14_f_0_1" x="-20.0115" y="71.2083" width="298.905" height="297.173" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter15_f_0_1" x="28.2847" y="58.2673" width="298.905" height="297.173" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter16_f_0_1" x="-94.1897" y="-12.4434" width="298.905" height="297.173" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter17_f_0_1" x="-45.8936" y="-25.3843" width="298.905" height="297.173" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter18_f_0_1" x="-284.511" y="-175.511" width="427.405" height="427.405" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="64" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter19_f_0_1" x="29.2722" y="-122.289" width="262.749" height="266.204" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                    <filter id="filter20_f_0_1" x="60.519" y="-86.6069" width="277.821" height="281.722" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="36" result="effect1_foregroundBlur_0_1"/>
+                    </filter>
+                </defs>
+            </svg>
+            <button id="lovable-badge-close" style="position: absolute; top: -2px; right: 5px; cursor: pointer; font-size: 14px; color: #A1A1AA;">&times;</button>
+        </a>
+        <script>
+            // Don't show the lovable-badge if the page is in an iframe or if it's being rendered by puppeteer (screenshot service)
+            if (navigator.userAgent.includes('puppeteer')) {
+                // the page is in an iframe
+                var badge = document.getElementById('lovable-badge');
+                if (badge) {
+                    badge.style.display = 'none';
                 }
-            });
-            
-            faqItem.classList.toggle('active');
-            if (answer.style.display === 'block') {
-                answer.style.display = 'none';
-            } else {
-                answer.style.display = 'block';
-                answer.style.animation = 'none';
-                answer.offsetHeight;
-                answer.style.animation = 'slideDown 0.3s ease forwards';
             }
-        }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    toggleAnswer(this);
+            // Add click event listener to close button
+            var closeButton = document.getElementById('lovable-badge-close');
+            if (closeButton) {
+                closeButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    var badge = document.getElementById('lovable-badge');
+                    if (badge) {
+                        badge.style.display = 'none';
+                    }
                 });
-            });
-
-            document.querySelectorAll('.mobile-nav a').forEach(link => {
-                link.addEventListener('click', () => {
-                    toggleMobileNav();
-                });
-            });
-        });
-    </script>
-</head>
-<body>
-    <header>
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
-            <img src="{% static 'deps/images/logo.jpg' %}" alt="ТНК ОЦЕНКА" style="width: 150px; height: auto; object-fit: contain;"/>
-            <nav>
-                <a href="/">ГЛАВНАЯ</a>
-                <a href="#services-section">УСЛУГИ</a>
-                <a href="#steps-section">КАК МЫ РАБОТАЕМ</a>
-                <a href="#certificates-section">СЕРТИФИКАТЫ</a>
-                <a href="#faq-section">FAQ</a>
-                {% if user.is_staff %}
-                    <a href="{% url 'ps_account:staff_documents' %}">ДОКУМЕНТЫ</a>
-                {% endif %}
-            </nav>
-            <div class="contact-info">
-                {% if user.is_authenticated %}
-                    <div class="user-menu">
-                        <a href="{% url 'ps_account:account' %}" class="auth-button profile-button">Профиль</a>
-                        <a href="{% url 'ps_account:logout' %}" class="auth-button logout-button">Выход</a>
-                    </div>
-                {% else %}
-                    <div class="auth-buttons">
-                        <a href="{% url 'ps_account:login' %}" class="auth-button login-button">Вход</a>
-                        <a href="{% url 'ps_account:registration' %}" class="auth-button register-button">Регистрация</a>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-        <div class="burger-menu" onclick="toggleMobileNav()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="mobile-nav">
-            <a href="/">ГЛАВНАЯ</a>
-            <a href="#services-section">УСЛУГИ</a>
-            <a href="#steps-section">КАК МЫ РАБОТАЕМ</a>
-            <a href="#certificates-section">СЕРТИФИКАТЫ</a>
-            <a href="#faq-section">FAQ</a>
-            {% if user.is_staff %}
-                <a href="{% url 'ps_account:staff_documents' %}">ДОКУМЕНТЫ</a>
-            {% endif %}
-            {% if user.is_authenticated %}
-                <a href="{% url 'ps_account:account' %}">ПРОФИЛЬ</a>
-                <a href="{% url 'ps_account:logout' %}">ВЫХОД</a>
-            {% else %}
-                <a href="{% url 'ps_account:login' %}">Вход</a>
-                <a href="{% url 'ps_account:registration' %}">Регистрация</a>
-            {% endif %}
-        </div>
-    </header>
-    <div class="main-content">
-        <div class="text-content">
-            <h1>Закажите оценку своего имущества и получите результат в тот же день</h1>
-            <ul>
-                <li><i class="fas fa-check"></i>На <span style="color: green;">15% ниже</span> рыночной цены</li>
-                <li><i class="fas fa-check"></i>Все оценщики с опытом работы <span style="color: green;">от 10 лет</span></li>
-                <li><i class="fas fa-check"></i><span style="color: green;">Более тысячи</span> выполненных отчетов</li>
-            </ul>
-        </div>
-        <div class="form-container">
-            <h2>Остались вопросы?</h2>
-            
-            <div class="messenger-buttons">
-                <a href="https://wa.me/77026264998" class="whatsapp-button" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                    Заказать через WhatsApp
-                </a>
-            </div>
-
-            <p class="divider">или</p>
-
-            <div>
-                <p>Вы можете зарегистрироваться</p>
-                <a href="{% url 'ps_account:registration' %}" class="register-button">Зарегистрироваться</a>
-            </div>
-
-            <p class="info-text">
-                Вы также можете заказать оценку через личный чат на нашем сайте 
-            </p>
-        </div>
-    </div>
-    <main class="main" id="services-section">
-        <h1>Наши услуги</h1>
-        <div class="services">
-            <div class="service-card">
-                <img alt="Image of a modern building" height="200" src="https://storage.googleapis.com/a1aa/image/vJI3otYhXAATCytszDuIqOdHggBgUjhN3yRY-5sGulY.jpg" width="300"/>
-                <h3>Оценка недвижимости</h3>
-                <p>Качественная оценка недвижимости в кратчайшие сроки</p>
-                <a href="https://wa.me/77026264998" class="whatsapp-button" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                    Заказать через WhatsApp
-                </a>
-                <a href="https://t.me/Kairat_Zhaxalykov" class="telegram-button" target="_blank">
-                    <i class="fab fa-telegram"></i>
-                    Заказать через Telegram
-                </a>
-            </div>
-            <div class="service-card">
-                <img alt="Image of parked cars" height="200" src="https://storage.googleapis.com/a1aa/image/AI4Anly52za3Kpsm9EH9ZZ1YwmmSxm5d8vDywNJoLf4.jpg" width="300"/>
-                <h3>Оценка движимого имущества</h3>
-                <p>Четкая и не затратная оценка транспортных средств</p>
-                <a href="https://wa.me/77026264998" class="whatsapp-button" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                    Заказать через WhatsApp
-                </a>
-                <a href="https://t.me/Kairat_Zhaxalykov" class="telegram-button" target="_blank">
-                    <i class="fab fa-telegram"></i>
-                    Заказать через Telegram
-                </a>
-            </div>
-            <div class="service-card">
-                <img alt="Image of business charts and graphs" height="200" src="https://storage.googleapis.com/a1aa/image/xOlsTgBhIHlcpK4Gtm1z3CD_GsPM1XJaGq4rYyIVNY8.jpg" width="300"/>
-                <h3>Оценка бизнеса</h3>
-                <p>Справедливая оценка стоимости бизнеса и имущества</p>
-                <a href="https://wa.me/77026264998" class="whatsapp-button" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                    Заказать через WhatsApp
-                </a>
-                <a href="https://t.me/Kairat_Zhaxalykov" class="telegram-button" target="_blank">
-                    <i class="fab fa-telegram"></i>
-                    Заказать через Telegram
-                </a>
-            </div>
-            <div class="service-card">
-                <img alt="Image of intellectual property items" height="200" src="https://storage.googleapis.com/a1aa/image/ihGXF-04bzmXhFoBsy9qb-haN0rmLRnrcvFy500RNxA.jpg" width="300"/>
-                <h3>Оценка интеллектуальной собственности</h3>
-                <p>Быстрая оценка стоимости интеллектуальной собственности</p>
-                <a href="https://wa.me/77026264998" class="whatsapp-button" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                    Заказать через WhatsApp
-                </a>
-                <a href="https://t.me/Kairat_Zhaxalykov" class="telegram-button" target="_blank">
-                    <i class="fab fa-telegram"></i>
-                    Заказать через Telegram
-                </a>
-            </div>
-        </div>
-    </main>
-
-    <div class="steps-container" id="steps-section">
-        <h1>Порядок оказания оценочных услуг</h1>
-        <div class="steps-list">
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-text">Консультация по телефону и WhatsApp (прием документов);</div>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-text">Предварительный расчет стоимости услуг;</div>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-text">Заключение договора на оценку;</div>
-            </div>
-            <div class="step">
-                <div class="step-number">4</div>
-                <div class="step-text">Осмотр объекта оценки;</div>
-            </div>
-            <div class="step">
-                <div class="step-number">5</div>
-                <div class="step-text">Оценщик составляет отчет об оценке;</div>
-            </div>
-            <div class="step">
-                <div class="step-number">6</div>
-                <div class="step-text">Отчет об оценке передается заказчику.</div>
-            </div>
-        </div>
-        <div class="button-container">
-            <a href="#" class="button">Заказать оценку</a>
-        </div>
-    </div>
-    <div class="certificates-section" id="certificates-section">
-        <h1>Наши сертификаты</h1>
-        <div class="certificates-scroll">
-            <div class="scroll-track track1">
-                {% for certificate in certificates %}
-                    <div class="certificate-card">
-                        <img src="{% static 'deps/images/certificates/'|add:certificate %}" alt="Сертификат" loading="lazy">
-                    </div>
-                {% endfor %}
-                {% for certificate in certificates %}
-                    <div class="certificate-card">
-                        <img src="{% static 'deps/images/certificates/'|add:certificate %}" alt="Сертификат" loading="lazy">
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="scroll-track track2">
-                {% for certificate in certificates %}
-                    <div class="certificate-card">
-                        <img src="{% static 'deps/images/certificates/'|add:certificate %}" alt="Сертификат" loading="lazy">
-                    </div>
-                {% endfor %}
-                {% for certificate in certificates %}
-                    <div class="certificate-card">
-                        <img src="{% static 'deps/images/certificates/'|add:certificate %}" alt="Сертификат" loading="lazy">
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <div class="container" id="faq-section">
-        <h1>Ответы на часто-задаваемые вопросы</h1>
-        <div class="faq-item">
-            <span>Какие банки принимают оценку?</span>
-            <i class="fas fa-plus"></i>
-        </div>
-        <div class="faq-answer">
-            Нашу оценку принимают все банки РК
-        </div>
-        
-        <div class="faq-item">
-            <span>Бесплатный ли выезд на объект оценки?</span>
-            <i class="fas fa-plus"></i>
-        </div>
-        <div class="faq-answer">
-            Выезд, фотографирование и консультация – бесплатны
-        </div>
-        <div class="faq-item">
-            <span>За какой срок вы можете оценить автомобиль?</span>
-            <i class="fas fa-plus"></i>
-        </div>
-        <div class="faq-answer">
-            Сделаем качественную оценку автомобиля в минимальные сроки – от 30 минут
-        </div>
-        
-        <div class="faq-item">
-            <span>Делаете ли вы предварительный расчет по предоставленным данным?</span>
-            <i class="fas fa-plus"></i>
-        </div>
-        <div class="faq-answer">
-            Да, мы делаем при консультации. Для этого данные должны быть точными
-        </div>
-    </div>
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="company-info">
-                <h3>ТНК ОЦЕНКА</h3>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <p>Астана, Проспект Республики, 32<br>Этаж 6, офис 605</p>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <a href="tel:+77026264998">+7 (702) 626-49-98</a>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <a href="mailto:tnk01@list.ru">tnk01@list.ru</a>
-                </div>
-                <div class="social-links">
-                    <a href="https://wa.me/77026264998" target="_blank" class="whatsapp">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="https://t.me/Kairat_Zhaxalykov" target="_blank" class="telegram">
-                        <i class="fab fa-telegram"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="footer-map">
-                <div class="schedule">
-                    <div class="schedule-title">
-                        <i class="far fa-clock"></i>
-                        График работы
-                    </div>
-                    <div class="schedule-time">ПН-ВС 9:00 - 18:30</div>
-                    <div class="schedule-lunch">Обед: 13:00 - 14:00</div>
-                </div>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2381.23367453417!2d71.42467107626491!3d51.16819113542735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424586d4b657ad8d%3A0xbf49b02d1912c9a6!2z0L_RgNC-0YHQvy4g0KDQtdGB0L_Rg9Cx0LvQuNC60LggMzIsINCQ0YHRgtCw0L3QsCAwMjAwMDA!5e1!3m2!1sru!2skz!4v1738428998880!5m2!1sru!2skz" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            © 2025 Сделано Svist.co.
-        </div>
-    </footer>
-
-    {% if user.is_authenticated %}
-        <a href="{% url 'chat:index' %}" class="chat-button">
-            <i class="far fa-comment"></i>
-        </a>
-    {% else %}
-        <a href="{% url 'ps_account:login' %}" class="chat-button">
-            <i class="far fa-comment"></i>
-        </a>
-    {% endif %}
-
-    <script src="{% static 'deps/js/jquery-3.4.1.min.js' %}"></script>
-    <script src="{% static 'deps/js/bootstrap.js' %}"></script>
-    <script src="{% static 'deps/js/custom.js' %}"></script>
-</body>
+            }
+        </script>
+    </body>
 </html>
