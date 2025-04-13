@@ -1,0 +1,29 @@
+ В этой директории должны находиться следующие файлы изображений услуг:
+
+1. real-estate.jpg - Оценка недвижимости
+2. movable-property.jpg - Оценка движимого имущества
+3. business.jpg - Оценка бизнеса
+4. intellectual-property.jpg - Оценка интеллектуальной собственности
+5. mining-rights.jpg - Оценка прав недропользования
+6. biological-assets.jpg - Оценка биологических активов
+7. ships-aircraft.jpg - Оценка воздушных и морских судов
+8. railway.jpg - Оценка железнодорожного транспорта
+9. car.jpg - Оценка легкового автомобиля
+10. construction.jpg - Оценка незавершенного строительства
+11. land.jpg - Оценка земельного участка
+12. machinery.jpg - Оценка спецтехники
+
+Вы можете загрузить эти изображения с Unsplash или использовать свои.
+Рекомендуемые источники изображений:
+- real-estate.jpg: https://images.unsplash.com/photo-1560518883-ce09059eeffa
+- movable-property.jpg: https://images.unsplash.com/photo-1605152276897-4f618f831968
+- business.jpg: https://images.unsplash.com/photo-1444653614773-995cb1ef9efa
+- intellectual-property.jpg: https://images.unsplash.com/photo-1588666309990-d68f08e3d4a6
+- mining-rights.jpg: https://images.unsplash.com/photo-1581094488379-6a10d04e7d54
+- biological-assets.jpg: https://images.unsplash.com/photo-1464226184884-fa280b87c399
+- ships-aircraft.jpg: https://images.unsplash.com/photo-1566431732089-bbc86080a54a
+- railway.jpg: https://images.unsplash.com/photo-1527224857830-43a7acc85260
+- car.jpg: https://images.unsplash.com/photo-1552519507-da3b142c6e3d
+- construction.jpg: https://images.unsplash.com/photo-1486744328743-c1151100a95b
+- land.jpg: https://images.unsplash.com/photo-1500382017468-9049fed747ef
+- machinery.jpg: https://images.unsplash.com/photo-1598446232742-11ada42c6e20 
