@@ -30,6 +30,5 @@ urlpatterns = [
 # Добавляем обработку медиа файлов
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Добавляем обработку статических файлов
-if settings.DEBUG:
-    urlpatterns += staticfiles_urlpatterns()
+# Добавляем обработку статических файлов - всегда, независимо от DEBUG
+urlpatterns += staticfiles_urlpatterns()
