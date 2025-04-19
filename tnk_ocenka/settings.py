@@ -165,8 +165,27 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# Используем более простое хранилище, которое не перезаписывает имена файлов
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+# Используем самый базовый вариант хранилища статики для Render
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
+
+# Явное указание MIME-типов для WhiteNoise
+WHITENOISE_MIMETYPES = {
+    '.css': 'text/css',
+    '.js': 'application/javascript',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.png': 'image/png',
+    '.ico': 'image/x-icon',
+    '.svg': 'image/svg+xml',
+    '.woff': 'font/woff',
+    '.woff2': 'font/woff2',
+    '.ttf': 'font/ttf',
+    '.eot': 'application/vnd.ms-fontobject',
+}
+
+# Отключаем строгую проверку MIME-типов
+WHITENOISE_ADD_MIME_TYPES = True
+WHITENOISE_USE_FINDERS = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
