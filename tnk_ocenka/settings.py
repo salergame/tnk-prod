@@ -165,10 +165,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# Используем самый базовый вариант хранилища статики для Render
+# Упрощенный вариант хранилища для WhiteNoise
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
-# Явное указание MIME-типов для WhiteNoise
+# Настройки для обработки MIME-типов
 WHITENOISE_MIMETYPES = {
     '.css': 'text/css',
     '.js': 'application/javascript',
@@ -183,8 +183,9 @@ WHITENOISE_MIMETYPES = {
     '.eot': 'application/vnd.ms-fontobject',
 }
 
-# Отключаем строгую проверку MIME-типов
-WHITENOISE_ADD_MIME_TYPES = True
+# Дополнительные настройки WhiteNoise
+WHITENOISE_ROOT = os.path.join(BASE_DIR, 'static')
+WHITENOISE_KEEP_ONLY_HASHED_FILES = False
 WHITENOISE_USE_FINDERS = True
 
 # Default primary key field type
