@@ -2,6 +2,7 @@ from django import forms
 from .models import UserDocument, UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.core.validators import EmailValidator
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -15,9 +16,6 @@ class RegisterForm(UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Этот email уже используется.')
         return email
-
-from django import forms
-from django.core.validators import EmailValidator
 
 
 class EmailChangeForm(forms.Form):

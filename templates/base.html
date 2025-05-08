@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block head_title %}{% endblock %} | TNK Оценка</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'deps/css/styles1.css' %}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">TNK ocenka</a>
+                <nav class="menu">
+                    <a href="{% url 'main:index' %}#services" class="menu-item">Услуги</a>
+                    <a href="{% url 'main:index' %}#testimonials" class="menu-item">Отзывы</a>
+                    <a href="{% url 'main:index' %}#contact" class="menu-item">Контакты</a>
+                    {% if user.is_staff %}
+                        <a href="{% url 'ps_account:staff_documents' %}" class="menu-item">Документы</a>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'ps_account:account' %}" class="btn btn-secondary btn-sm">
+                            <i data-lucide="user" class="icon-sm"></i>
+                            Профиль
+                        </a>
+                    {% else %}
+                        <a href="{% url 'ps_account:login' %}" class="btn btn-secondary btn-sm">
+                            <i data-lucide="log-in" class="icon-sm"></i>
+                            Вход / Регистрация
+                        </a>
+                    {% endif %}
+                    <a href="https://wa.me/77026264998" target="_blank" class="btn btn-primary btn-sm">
+                        <i data-lucide="phone" class="icon-sm"></i>
+                        Связаться
+                    </a>
+                </nav>
+                <button class="mobile-menu-btn">
+                    <i data-lucide="menu" class="icon"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu">
+            <div class="container">
+                <nav class="mobile-nav">
+                    <a href="{% url 'main:index' %}#services" class="menu-item">Услуги</a>
+                    <a href="{% url 'main:index' %}#testimonials" class="menu-item">Отзывы</a>
+                    <a href="{% url 'main:index' %}#contact" class="menu-item">Контакты</a>
+                    {% if user.is_staff %}
+                        <a href="{% url 'ps_account:staff_documents' %}" class="menu-item">Документы</a>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'ps_account:account' %}" class="btn btn-secondary btn-sm">
+                            <i data-lucide="user" class="icon-sm"></i>
+                            Профиль
+                        </a>
+                    {% else %}
+                        <a href="{% url 'ps_account:login' %}" class="btn btn-secondary btn-sm">
+                            <i data-lucide="log-in" class="icon-sm"></i>
+                            Вход / Регистрация
+                        </a>
+                    {% endif %}
+                    <a href="https://wa.me/77026264998" target="_blank" class="btn btn-primary btn-sm">
+                        <i data-lucide="phone" class="icon-sm"></i>
+                        Связаться
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <script>
+        // Инициализация Lucide иконок
+        lucide.createIcons();
+        
+        // Логика мобильного меню 
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        if(menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                const icon = menuBtn.querySelector('i');
+                if (mobileMenu.classList.contains('active')) {
+                    icon.setAttribute('data-lucide', 'x');
+                } else {
+                    icon.setAttribute('data-lucide', 'menu');
+                }
+                lucide.createIcons();
+            });
+        }
+    </script>
+</body>
+</html> 

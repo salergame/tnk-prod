@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1", cast=Csv())
 
@@ -40,7 +40,6 @@ CORS_ALLOW_ALL_ORIGINS = True  # Разрешить все домены
 # Application definition
 
 INSTALLED_APPS = [
-    "daphne",
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,7 +53,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google', 
-    'django_htmx',
     'corsheaders',
     
     'main',
@@ -221,8 +219,11 @@ CORS_ALLOWED_ORIGINS = [
     'https://www.tnk-ocenka.kz',
 ]
 
+# Настройки сайта для генерации URL
+SITE_ID = 1
+SITE_URL = 'https://tnk-ocenka.kz'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGGING = {
@@ -238,3 +239,12 @@ LOGGING = {
         'level': 'DEBUG',
     },
 }
+
+# Настройки для отправки электронной почты
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'tnk01@yandex.ru'
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+DEFAULT_FROM_EMAIL = 'tnk01@yandex.ru'

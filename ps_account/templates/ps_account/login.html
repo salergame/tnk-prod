@@ -9,6 +9,24 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <!-- Добавляем FontAwesome для иконки глаза, если нужно -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <style>
+    .forgot-password {
+      text-align: right;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    
+    .forgot-password a {
+      color: #B1454A;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .forgot-password a:hover {
+      color: #C85F63;
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
     <!-- Вставляем новую шапку -->
@@ -94,14 +112,19 @@
                           <i class="far fa-eye" id="togglePassword"></i>
                       </span>
                   </div>
+                  <div class="forgot-password">
+                      <a href="{% url 'ps_account:password_reset' %}">Забыли пароль?</a>
+                  </div>
               </div>
-              <button type="submit" class="btn-primary">Войти</button>
+              <button type="submit" class="btn btn-primary btn-full">Войти</button>
               <div class="social-login">
                   <p>Или войдите через</p>
-                  <a href="{% provider_login_url 'google' %}" class="btn-google">
-                      <span class="google-icon"></span>
-                      Войти через Google
-                  </a>
+                  <div class="google-login-button">
+                     <a href="{% provider_login_url 'google' %}" class="btn-google">
+                         <span class="google-icon"></span>
+                         Войти через Google
+                     </a>
+                  </div>
               </div>
           </form>
           <p class="signup-link">

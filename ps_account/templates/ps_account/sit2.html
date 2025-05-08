@@ -342,6 +342,100 @@
                 top: 15px;
             }
         }
+
+        /* Стили для кнопки добавления документа */
+        .admin-controls {
+            margin-bottom: 30px;
+        }
+
+        .add-document-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .add-document-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(177,69,74,0.2);
+        }
+
+        .add-document-btn i {
+            font-size: 14px;
+        }
+
+        /* Стили для формы загрузки */
+        .upload-form-container {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .upload-form-container .form-group {
+            margin-bottom: 20px;
+        }
+
+        .upload-form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .upload-form-container input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px dashed rgba(177,69,74,0.2);
+            border-radius: 10px;
+            background-color: white;
+        }
+
+        .upload-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .upload-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(177,69,74,0.2);
+        }
+
+        /* Стили для иконки удаления */
+        .delete-icon {
+            color: #dc3545;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .delete-icon:hover {
+            color: #c82333;
+            transform: scale(1.1);
+        }
+
+        .no-documents {
+            color: #6c757d;
+            font-style: italic;
+            padding: 20px;
+            text-align: center;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
     </style>
 </head>
 <body>
@@ -424,6 +518,11 @@
                     <p>Email: {{ user_email }}</p>
                     <p>Дата регистрации: {{ registration_date }}</p>
                      <div class="profile-actions">
+                        {% if request.user.is_staff %}
+                        <a href="{% url 'ps_account:staff_documents' %}" class="btn btn-primary">
+                            <i data-lucide="users" class="icon-sm"></i> Управление пользователями
+                        </a>
+                        {% endif %}
                         <a href="{% url 'ps_account:change_password' %}" class="btn btn-outline-secondary">
                              <i data-lucide="lock" class="icon-sm"></i> Сменить пароль
                         </a>
@@ -442,18 +541,59 @@
 
             <div class="profile-section">
                 <h3>Мои документы</h3>
-                {% if documents %}
+                <div class="documents-panel">
+                    <h2>Мои документы</h2>
+                    {% if request.user.is_staff or request.user.id == user.id %}
+                    <div class="admin-controls">
+                        <button id="addDocumentBtn" class="add-document-btn">
+                            <i class="fas fa-plus"></i> Добавить документ
+                        </button>
+                    </div>
+                    
+                    <!-- Форма загрузки документа (скрыта по умолчанию) -->
+                    <div id="uploadFormContainer" class="upload-form-container" style="display: none;">
+                        {% if user.id == request.user.id %}
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="id_document">Выберите документ</label>
+                                <input type="file" name="document" id="id_document" required>
+                            </div>
+                            <button type="submit" class="upload-button">Загрузить</button>
+                        </form>
+                        {% else %}
+                        <form method="post" enctype="multipart/form-data" action="{% url 'ps_account:user_account_for_staff' user_id=user.id %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="id_document">Выберите документ</label>
+                                <input type="file" name="document" id="id_document" required>
+                            </div>
+                            <button type="submit" class="upload-button">Загрузить</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
                     <ul class="document-list">
-                        {% for doc in documents %}
-                            <li class="document-item">
-                                <a href="{{ doc.document.url }}" target="_blank" class="document-link">{{ doc.document.name|cut:"documents/" }}</a>
-                                <span>Загружено: {{ doc.uploaded_at|date:"d.m.Y H:i" }}</span>
-                            </li>
-                        {% endfor %}
+                        {% if documents %}
+                            {% for document in documents %}
+                                <li class="document-item">
+                                    <div class="document-info">
+                                        <a href="{{ document.document.url }}" target="_blank">{{ document.document.name|slice:"10:" }}</a>
+                                        <span>Загружен: {{ document.uploaded_at|date:"d.m.Y" }}</span>
+                                    </div>
+                                    {% if request.user.is_staff %}
+                                    <a href="{% url 'ps_account:delete_document' user_id=document.user.id document_id=document.id %}" class="delete-icon" onclick="return confirm('Вы уверены, что хотите удалить этот документ?')">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="no-documents">Документов пока нет</li>
+                        {% endif %}
                     </ul>
-                {% else %}
-                    <p>У вас пока нет загруженных документов.</p>
-                {% endif %}
+                </div>
             </div>
 
             <!-- Можно добавить форму для загрузки документов сюда, если нужно -->
@@ -475,6 +615,22 @@
                     icon.setAttribute('data-lucide', 'menu');
                 }
                 lucide.createIcons(); 
+            });
+        }
+
+        // JavaScript для показа/скрытия формы загрузки документа
+        const addDocumentBtn = document.getElementById('addDocumentBtn');
+        const uploadFormContainer = document.getElementById('uploadFormContainer');
+        
+        if (addDocumentBtn && uploadFormContainer) {
+            addDocumentBtn.addEventListener('click', function() {
+                if (uploadFormContainer.style.display === 'none') {
+                    uploadFormContainer.style.display = 'block';
+                    addDocumentBtn.innerHTML = '<i class="fas fa-times"></i> Отменить';
+                } else {
+                    uploadFormContainer.style.display = 'none';
+                    addDocumentBtn.innerHTML = '<i class="fas fa-plus"></i> Добавить документ';
+                }
             });
         }
     </script>

@@ -6,7 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import auth
 from django.urls import reverse
 from ps_account.forms import RegisterForm
-from .forms import AvatarChangeForm, EmailChangeForm,DocumentUploadForm
+from .forms import AvatarChangeForm, EmailChangeForm, DocumentUploadForm
 from .models import UserDocument, UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test
@@ -24,11 +24,19 @@ def account(request):
     profile, created = UserProfile.objects.get_or_create(user=user)
     documents = UserDocument.objects.filter(user=user)
 
-    if request.method == 'POST' and request.FILES.get('avatar'):
-        avatar_form = AvatarChangeForm(request.POST, request.FILES, instance=profile)
-        if avatar_form.is_valid():
-            profile = avatar_form.save()
-            return redirect('ps_account:account')
+    if request.method == 'POST':
+        if request.FILES.get('avatar'):
+            avatar_form = AvatarChangeForm(request.POST, request.FILES, instance=profile)
+            if avatar_form.is_valid():
+                profile = avatar_form.save()
+                return redirect('ps_account:account')
+        elif request.FILES.get('document'):
+            form = DocumentUploadForm(request.POST, request.FILES)
+            if form.is_valid():
+                document = form.save(commit=False)
+                document.user = user
+                document.save()
+                return redirect('ps_account:account')
     else:
         avatar_form = AvatarChangeForm(instance=profile)
 
@@ -43,9 +51,9 @@ def account(request):
         'avatar_form': avatar_form,
         'profile': profile,
         'avatar_url': avatar_url,
+        'user': user,  # Добавляем пользователя в контекст
     }
     return render(request, 'ps_account/sit2.html', context)
-
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -87,8 +95,22 @@ def logout(request):
 def delete_account(request):
     if request.method == 'POST':
         user = request.user
+        
+        # Сначала удаляем связанные объекты
+        UserDocument.objects.filter(user=user).delete()
+        
+        # Удаляем профиль пользователя
+        try:
+            profile = UserProfile.objects.get(user=user)
+            profile.delete()
+        except UserProfile.DoesNotExist:
+            pass
+        
+        # Теперь удаляем самого пользователя
         user.delete()
-        logout(request)
+        
+        # Выходим из системы
+        auth.logout(request)
         return redirect('main:index')
     return render(request, 'ps_account/delete_account.html')
 
@@ -155,11 +177,12 @@ def user_account_for_staff(request, user_id):
         form = DocumentUploadForm()
 
     context = {
-        'user_name': selected_user.get_full_name(),
+        'user_name': selected_user.get_full_name() or selected_user.username,
         'user_email': selected_user.email,
         'registration_date': selected_user.date_joined.strftime('%d %B %Y'),
         'documents': documents,
         'form': form,  # For document upload
+        'user': selected_user,  # Добавляем пользователя в контекст
     }
     return render(request, 'ps_account/sit2.html', context)
 
@@ -169,4 +192,7 @@ def user_account_for_staff(request, user_id):
 def delete_document(request, user_id, document_id):
     document = get_object_or_404(UserDocument, id=document_id, user_id=user_id)
     document.delete()
-    return redirect('ps_account:user_account_for_staff', user_id=user_id)
+    if int(user_id) == request.user.id:
+        return redirect('ps_account:account')
+    else:
+        return redirect('ps_account:user_account_for_staff', user_id=user_id)
