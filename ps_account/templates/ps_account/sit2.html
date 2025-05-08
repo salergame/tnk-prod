@@ -1,4 +1,5 @@
-{% load static extras %}
+{% load static %}
+{% load account %}
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -9,6 +10,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="{% static 'deps/images/logo.ico' %}" sizes="32x32">
+    <link rel="stylesheet" href="{% static 'deps/css/styles1.css' %}">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
             --primary-color: #B1454A;
@@ -33,74 +36,6 @@
             display: flex;
             flex-direction: column;
         }
-
-        /* Навбар */
-        header {
-            background-color: var(--white);
-            padding: 15px 40px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            font-family: var(--heading-font);
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex: 1;
-        }
-
-        .nav-left a:not(.logo) {
-            margin-left: auto;
-            font-size: 15px;
-            font-weight: 500;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        nav a {
-            position: relative;
-            color: #2D2D2D;
-            text-decoration: none;
-            padding: 10px 20px;
-            transition: color 0.3s ease;
-            font-weight: 500;
-        }
-
-        nav a:not(.logo):after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            left: 0;
-            bottom: -5px;
-            transition: width 0.3s ease;
-        }
-
-        nav a:not(.logo):hover:after {
-            width: 100%;
-        }
-
-        nav a:not(.logo):hover {
-            color: var(--primary-color);
-        }
-
         .logo {
             padding: 0 !important;
             margin-right: auto;
@@ -410,135 +345,138 @@
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-            </div>
-            <div class="nav-left">
-                <a href="{% url 'main:index' %}" class="logo">
-                    <img src="{% static 'deps/images/logo.jpg' %}" alt="Sadyrbai Consulting">
+    <!-- Вставляем новую шапку -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <a href="/" class="logo">TNK ocenka</a>
+          <nav class="menu">
+            <a href="{% url 'main:index' %}#services" class="menu-item">Услуги</a>
+            <a href="{% url 'main:index' %}#testimonials" class="menu-item">Отзывы</a>
+            <a href="{% url 'main:index' %}#contact" class="menu-item">Контакты</a>
+             {% if user.is_staff %}
+                <a href="{% url 'ps_account:staff_documents' %}" class="menu-item">Документы</a>
+             {% endif %}
+             {% if user.is_authenticated %}
+                <a href="{% url 'ps_account:account' %}" class="btn btn-secondary btn-sm">
+                  <i data-lucide="user" class="icon-sm"></i>
+                  Профиль
                 </a>
-                <a href="{% url 'main:index' %}">ГЛАВНАЯ</a>
-                <a href="{% url 'main:index' %}#services-section">УСЛУГИ</a>
-                <a href="{% url 'main:index' %}#steps-section">КАК МЫ РАБОТАЕМ</a>
-                <a href="{% url 'main:index' %}#certificates-section">СЕРТИФИКАТЫ</a>
-                <a href="{% url 'chat:index' %}#faq-section">ЧАТ</a>
-                {% if user.is_staff %}
-                    <a href="{% url 'ps_account:staff_documents' %}">ДОКУМЕНТЫ</a>
-                {% endif %}
-            </div>
-        </nav>
-    </header>
-
-    <div class="profile-container">
-        <!-- Левая панель -->
-        <div class="profile-sidebar">
-            <div class="profile-avatar">
-                <img id="user-avatar" 
-                     src="{% if profile.avatar and profile.avatar.name %}{{ profile.avatar.url }}{% else %}{% static 'deps/images/default-avatar.png' %}{% endif %}" 
-                     alt="Аватар пользователя">
-                <form id="avatar-form" method="post" enctype="multipart/form-data" style="display: none;">
-                    {% csrf_token %}
-                    {{ avatar_form.avatar }}
-                </form>
-            </div>
-
-            <div class="profile-info">
-                <h2>Информация профиля</h2>
-                <div class="profile-details">
-                    <p><strong>Имя:</strong> {{ user_name }}</p>
-                    <p><strong>Email:</strong> {{ user_email }}</p>
-                    <p><strong>Дата регистрации:</strong> {{ registration_date }}</p>
-                </div>
-            </div>
-
-            <div class="settings-buttons">
-                <a href="{% url 'ps_account:change_password' %}">
-                    <button class="settings-button">Изменить пароль</button>
+             {% else %}
+                <a href="{% url 'ps_account:login' %}" class="btn btn-secondary btn-sm">
+                  <i data-lucide="log-in" class="icon-sm"></i>
+                  Вход / Регистрация
                 </a>
-                <a href="{% url 'ps_account:change_email' %}">
-                    <button class="settings-button">Изменить email</button>
-                </a>
-                <a href="{% url 'ps_account:delete_account' %}">
-                    <button class="settings-button">Удалить аккаунт</button>
-                </a>
-            </div>
+             {% endif %}
+            <a href="https://wa.me/77026264998" target="_blank" class="btn btn-primary btn-sm">
+              <i data-lucide="phone" class="icon-sm"></i>
+              Связаться
+            </a>
+          </nav>
+          <button class="mobile-menu-btn">
+            <i data-lucide="menu" class="icon"></i>
+          </button>
         </div>
-
-        <!-- Правая панель -->
-        <div class="documents-panel">
-            <h2>Загруженные документы</h2>
-            <ul class="document-list">
-                {% for document in documents %}
-                    <li class="document-item">
-                        <div class="document-info">
-                            <a href="{{ document.document.url }}" download>{{ document.document.name|basename }}</a>
-                            <span>Загружено {{ document.uploaded_at }}</span>
-                        </div>
-                        {% if user.is_staff %}
-                            <a href="{% url 'ps_account:delete_document' user_id=document.user.id document_id=document.id %}" 
-                               class="delete-icon" 
-                               onclick="return confirm('Вы уверены, что хотите удалить этот документ?');">
-                               <i class="fas fa-trash-alt"></i>
-                            </a>
-                        {% endif %}
-                    </li>
-                {% empty %}
-                    <li class="document-item">Документы отсутствуют.</li>
-                {% endfor %}
-            </ul>
-
-            {% if user.is_staff %}
-                <div class="upload-form">
-                    <h2>Загрузить новый документ</h2>
-                    <form method="post" enctype="multipart/form-data">
+      </div>
+      <div class="mobile-menu">
+        <div class="container">
+          <nav class="mobile-nav">
+             <a href="{% url 'main:index' %}#services" class="menu-item">Услуги</a>
+            <a href="{% url 'main:index' %}#testimonials" class="menu-item">Отзывы</a>
+            <a href="{% url 'main:index' %}#contact" class="menu-item">Контакты</a>
+             {% if user.is_staff %}
+                <a href="{% url 'ps_account:staff_documents' %}" class="menu-item">Документы</a>
+             {% endif %}
+             {% if user.is_authenticated %}
+                <a href="{% url 'ps_account:account' %}" class="btn btn-secondary btn-sm">
+                  <i data-lucide="user" class="icon-sm"></i>
+                  Профиль
+                </a>
+             {% else %}
+                <a href="{% url 'ps_account:login' %}" class="btn btn-secondary btn-sm">
+                  <i data-lucide="log-in" class="icon-sm"></i>
+                  Вход / Регистрация
+                </a>
+             {% endif %}
+            <a href="https://wa.me/77026264998" target="_blank" class="btn btn-primary btn-sm">
+              <i data-lucide="phone" class="icon-sm"></i>
+              Связаться
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="avatar-container">
+                    <img src="{% if profile.avatar %}{{ profile.avatar.url }}{% else %}{% static 'deps/images/default-avatar.png' %}{% endif %}" alt="Аватар" class="avatar">
+                    <label for="avatar-upload" class="change-avatar-btn" title="Сменить аватар">
+                        <i data-lucide="camera"></i>
+                    </label>
+                    <form method="post" enctype="multipart/form-data" style="display: none;">
                         {% csrf_token %}
-                        {{ form.document }}
-                        <button type="submit" class="upload-button">Загрузить</button>
+                        <input type="file" name="avatar" id="avatar-upload" accept="image/*" onchange="this.form.submit()">
                     </form>
                 </div>
-            {% endif %}
+                <div class="profile-info">
+                    <h2>{{ user_name }}</h2>
+                    <p>Email: {{ user_email }}</p>
+                    <p>Дата регистрации: {{ registration_date }}</p>
+                     <div class="profile-actions">
+                        <a href="{% url 'ps_account:change_password' %}" class="btn btn-outline-secondary">
+                             <i data-lucide="lock" class="icon-sm"></i> Сменить пароль
+                        </a>
+                        <a href="{% url 'ps_account:change_email' %}" class="btn btn-outline-secondary">
+                            <i data-lucide="mail" class="icon-sm"></i> Сменить Email
+                        </a>
+                        <a href="{% url 'ps_account:logout' %}" class="btn btn-outline-secondary">
+                            <i data-lucide="log-out" class="icon-sm"></i> Выйти
+                        </a>
+                         <a href="{% url 'ps_account:delete_account' %}" class="btn btn-danger">
+                             <i data-lucide="trash-2" class="icon-sm"></i> Удалить аккаунт
+                         </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3>Мои документы</h3>
+                {% if documents %}
+                    <ul class="document-list">
+                        {% for doc in documents %}
+                            <li class="document-item">
+                                <a href="{{ doc.document.url }}" target="_blank" class="document-link">{{ doc.document.name|cut:"documents/" }}</a>
+                                <span>Загружено: {{ doc.uploaded_at|date:"d.m.Y H:i" }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>У вас пока нет загруженных документов.</p>
+                {% endif %}
+            </div>
+
+            <!-- Можно добавить форму для загрузки документов сюда, если нужно -->
+            
         </div>
-    </div>
-
-    <script>
-        document.getElementById('user-avatar').addEventListener('click', function() {
-            document.getElementById('id_avatar').click();
-        });
-    
-        document.getElementById('id_avatar').addEventListener('change', function() {
-            document.getElementById('avatar-form').submit();
-        });
-
-        // Добавляем код для бургер-меню
-        const burger = document.querySelector('.burger');
-        const navLeft = document.querySelector('.nav-left');
-        const navRight = document.querySelector('.nav-right');
-
-        burger.addEventListener('click', () => {
-            // Анимация бургера
-            burger.classList.toggle('active');
-            
-            // Показать/скрыть меню
-            navLeft.classList.toggle('active');
-            navRight.classList.toggle('active');
-            
-            // Запретить прокрутку body при открытом меню
-            document.body.style.overflow = burger.classList.contains('active') ? 'hidden' : 'auto';
-        });
-
-        // Закрывать меню при клике на пункт меню
-        document.querySelectorAll('.nav-left a, .nav-right a').forEach(link => {
-            link.addEventListener('click', () => {
-                burger.classList.remove('active');
-                navLeft.classList.remove('active');
-                navRight.classList.remove('active');
-                document.body.style.overflow = 'auto';
+    </main>
+     <script>
+        lucide.createIcons();
+        // Логика мобильного меню
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        if(menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                const icon = menuBtn.querySelector('i');
+                if (mobileMenu.classList.contains('active')) {
+                    icon.setAttribute('data-lucide', 'x');
+                } else {
+                    icon.setAttribute('data-lucide', 'menu');
+                }
+                lucide.createIcons(); 
             });
-        });
+        }
     </script>
 </body>
 </html>

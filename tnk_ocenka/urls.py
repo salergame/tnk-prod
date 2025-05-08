@@ -25,12 +25,10 @@ urlpatterns = [
     path('',include('main.urls', namespace='main')),
     path('account/',include('ps_account.urls', namespace='ps_account')),
     path('accounts/', include('allauth.urls')),
-    path('chat/',include('chat.urls', namespace='chat')),
 ]
 
 # Добавляем обработку медиа файлов
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Добавляем обработку статических файлов
-if settings.DEBUG:
-    urlpatterns += staticfiles_urlpatterns()
+# Добавляем обработку статических файлов - всегда, независимо от DEBUG
+urlpatterns += staticfiles_urlpatterns()

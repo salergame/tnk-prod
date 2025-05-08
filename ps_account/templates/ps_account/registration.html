@@ -1,12 +1,15 @@
 {% load static socialaccount %}
+{% load account %}
 
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация | Sadyrbai Consulting</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <title>Регистрация | TNK Оценка</title>
+    <link rel="stylesheet" href="{% static 'deps/css/styles1.css' %}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="{% static 'deps/images/logo.ico' %}" sizes="32x32">
     <style>
@@ -363,119 +366,155 @@
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-            </div>
-            <div class="nav-left">
-                <a href="{% url 'main:index' %}" class="logo">
-                    <img src="{% static 'deps/images/logo.jpg' %}" alt="Sadyrbai Consulting">
+    <!-- Вставляем новую шапку -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <a href="/" class="logo">TNK ocenka</a>
+          <nav class="menu">
+            <a href="{% url 'main:index' %}#services" class="menu-item">Услуги</a>
+            <a href="{% url 'main:index' %}#testimonials" class="menu-item">Отзывы</a>
+            <a href="{% url 'main:index' %}#contact" class="menu-item">Контакты</a>
+             {% if user.is_staff %}
+                <a href="{% url 'ps_account:staff_documents' %}" class="menu-item">Документы</a>
+             {% endif %}
+             {% if user.is_authenticated %}
+                <a href="{% url 'ps_account:account' %}" class="btn btn-secondary btn-sm">
+                  <i data-lucide="user" class="icon-sm"></i>
+                  Профиль
                 </a>
-                <a href="{% url 'main:index' %}">ГЛАВНАЯ</a>
-                <a href="{% url 'main:index' %}#services-section">УСЛУГИ</a>
-                <a href="{% url 'main:index' %}#steps-section">КАК МЫ РАБОТАЕМ</a>
-                <a href="{% url 'main:index' %}#certificates-section">СЕРТИФИКАТЫ</a>
-                <a href="{% url 'chat:index' %}#faq-section">ЧАТ</a>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'ps_account:profile' %}">ПРОФИЛЬ</a>
-                    <a href="{% url 'ps_account:logout' %}">ВЫЙТИ</a>
-                {% else %}
-                    <a href="{% url 'ps_account:login' %}">ВОЙТИ</a>
-                    <a href="{% url 'ps_account:registration' %}">РЕГИСТРАЦИЯ</a>
-                {% endif %}
-                {% if user.is_staff %}
-                    <a href="{% url 'ps_account:staff_documents' %}">ДОКУМЕНТЫ</a>
-                    <a href="{% url 'admin:index' %}">АДМИН ПАНЕЛЬ</a>
-                {% endif %}
-            </div>
-        </nav>
+             {% else %}
+                <a href="{% url 'ps_account:login' %}" class="btn btn-secondary btn-sm">
+                  <i data-lucide="log-in" class="icon-sm"></i>
+                  Вход / Регистрация
+                </a>
+             {% endif %}
+            <a href="https://wa.me/77026264998" target="_blank" class="btn btn-primary btn-sm">
+              <i data-lucide="phone" class="icon-sm"></i>
+              Связаться
+            </a>
+          </nav>
+          <button class="mobile-menu-btn">
+            <i data-lucide="menu" class="icon"></i>
+          </button>
+        </div>
+      </div>
+      <div class="mobile-menu">
+        <div class="container">
+          <nav class="mobile-nav">
+             <a href="{% url 'main:index' %}#services" class="menu-item">Услуги</a>
+            <a href="{% url 'main:index' %}#testimonials" class="menu-item">Отзывы</a>
+            <a href="{% url 'main:index' %}#contact" class="menu-item">Контакты</a>
+             {% if user.is_staff %}
+                <a href="{% url 'ps_account:staff_documents' %}" class="menu-item">Документы</a>
+             {% endif %}
+             {% if user.is_authenticated %}
+                <a href="{% url 'ps_account:account' %}" class="btn btn-secondary btn-sm">
+                  <i data-lucide="user" class="icon-sm"></i>
+                  Профиль
+                </a>
+             {% else %}
+                <a href="{% url 'ps_account:login' %}" class="btn btn-secondary btn-sm">
+                  <i data-lucide="log-in" class="icon-sm"></i>
+                  Вход / Регистрация
+                </a>
+             {% endif %}
+            <a href="https://wa.me/77026264998" target="_blank" class="btn btn-primary btn-sm">
+              <i data-lucide="phone" class="icon-sm"></i>
+              Связаться
+            </a>
+          </nav>
+        </div>
+      </div>
     </header>
-
-    <div class="login-container">
-        <h1>Регистрация</h1>
-        <form action="{% url 'ps_account:registration' %}" method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="username">Имя пользователя</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password1">Пароль</label>
-                <div class="password-wrapper">
-                    <input type="password" id="password1" name="password1" required>
-                    <span class="toggle-password">
-                        <i class="far fa-eye" id="togglePassword1"></i>
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="password2">Подтвердите пароль</label>
-                <div class="password-wrapper">
-                    <input type="password" id="password2" name="password2" required>
-                    <span class="toggle-password">
-                        <i class="far fa-eye" id="togglePassword2"></i>
-                    </span>
-                </div>
-            </div>
-            <button type="submit" class="login-button">Зарегистрироваться</button>
-            
-            <div class="social-login">
-                <p>Или зарегистрируйтесь через</p>
-                <a href="{% provider_login_url 'google' %}" class="btn-google">
-                    <span class="google-icon"></span>
-                    Регистрация через Google
-                </a>
-            </div>
-        </form>
-    </div>
-
+    <main>
+      <div class="registration-container">
+          <h1>Регистрация</h1>
+          <form action="{% url 'ps_account:registration' %}" method="post">
+              {% csrf_token %}
+              {{ form.non_field_errors }}
+              <div class="form-group">
+                  <label for="{{ form.username.id_for_label }}">Имя пользователя</label>
+                  {{ form.username }} 
+                  {{ form.username.errors }}
+              </div>
+              <div class="form-group">
+                  <label for="{{ form.email.id_for_label }}">Email</label>
+                  {{ form.email }}
+                  {{ form.email.errors }}
+              </div>
+              <div class="form-group">
+                  <label for="{{ form.password1.id_for_label }}">Пароль</label>
+                  <div class="password-wrapper">
+                      {{ form.password1 }}
+                      <span class="toggle-password">
+                          <i class="far fa-eye" id="togglePassword1"></i>
+                      </span>
+                  </div>
+                   {{ form.password1.errors }}
+              </div>
+              <div class="form-group">
+                  <label for="{{ form.password2.id_for_label }}">Подтвердите пароль</label>
+                  <div class="password-wrapper">
+                     {{ form.password2 }}
+                      <span class="toggle-password">
+                          <i class="far fa-eye" id="togglePassword2"></i>
+                      </span>
+                  </div>
+                   {{ form.password2.errors }}
+              </div>
+              <button type="submit" class="btn-primary">Зарегистрироваться</button>
+              
+              <div class="social-login">
+                  <p>Или зарегистрируйтесь через</p>
+                  <a href="{% provider_login_url 'google' %}" class="btn-google">
+                      <span class="google-icon"></span>
+                      Регистрация через Google
+                  </a>
+              </div>
+          </form>
+          <p class="login-link">
+              Уже есть аккаунт? <a href="{% url 'ps_account:login' %}">Войти</a>
+          </p>
+      </div>
+    </main>
     <script>
         const togglePassword1 = document.querySelector('#togglePassword1');
+        const passwordInput1 = document.querySelector('#id_password1'); // Убедитесь, что ID совпадает
         const togglePassword2 = document.querySelector('#togglePassword2');
-        const password1 = document.querySelector('#password1');
-        const password2 = document.querySelector('#password2');
+        const passwordInput2 = document.querySelector('#id_password2'); // Убедитесь, что ID совпадает
 
-        togglePassword1.addEventListener('click', function (e) {
-            const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
-            password1.setAttribute('type', type);
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
+        function setupToggle(toggleElement, passwordElement) {
+            if (toggleElement && passwordElement) {
+                toggleElement.addEventListener('click', function() {
+                    const type = passwordElement.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordElement.setAttribute('type', type);
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('fa-eye');
+                    icon.classList.toggle('fa-eye-slash');
+                });
+            }
+        }
 
-        togglePassword2.addEventListener('click', function (e) {
-            const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
-            password2.setAttribute('type', type);
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
-
-        // Добавляем код для бургер-меню
-        const burger = document.querySelector('.burger');
-        const navLeft = document.querySelector('.nav-left');
-        const navRight = document.querySelector('.nav-right');
-
-        burger.addEventListener('click', () => {
-            burger.classList.toggle('active');
-            navLeft.classList.toggle('active');
-            navRight.classList.toggle('active');
-            document.body.style.overflow = burger.classList.contains('active') ? 'hidden' : 'auto';
-        });
-
-        document.querySelectorAll('.nav-left a, .nav-right a').forEach(link => {
-            link.addEventListener('click', () => {
-                burger.classList.remove('active');
-                navLeft.classList.remove('active');
-                navRight.classList.remove('active');
-                document.body.style.overflow = 'auto';
+        setupToggle(togglePassword1, passwordInput1);
+        setupToggle(togglePassword2, passwordInput2);
+        
+        lucide.createIcons();
+        // Логика мобильного меню
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        if(menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                const icon = menuBtn.querySelector('i');
+                if (mobileMenu.classList.contains('active')) {
+                    icon.setAttribute('data-lucide', 'x');
+                } else {
+                    icon.setAttribute('data-lucide', 'menu');
+                }
+                lucide.createIcons(); 
             });
-        });
+        }
     </script>
 </body>
 </html>

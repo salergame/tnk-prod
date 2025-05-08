@@ -1,209 +1,106 @@
 {% load static %}
+{% load account %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Удаление аккаунта | Sadyrbai Consulting</title>
+    <title>Удаление аккаунта | TNK Оценка</title>
+    <link rel="stylesheet" href="{% static 'deps/css/styles1.css' %}">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="{% static 'deps/images/logo.ico' %}" sizes="32x32">
-    <style>
-        /* Те же базовые стили */
-        :root {
-            --primary-color: #B1454A;
-            --secondary-color: #C85F63;
-            --accent-color: #D87A7E;
-            --dark-bg: #2D2D2D;
-            --text-color: #333333;
-            --light-text: #FFFFFF;
-            --form-bg: #FFFFFF;
-            --light-bg: #F5EDED;
-            --white: #FFFFFF;
-            --heading-font: 'Outfit', sans-serif;
-            --body-font: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        body {
-            font-family: var(--body-font);
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Навбар */
-        header {
-            background-color: var(--white);
-            padding: 15px 40px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            font-family: var(--heading-font);
-        }
-
-        nav a {
-            position: relative;
-            color: #2D2D2D;
-            text-decoration: none;
-            padding: 10px 20px;
-            transition: color 0.3s ease;
-            font-weight: 500;
-        }
-
-        nav a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            left: 0;
-            bottom: -5px;
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover:after {
-            width: 100%;
-        }
-
-        nav a:hover {
-            color: var(--primary-color);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-
-        .form-container {
-            background: white;
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            font-family: var(--heading-font);
-            color: var(--dark-bg);
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 32px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--text-color);
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        button {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        button:hover {
-            background: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
-        .messages {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #f8d7da;
-            color: #721c24;
-            text-align: center;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-                margin: 20px auto;
-            }
-
-            .form-container {
-                padding: 20px;
-            }
-        }
-
-        /* Дополнительные стили для кнопки удаления */
-        .delete-button {
-            background: #dc3545;
-        }
-
-        .delete-button:hover {
-            background: #c82333;
-        }
-
-        .warning-text {
-            color: #721c24;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="{% url 'main:index' %}">ГЛАВНАЯ</a>
-            <a href="{% url 'chat:index' %}">ЧАТ</a>
-            <a href="{% url 'ps_account:account' %}">ЛИЧНЫЙ КАБИНЕТ</a>
-        </nav>
+    <!-- Стандартная шапка -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <a href="/" class="logo">TNK ocenka</a>
+          <nav class="menu">
+            <a href="{% url 'main:index' %}#services" class="menu-item">Услуги</a>
+            <a href="{% url 'main:index' %}#testimonials" class="menu-item">Отзывы</a>
+            <a href="{% url 'main:index' %}#contact" class="menu-item">Контакты</a>
+             {% if user.is_staff %}
+                <a href="{% url 'ps_account:staff_documents' %}" class="menu-item">Документы</a>
+             {% endif %}
+             {% if user.is_authenticated %}
+                <a href="{% url 'ps_account:account' %}" class="btn btn-secondary btn-sm">
+                  <i data-lucide="user" class="icon-sm"></i>
+                  Профиль
+                </a>
+             {% else %}
+                <a href="{% url 'ps_account:login' %}" class="btn btn-secondary btn-sm">
+                  <i data-lucide="log-in" class="icon-sm"></i>
+                  Вход / Регистрация
+                </a>
+             {% endif %}
+            <a href="https://wa.me/77026264998" target="_blank" class="btn btn-primary btn-sm">
+              <i data-lucide="phone" class="icon-sm"></i>
+              Связаться
+            </a>
+          </nav>
+          <button class="mobile-menu-btn">
+            <i data-lucide="menu" class="icon"></i>
+          </button>
+        </div>
+      </div>
+      <div class="mobile-menu">
+        <div class="container">
+          <nav class="mobile-nav">
+             <a href="{% url 'main:index' %}#services" class="menu-item">Услуги</a>
+            <a href="{% url 'main:index' %}#testimonials" class="menu-item">Отзывы</a>
+            <a href="{% url 'main:index' %}#contact" class="menu-item">Контакты</a>
+             {% if user.is_staff %}
+                <a href="{% url 'ps_account:staff_documents' %}" class="menu-item">Документы</a>
+             {% endif %}
+             {% if user.is_authenticated %}
+                <a href="{% url 'ps_account:account' %}" class="btn btn-secondary btn-sm">
+                  <i data-lucide="user" class="icon-sm"></i>
+                  Профиль
+                </a>
+             {% else %}
+                <a href="{% url 'ps_account:login' %}" class="btn btn-secondary btn-sm">
+                  <i data-lucide="log-in" class="icon-sm"></i>
+                  Вход / Регистрация
+                </a>
+             {% endif %}
+            <a href="https://wa.me/77026264998" target="_blank" class="btn btn-primary btn-sm">
+              <i data-lucide="phone" class="icon-sm"></i>
+              Связаться
+            </a>
+          </nav>
+        </div>
+      </div>
     </header>
-
-    <div class="container">
-        <div class="form-container">
-            <h1>Удаление аккаунта</h1>
-            <p class="warning-text">Вы уверены, что хотите удалить аккаунт? Это действие необратимо.</p>
+    <main>
+        <div class="confirmation-container">
+            <h1>Подтверждение удаления аккаунта</h1>
+            <p>Вы уверены, что хотите удалить свой аккаунт? Это действие необратимо, и все ваши данные будут удалены.</p>
             <form method="post">
                 {% csrf_token %}
-                <button type="submit" class="delete-button">Удалить аккаунт</button>
+                <button type="submit" class="btn btn-danger">Да, удалить аккаунт</button>
+                <a href="{% url 'ps_account:account' %}" class="btn btn-secondary">Отмена</a>
             </form>
         </div>
-    </div>
+    </main>
+     <script>
+        lucide.createIcons();
+        // Логика мобильного меню
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        if(menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                const icon = menuBtn.querySelector('i');
+                if (mobileMenu.classList.contains('active')) {
+                    icon.setAttribute('data-lucide', 'x');
+                } else {
+                    icon.setAttribute('data-lucide', 'menu');
+                }
+                lucide.createIcons(); 
+            });
+        }
+    </script>
 </body>
 </html>
