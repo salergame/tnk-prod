@@ -623,17 +623,31 @@
           </div>
         </div>
         
-        <div class="map-container">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2505.9744646581743!2d71.42843857687566!3d51.12818623659125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585a5923e1111%3A0x9dff0742d2832cf5!2z0L_RgNC-0YHQv9C10LrRgiDQoNC10YHQv9GD0LHQu9C40LrQuCAzMiwg0JDRgdGC0LDQvdCwIDAyMDAwMA!5e0!3m2!1sru!2skz!4v1711024714303!5m2!1sru!2skz"
-            width="100%"
-            height="100%"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
-        </div>
+        <div class="map-container" id="map"></div>
+        <script src="https://api-maps.yandex.ru/2.1/?apikey=4ec4ed4a-e083-4dd2-b3d1-7f1bf8b71b8a&lang=ru_RU" type="text/javascript"></script>
+        <script type="text/javascript">
+            ymaps.ready(init);
+            function init(){
+                var myMap = new ymaps.Map("map", {
+                    center: [51.128186, 71.428439],
+                    zoom: 17,
+                    controls: ['zoomControl', 'geolocationControl']
+                });
+
+                var myPlacemark = new ymaps.Placemark([51.128186, 71.428439], {
+                    balloonContentHeader: "ТНК ОЦЕНКА",
+                    balloonContentBody: "Проспект Республики, 32<br>Этаж 6, офис 605",
+                    balloonContentFooter: "Режим работы: 9:00-18:30",
+                    hintContent: "ТНК ОЦЕНКА"
+                }, {
+                    preset: 'islands#redDotIcon'
+                });
+
+                myMap.geoObjects.add(myPlacemark);
+                myPlacemark.balloon.open();
+                myMap.behaviors.disable('scrollZoom');
+            }
+        </script>
       </div>
     </div>
   </section>
