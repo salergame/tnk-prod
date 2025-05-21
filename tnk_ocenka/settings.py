@@ -164,8 +164,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# Использую ManifestStaticFilesStorage вместо StaticFilesStorage
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+# Возвращаем WhiteNoise хранилище, так как ManifestStaticFilesStorage вызывает ошибки
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Настройки для обработки MIME-типов
 WHITENOISE_MIMETYPES = {
