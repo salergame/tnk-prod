@@ -224,7 +224,8 @@ CORS_ALLOWED_ORIGINS = [
 SITE_ID = 1
 SITE_URL = 'https://tnk-ocenka.kz'
 
-MEDIA_URL = 'media/'
+# Исправленные настройки для медиа-файлов
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGGING = {
