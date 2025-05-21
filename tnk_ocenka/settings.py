@@ -27,11 +27,12 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1", cast=Csv())
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1,tnk-prod.onrender.com", cast=Csv())
 
 CSRF_TRUSTED_ORIGINS = [
     'https://tnk-ocenka.kz',
     'https://www.tnk-ocenka.kz',
+    'https://tnk-prod.onrender.com',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True  # Разрешить все домены
@@ -163,8 +164,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# Упрощенный вариант хранилища для WhiteNoise
-STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
+# Использую ManifestStaticFilesStorage вместо StaticFilesStorage
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 # Настройки для обработки MIME-типов
 WHITENOISE_MIMETYPES = {
