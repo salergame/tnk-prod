@@ -1,5 +1,0 @@
-[33mcommit 46ca32ef71e7a790c30f53aaff82b08206065152[m[33m ([m[1;36mHEAD[m[33m)[m
-Author: Sanzhar <salergame07@gmail.com>
-Date:   Sat Apr 19 14:58:03 2025 +0500
-
-    Исправлены настройки статических файлов для Render: 1) Убрана проверка DEBUG для staticfiles_urlpatterns, 2) Исправлен STATIC_URL, 3) Упрощено STATICFILES_STORAGE
