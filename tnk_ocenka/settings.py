@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google', 
     'corsheaders',
+    'storages',
     
     'main',
     'ps_account',
@@ -63,7 +64,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # WhiteNoise должен быть сразу после SecurityMiddleware
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -93,8 +94,10 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'tnk_ocenka.wsgi.application'
+# Используем WSGI для production
+WSGI_APPLICATION = 'tnk_ocenka.wsgi.application'
 
+# ASGI для websockets и асинхронных задач
 ASGI_APPLICATION = 'tnk_ocenka.asgi.application'
 
 if DEBUG:
@@ -164,9 +167,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# Возвращаем WhiteNoise хранилище, так как ManifestStaticFilesStorage вызывает ошибки
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-
 # Настройки для обработки MIME-типов
 WHITENOISE_MIMETYPES = {
     '.css': 'text/css',
@@ -180,12 +180,17 @@ WHITENOISE_MIMETYPES = {
     '.woff2': 'font/woff2',
     '.ttf': 'font/ttf',
     '.eot': 'application/vnd.ms-fontobject',
+    '.pdf': 'application/pdf',
+    '.doc': 'application/msword',
+    '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 }
 
-# Дополнительные настройки WhiteNoise
+# Настройки WhiteNoise
 WHITENOISE_ROOT = os.path.join(BASE_DIR, 'static')
+WHITENOISE_INDEX_FILE = True  # Включаем поддержку индексных файлов
 WHITENOISE_KEEP_ONLY_HASHED_FILES = False
 WHITENOISE_USE_FINDERS = True
+WHITENOISE_AUTOREFRESH = True  # Автоматически обновлять файлы при изменении
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -228,10 +233,20 @@ SITE_URL = 'https://tnk-ocenka.kz'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Убираем лишние настройки WhiteNoise для медиа
-WHITENOISE_ROOT = os.path.join(BASE_DIR, 'static')
-WHITENOISE_KEEP_ONLY_HASHED_FILES = False
-WHITENOISE_USE_FINDERS = True
+# Настройки для хранения медиа-файлов с использованием django-storages
+DEFAULT_FILE_STORAGE = 'storages.backends.filesystem.FileSystemStorage'
+STORAGES = {
+    'default': {
+        'BACKEND': 'storages.backends.filesystem.FileSystemStorage',
+        'OPTIONS': {
+            'location': MEDIA_ROOT,
+            'base_url': MEDIA_URL,
+        },
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
 
 LOGGING = {
     'version': 1,
