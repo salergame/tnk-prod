@@ -276,12 +276,11 @@ h1 {
     display: inline-block;
     width: 20px;
     height: 20px;
-    background-image: url('../images/white_g_no_background.png'); /* Adjust path as needed */
+    background-image: url('../../white_g_no_background.png'); /* Исправленный путь */
     background-size: contain;
     background-repeat: no-repeat;
     margin-right: 10px;
 }
-
 
 .btn-linkedin {
     background-color: #0077B5; /* Цвет LinkedIn */
