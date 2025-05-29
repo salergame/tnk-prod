@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import os
 from django.conf import settings
+from django.urls import reverse
 
 def get_document_path(instance, filename):
     # Сохраняем файл в папку media/documents/ с именем файла
@@ -21,7 +22,10 @@ class UserDocument(models.Model):
 
     def get_document_url(self):
         if self.document and hasattr(self.document, 'url'):
-            return self.document.url
+            # Получаем только имя файла из полного пути
+            filename = os.path.basename(self.document.name)
+            # Используем представление serve_document из корневых URL
+            return reverse('serve_document_root', kwargs={'filename': filename})
         return None
 
 class UserProfile(models.Model):
@@ -33,6 +37,9 @@ class UserProfile(models.Model):
 
     def get_avatar_url(self):
         if self.avatar and hasattr(self.avatar, 'url') and self.avatar.name:
-            return self.avatar.url
+            # Получаем только имя файла из полного пути
+            filename = os.path.basename(self.avatar.name)
+            # Используем представление serve_avatar из корневых URL
+            return reverse('serve_avatar_root', kwargs={'filename': filename})
         return None
 

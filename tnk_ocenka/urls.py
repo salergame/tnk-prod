@@ -15,20 +15,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from ps_account.views import serve_avatar, serve_document
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('main.urls', namespace='main')),
     path('account/',include('ps_account.urls', namespace='ps_account')),
     path('accounts/', include('allauth.urls')),
+    
+    # Добавляем корневые маршруты для обслуживания медиа-файлов
+    path('media/avatars/<str:filename>', serve_avatar, name='serve_avatar_root'),
+    path('media/documents/<str:filename>', serve_document, name='serve_document_root'),
 ]
 
-# Добавляем обработку медиа файлов
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Обрабатываем медиа-файлы только в режиме отладки
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Добавляем обработку статических файлов - всегда, независимо от DEBUG
 urlpatterns += staticfiles_urlpatterns()

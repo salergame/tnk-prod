@@ -18,6 +18,10 @@ urlpatterns = [
     path('staff-documents/<int:user_id>/', views.user_account_for_staff, name='user_account_for_staff'),
     path('staff-documents/<int:user_id>/delete-document/<int:document_id>/', views.delete_document, name='delete_document'),
     
+    # Добавляем маршруты для обслуживания медиа-файлов
+    path('media/avatars/<str:filename>', views.serve_avatar, name='serve_avatar'),
+    path('media/documents/<str:filename>', views.serve_document, name='serve_document'),
+    
     # URL для сброса пароля
     path('password-reset/', 
          auth_views.PasswordResetView.as_view(
@@ -46,4 +50,8 @@ urlpatterns = [
              template_name='ps_account/password_reset_complete.html'
          ), 
          name='password_reset_complete'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+# В production не используем standard static helper, который не работает на Render
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

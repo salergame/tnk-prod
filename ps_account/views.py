@@ -11,10 +11,42 @@ from .models import UserDocument, UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test
 from django.db.models import Q
-
+from django.http import HttpResponse, FileResponse
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.conf import settings
+import os
+import mimetypes
+
+
+# Функция для отдачи файлов
+def serve_file(request, file_path):
+    # Проверяем, что путь безопасен и не содержит ".."
+    if '..' in file_path or file_path.startswith('/'):
+        return HttpResponse("Неверный путь к файлу", status=400)
+    
+    # Собираем полный путь к файлу
+    full_path = os.path.join(settings.MEDIA_ROOT, file_path)
+    
+    # Проверяем существование файла
+    if not os.path.exists(full_path) or not os.path.isfile(full_path):
+        return HttpResponse("Файл не найден", status=404)
+    
+    # Определяем MIME-тип файла
+    content_type, _ = mimetypes.guess_type(full_path)
+    if not content_type:
+        content_type = 'application/octet-stream'
+    
+    # Возвращаем файл
+    return FileResponse(open(full_path, 'rb'), content_type=content_type)
+
+
+# Обработчики для медиа-файлов
+def serve_avatar(request, filename):
+    return serve_file(request, os.path.join('avatars', filename))
+
+def serve_document(request, filename):
+    return serve_file(request, os.path.join('documents', filename))
 
 
 # Create your views here.
