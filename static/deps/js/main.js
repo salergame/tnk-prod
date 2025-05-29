@@ -267,7 +267,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const certificateCards = document.querySelectorAll('.certificate-card');
   const certificateModal = document.getElementById('certificate-modal');
   const certificateTitle = document.getElementById('certificate-title');
-  const certificateDescription = document.getElementById('certificate-description');
   const certificateDocument = document.getElementById('certificate-document');
   
   // Открытие модального окна сертификата
@@ -278,7 +277,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const cardImage = this.querySelector('.certificate-image img'); // Находим img внутри карточки
 
       certificateTitle.textContent = certificate.title; // Используем title из массива
-      certificateDescription.textContent = certificate.description; // Используем description из массива
       
       // Используем src из img карточки
       if (cardImage) {
