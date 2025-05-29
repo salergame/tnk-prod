@@ -40,8 +40,12 @@ def account(request):
     else:
         avatar_form = AvatarChangeForm(instance=profile)
 
-    # Безопасное получение URL аватарки
+    # Безопасное получение URL аватарки и документов
     avatar_url = profile.get_avatar_url() if profile.avatar else None
+    
+    # Добавляем URL для документов
+    for doc in documents:
+        doc.url = doc.get_document_url()
     
     context = {
         'user_name': user.get_full_name() or user.username,
@@ -52,8 +56,10 @@ def account(request):
         'profile': profile,
         'avatar_url': avatar_url,
         'user': user,  # Добавляем пользователя в контекст
+        'media_url': settings.MEDIA_URL,  # Добавляем URL медиа-файлов
     }
     return render(request, 'ps_account/sit2.html', context)
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -176,6 +182,19 @@ def user_account_for_staff(request, user_id):
     else:
         form = DocumentUploadForm()
 
+    # Добавляем URL для документов
+    for doc in documents:
+        doc.url = doc.get_document_url()
+        
+    # Получаем профиль пользователя для аватарки
+    profile = None
+    avatar_url = None
+    try:
+        profile = UserProfile.objects.get(user=selected_user)
+        avatar_url = profile.get_avatar_url()
+    except UserProfile.DoesNotExist:
+        pass
+
     context = {
         'user_name': selected_user.get_full_name() or selected_user.username,
         'user_email': selected_user.email,
@@ -183,6 +202,9 @@ def user_account_for_staff(request, user_id):
         'documents': documents,
         'form': form,  # For document upload
         'user': selected_user,  # Добавляем пользователя в контекст
+        'profile': profile,
+        'avatar_url': avatar_url,
+        'media_url': settings.MEDIA_URL,  # Добавляем URL медиа-файлов
     }
     return render(request, 'ps_account/sit2.html', context)
 
