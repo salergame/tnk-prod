@@ -238,7 +238,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Настройки для хранения файлов
 STORAGES = {
     'default': {
-        'BACKEND': 'storages.backends.filesystem.FileSystemStorage',
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
         'OPTIONS': {
             'location': MEDIA_ROOT,
             'base_url': MEDIA_URL,
