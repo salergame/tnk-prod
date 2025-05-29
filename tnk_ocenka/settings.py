@@ -233,8 +233,7 @@ SITE_URL = 'https://tnk-ocenka.kz'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Настройки для хранения медиа-файлов с использованием django-storages
-DEFAULT_FILE_STORAGE = 'storages.backends.filesystem.FileSystemStorage'
+# Настройки для хранения файлов
 STORAGES = {
     'default': {
         'BACKEND': 'storages.backends.filesystem.FileSystemStorage',
