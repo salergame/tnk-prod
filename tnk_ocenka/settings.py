@@ -27,7 +27,8 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1,tnk-prod.onrender.com", cast=Csv())
+# Явно добавляем все необходимые хосты
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'tnk-prod.onrender.com', 'tnk-ocenka.kz', 'www.tnk-ocenka.kz']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://tnk-ocenka.kz',
@@ -244,7 +245,7 @@ STORAGES = {
         },
     },
     'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
     },
 }
 
