@@ -191,6 +191,7 @@ WHITENOISE_INDEX_FILE = True  # Включаем поддержку индекс
 WHITENOISE_KEEP_ONLY_HASHED_FILES = False
 WHITENOISE_USE_FINDERS = True
 WHITENOISE_AUTOREFRESH = True  # Автоматически обновлять файлы при изменении
+WHITENOISE_SKIP_MISSING_FILES = True  # Игнорировать отсутствующие файлы (например, source maps)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
