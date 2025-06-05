@@ -107,103 +107,83 @@ const serviceItems = [
 // Данные для сертификатов
 const certificates = [
   {
-    title: "Сертификат оценщика",
-    description: "Лицензия на оценку имущества, выданная Кайрату Жаксалыкову",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Жаксалыков Кайрат Куанышпаевич.png"
   },
   {
-    title: "Сертификат оценщика №2",
-    description: "Дополнительная лицензия на оценку имущества",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Жаксалыков Кайрат Куанышпаевич1.png"
   },
   {
-    title: "Сертификат оценщика №3",
-    description: "Лицензия с дополнительными полномочиями",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Жаксалыков Кайрат Куанышпаевич2.png"
   },
   {
-    title: "Государственная лицензия",
-    description: "Право на осуществление оценочной деятельности в сфере недвижимого имущества",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Недвижимое имущество.png"
   },
   {
-    title: "Сертификат оценки недвижимости",
-    description: "Право на оценку недвижимых объектов",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Недвижимое.png"
   },
   {
-    title: "Лицензия движимого имущества",
-    description: "Аккредитация на оценку движимого имущества",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Движимое имущество.png"
   },
   {
-    title: "Сертификат движимого имущества",
-    description: "Право на оценку транспорта и оборудования",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Движимое.png"
   },
   {
-    title: "Свидетельство палаты оценщиков",
-    description: "Членство в палате оценщиков, свидетельство 2024 года",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Свидетельство палаты 2024 г..png"
   },
   {
-    title: "Лицензия интеллектуальной собственности",
-    description: "Право на оценку объектов интеллектуальной собственности",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Интелектуальной собственности.png"
   },
   {
-    title: "Сертификат интеллектуальной собственности",
-    description: "Право на оценку патентов и авторских прав",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Интелектуалка.png"
   },
   {
-    title: "Сертификат Назерке Әділхановой",
-    description: "Лицензия на оценку имущества",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Әділханова Назерке.png"
   },
   {
-    title: "Сертификат Назерке Әділхановой №1",
-    description: "Профессиональный сертификат оценщика",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Әділханова Назерке1.png"
   },
   {
-    title: "Сертификат Назерке Әділхановой №2",
-    description: "Дополнительная лицензия оценщика",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Әділханова Назерке2.png"
   },
   {
-    title: "Сертификат Назерке Әділхановой №3",
-    description: "Сертификат специалиста по оценке",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Әділханова Назерке3.png"
   },
   {
-    title: "Сертификат Назерке Әділхановой №4",
-    description: "Лицензия на право проведения оценки",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Әділханова Назерке4.png"
   },
   {
-    title: "Сертификат Назерке Әділхановой №5",
-    description: "Свидетельство о квалификации оценщика",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Әділханова Назерке5.png"
   },
   {
-    title: "Сертификат от 28.09.2023",
-    description: "Свидетельство Назерке Әмірханқызы",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Әділханова Назерке Әмірханқызы 28.09.2023.png"
   },
   {
-    title: "Сертификат от 12.10.2023",
-    description: "Свидетельство Назерке Әмірханқызы",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Әділханова Назерке Әмірханқызы 12.10.2023.png"
   },
   {
-    title: "Свидетельство 2024 года",
-    description: "Актуальный сертификат Назерке Әмірханқызы",
+    title: "Сертификат",
     image: "static/deps/images/certificates/Әділханова Назерке Әмірханқызы 2024 г..png"
   },
   {
-    title: "Сертификат №1",
-    description: "Профессиональный сертификат оценщика",
+    title: "Сертификат",
     image: "static/deps/images/certificates/1.png"
   }
 ];
@@ -266,17 +246,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Обработка карточек сертификатов
   const certificateCards = document.querySelectorAll('.certificate-card');
   const certificateModal = document.getElementById('certificate-modal');
-  const certificateTitle = document.getElementById('certificate-title');
   const certificateDocument = document.getElementById('certificate-document');
   
   // Открытие модального окна сертификата
   certificateCards.forEach(card => {
     card.addEventListener('click', function() {
-      const certIndex = this.getAttribute('data-cert');
-      const certificate = certificates[certIndex]; // Получаем данные сертификата для текста
       const cardImage = this.querySelector('.certificate-image img'); // Находим img внутри карточки
-
-      certificateTitle.textContent = certificate.title; // Используем title из массива
       
       // Используем src из img карточки
       if (cardImage) {
@@ -284,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         certificateDocument.src = ''; // Установить пустой src, если изображение не найдено
       }
-      certificateDocument.alt = certificate.title; // Используем title из массива для alt
+      certificateDocument.alt = "Сертификат"; // Используем обобщенное название для alt
       
       certificateModal.classList.add('active');
       document.body.style.overflow = 'hidden';
